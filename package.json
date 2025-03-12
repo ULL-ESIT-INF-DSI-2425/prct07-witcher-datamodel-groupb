@@ -1,0 +1,36 @@
+{
+  "name": "prct-witcher-groupb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "doc": "typedoc",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb"
+  },
+  "keywords": [],
+  "author": "Daniel Marhuenda",
+  "license": "ISC",
+  "description": "Práctica de la asignatura DSI en el curso 2024/2025",
+  "dependencies": {
+    "@types/node": "^22.13.9",
+    "tsc-watch": "^6.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@types/jest": "^29.5.14",
+    "@vitest/coverage-v8": "^3.0.6",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-tsdoc": "^0.4.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typedoc": "^0.27.7",
+    "typescript-eslint": "^8.23.0",
+    "vitest": "^3.0.5"
+  }
+}
