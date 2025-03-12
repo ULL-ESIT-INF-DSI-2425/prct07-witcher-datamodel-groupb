@@ -1,14 +1,15 @@
 {
-  "exclude":[
-    "./tests",
-    "./node_modules",
-    "./dist"
+  "exclude": [
+    "tests",
+    "node_modules",
+    "dist",
   ],
-    "compilerOptions": {
-      "target": "ES2024",
-      "module": "commonjs",
-      "rootDir": "./src",
-      "declaration": true,
-      "outDir": "./dist"
-    }
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "Node16",
+    "rootDir": "./src",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+  }
 }
