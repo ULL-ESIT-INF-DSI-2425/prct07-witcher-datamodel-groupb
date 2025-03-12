@@ -18,6 +18,8 @@
   "description": "Práctica de la asignatura DSI en el curso 2024/2025",
   "dependencies": {
     "@types/node": "^22.13.9",
+    "inquirer": "^12.4.3",
+    "lowdb": "^7.0.1",
     "tsc-watch": "^6.2.1"
   },
   "devDependencies": {
