@@ -7,9 +7,9 @@ import { JSONFileSync  } from "lowdb/node";
 
 
 type schemaType = {
-    bienes: { ID: number, nombre: string, descripcion: string, material: string, peso: number, precio: number, cantidad:number}[]
-    clientes: { ID: number, nombre: string, raza: string, ubicacion: string}[]
-    mercaderes: { ID: number, nombre: string, tipo: string, ubicacion: string}[]
+    bienes: Bien[];
+    clientes: Cliente[];
+    mercaderes: Mercader[];
 };
 
 
@@ -43,14 +43,73 @@ export default class Inventario{
         }
     }
 
-    getclientesMap(){
+    getclientesMap():Map<number,Cliente>{
         return this.clientesMap;
     }
-    getmercaderesMap(){
+    getmercaderesMap():Map<number,Mercader>{
         return this.mercaderesMap;
     }
-    getbienesMap(){
+    getbienesMap():Map<number,Bien>{
         return this.bienesMap;
+    }
+
+    /**
+     * Función para almacenar el contenido de los Mapas dentro del fichero json.
+     * data tiene ! para que el compilador confie en que data no está vacío y no se queje.
+     */
+    private storeInventario():void{
+        this.database.data!.bienes = [...this.bienesMap.values()];
+        this.database.data!.clientes = [...this.clientesMap.values()];
+        this.database.data!.mercaderes = [...this.mercaderesMap.values()];
+        this.database.write();
+    }
+
+    /**
+     * Función para almacenar un nuevo cliente en la base de datos
+     * @param cliente Cliente a añadir, su ID debe ser único
+     */
+    addCliente(cliente:Cliente):void{
+        if(this.clientesMap.has(cliente.ID)){
+            throw new Error(`Error, ID ${cliente.ID} ya está en uso`);
+        }else{
+            this.clientesMap.set(cliente.ID, cliente);
+            this.storeInventario();
+        }
+    }
+
+    /**
+     * Función para almacenar un nuevo mercader en la base de datos
+     * @param mercader Mercader a añadir, su ID debe ser único
+     */
+    addMercader(mercader:Mercader):void{
+        if(this.mercaderesMap.has(mercader.ID)){
+            throw new Error(`Error, ID ${mercader.ID} ya está en uso`);
+        }else{
+            this.mercaderesMap.set(mercader.ID, mercader);
+            this.storeInventario();
+        }
+    }
+
+    /**
+     * Función para almacenar un nuevo bien en la base de datos
+     * @param bien Bien a añadir, su ID debe ser único
+     */
+    addBien(bien:Bien):void{
+        if(this.bienesMap.has(bien.ID)){
+            throw new Error(`Error, ID ${bien.ID} ya está en uso`);
+        }else{
+            this.bienesMap.set(bien.ID, bien);
+            this.storeInventario();
+        }
+    }
+
+    removeCliente(ID:number): void {
+        if (!this.clientesMap.has(ID)) {
+            throw new Error(`Cliente con ID ${ID} no encontrado.`);
+        } else {
+            this.clientesMap.delete(ID);
+            this.storeInventario();
+        }
     }
 
 }
