@@ -1,29 +1,30 @@
 import inquirer from 'inquirer';
-
+import Inventario from './Inventario.js';
 
 enum comandosPrincipales {
     Interactuar_bienes = "Gestionar bienes",
     Interactuar_mercaderes = "Gestionar mercaderes",
     Interactuar_clientes = "Gestionar clientes",
+    Test_Imprimir = "Test Comprobar lectura json",
     Quit = "Quit"
 }
 
 enum comandosProveedores {
     nuevo_proveedor = "Proveedor nuevo",
     proveedor_existente = "Proveedor ya registrado",
-    Quit = "Quit"
+    Volver = "Volver"
 }
 
 enum comandosClientes {
     nuevo_cliente = "Cliente nuevo",
     cliente_existente = "Cliente ya registrado",
-    Quit = "Quit"
+    Volver = "Volver"
 }
 
 enum comandosBienes {
     nuevo_bien = "Bien nuevo",
     bien_existente = "Bien ya registrado",
-    Quit = "Quit"
+    Volver = "Volver"
 }
 
 
@@ -35,11 +36,14 @@ function promptInteracturarMercaderes(): void {
         switch(answers["Comandos mercaderes"]){
             case comandosProveedores.nuevo_proveedor:
                 console.log("LLamada a crear proveedor")
-                promptUser();
+                menuPrincipal();
                 break;
             case comandosProveedores.proveedor_existente:
                 console.log("LLamada a modificar proveedor")
-                promptUser();
+                menuPrincipal();
+                break;
+            case comandosProveedores.Volver:
+                menuPrincipal();
                 break;
         }
     }) 
@@ -53,11 +57,14 @@ function promptInteracturarBienes(): void {
         switch(answers["Comandos bienes"]){
             case comandosBienes.nuevo_bien:
                 console.log("Llamada a crear bien")
-                promptUser();
+                menuPrincipal();
                 break;
             case comandosBienes.bien_existente:
                 console.log("Llamada a modificar bien")  
-                promptUser();
+                menuPrincipal();
+                break;
+            case comandosBienes.Volver:
+                menuPrincipal();
                 break;
         }
     })
@@ -71,18 +78,21 @@ function promptInteracturarClientes(): void {
         switch(answers["Comandos clientes"]){
             case comandosClientes.nuevo_cliente:
                 console.log("Llamada a crear Cliente")
-                promptUser();
+                menuPrincipal();
                 break;
             case comandosClientes.cliente_existente:
                 console.log("Llamada a modificar cliente")  
-                promptUser();
+                menuPrincipal();
+                break;
+            case comandosProveedores.Volver:
+                menuPrincipal();
                 break;
         }
     })
 }
   
 
-function promptUser(): void {
+function menuPrincipal(): void {
     console.clear();
     inquirer.prompt({
         type: "list",
@@ -100,8 +110,22 @@ function promptUser(): void {
             case comandosPrincipales.Interactuar_clientes:
                 promptInteracturarClientes();
                 break;
+            case comandosPrincipales.Quit:
+                break;
+            
+            case comandosPrincipales.Test_Imprimir:
+                inventario.getclientesMap().forEach(element => {
+                    console.log(element.nombre)
+                });
+                inventario.getmercaderesMap().forEach(element => {
+                    console.log(element.nombre)
+                });
+                inventario.getbienesMap().forEach(element => {
+                    console.log(element.nombre)
+                });
         }
     })
 }
 
-    promptUser();
+    let inventario:Inventario = new Inventario();
+    menuPrincipal();

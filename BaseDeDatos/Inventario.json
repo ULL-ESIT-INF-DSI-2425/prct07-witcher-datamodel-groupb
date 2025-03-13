@@ -1,0 +1,30 @@
+{
+    "clientes": [
+      {
+        "ID": 1,
+        "nombre": "Cliente1",
+        "raza": "humano",
+        "ubicacion": "habitacion nº1"
+      },
+      {
+        "ID": 2,
+        "nombre": "Cliente2",
+        "raza": "elfo",
+        "ubicacion": "habitacion nº2"
+      }
+    ],
+    "mercaderes": [
+      {
+        "ID": 1,
+        "nombre": "Mercader1",
+        "tipo": "herreros",
+        "ubicacion": "habitacion nº1"
+      },
+      {
+        "ID": 2,
+        "nombre": "Mercader2",
+        "tipo": "escudero",
+        "ubicacion": "habitacion nº2"
+      }
+    ]
+  }
