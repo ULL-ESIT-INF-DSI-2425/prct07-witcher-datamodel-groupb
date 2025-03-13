@@ -103,11 +103,41 @@ export default class Inventario{
         }
     }
 
+    /**
+     * Eliminar cliente de la base de datos
+     * @param ID ID del cliente a eliminar
+     */
     removeCliente(ID:number): void {
         if (!this.clientesMap.has(ID)) {
             throw new Error(`Cliente con ID ${ID} no encontrado.`);
         } else {
             this.clientesMap.delete(ID);
+            this.storeInventario();
+        }
+    }
+
+    /**
+     * Eliminar mercader de la base de datos
+     * @param ID ID del mercader a eliminar
+     */
+    removeMercader(ID:number): void {
+        if (!this.mercaderesMap.has(ID)) {
+            throw new Error(`Mercader con ID ${ID} no encontrado.`);
+        } else {
+            this.mercaderesMap.delete(ID);
+            this.storeInventario();
+        }
+    }
+
+    /**
+     * Eliminar bien de la base de datos
+     * @param ID ID del bien a eliminar
+     */
+    removeBien(ID:number): void {
+        if (!this.bienesMap.has(ID)) {
+            throw new Error(`Bien con ID ${ID} no encontrado.`);
+        } else {
+            this.bienesMap.delete(ID);
             this.storeInventario();
         }
     }
