@@ -36,6 +36,10 @@ export default class Inventario{
             this.database.data.mercaderes.forEach(mercader => 
                 this.mercaderesMap.set(mercader.ID, 
                     new Mercader(mercader.ID, mercader.nombre, mercader.tipo, mercader.ubicacion)));
+
+            this.database.data.bienes.forEach(bien => 
+                this.bienesMap.set(bien.ID, 
+                    new Bien(bien.ID, bien.nombre, bien.descripcion, bien.material, bien.peso, bien.precio, bien.cantidad)));
         }
     }
 
