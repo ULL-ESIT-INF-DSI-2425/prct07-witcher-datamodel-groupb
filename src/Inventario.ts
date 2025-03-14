@@ -5,12 +5,33 @@ import Mercader from "./Mercader.js";
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
 
+/**
+ * Tipo de datos que se almacenan en el fichero JSON.
+ * Contiene un array de bienes, clientes y mercaderes.
+ * @param bienes - Array de bienes.
+ * @param clientes - Array de clientes.
+ * @param mercaderes - Array de mercaderes.
+ * @returns Objeto de tipo schemaType.
+ */
 type schemaType = {
   bienes: Bien[];
   clientes: Cliente[];
   mercaderes: Mercader[];
 };
 
+/**
+ * Clase que representa el inventario de la `Posada del Lobo Blanco`.
+ * Contiene un mapa de bienes, clientes y mercaderes.
+ * Los datos se almacenan en un fichero JSON.
+ * Entre sus funciones están:
+ *  - Añadir un cliente, mercader o bien.
+ *  - Eliminar un cliente, mercader o bien.
+ *  - Consultar información de bienes específicos.
+ *  - Localizar mercaderes y clientes por su nombre, tipo, raza o ubicación.
+ *  - Llevar el control automatizado del stock, gestionando la cantidad de bienes disponibles.
+ *  - Registrar transacciones, como ventas, compras o devoluciones.
+ *  - Generar informes con estado del stock, bienes más vendidos y más demandados, total de ingresos y gastos, etc.
+ */
 export default class Inventario {
   private database: LowSync<schemaType>;
 
@@ -200,4 +221,23 @@ export default class Inventario {
       this.storeInventario();
     }
   }
+
+  // TODO: Implementar funciones para consultar información de bienes específicos (ordenación).
+  // TODO: Implementar funcion para localizar mercaderes y clientes por su nombre, tipo, raza o ubicación.
+  
+  /*REVISAR
+  venderBien(bien: Bien, cantidad: number, fecha: Date) {
+    if (!this.bienesMap.has(bien.ID)) {
+      throw new Error(`Bien con ID ${bien.ID} no encontrado.`);
+    }
+    const bienExistente = this.bienesMap.get(bien.ID);
+    if (bienExistente === undefined || bienExistente.cantidad < cantidad) {
+      throw new Error(
+        `No hay suficientes ${bien.nombre} en stock. Stock actual: ${bien.cantidad}`,
+      );
+    }
+    bienExistente.removeBien(bien.ID);
+    this.storeInventario();
+  }
+  */
 }
