@@ -114,15 +114,7 @@ function menuPrincipal(): void {
                 break;
             
             case comandosPrincipales.Test_Imprimir:
-                inventario.getclientesMap().forEach(element => {
-                    console.log(element.nombre)
-                });
-                inventario.getmercaderesMap().forEach(element => {
-                    console.log(element.nombre)
-                });
-                inventario.getbienesMap().forEach(element => {
-                    console.log(element.nombre)
-                });
+                inventario.ImprimirTest();
         }
     })
 }

@@ -16,9 +16,9 @@ type schemaType = {
 export default class Inventario{
     private database: LowSync<schemaType>;
 
-    private bienesMap = new Map<number, Bien>
-    private clientesMap = new Map<number, Cliente>
-    private mercaderesMap = new Map<number, Mercader>
+    private _bienesMap = new Map<number, Bien>
+    private _clientesMap = new Map<number, Cliente>
+    private _mercaderesMap = new Map<number, Mercader>
 
 
     constructor() {
@@ -43,14 +43,27 @@ export default class Inventario{
         }
     }
 
-    getclientesMap():Map<number,Cliente>{
-        return this.clientesMap;
+    get clientesMap():Map<number,Cliente>{
+        return this._clientesMap;
     }
-    getmercaderesMap():Map<number,Mercader>{
-        return this.mercaderesMap;
+    
+    get mercaderesMap():Map<number,Mercader>{
+        return this._mercaderesMap;
     }
-    getbienesMap():Map<number,Bien>{
-        return this.bienesMap;
+    get bienesMap():Map<number,Bien>{
+        return this._bienesMap;
+    }
+
+    public ImprimirTest():void{
+        this._clientesMap.forEach(element => {
+            console.log(element.nombre)
+        });
+        this._mercaderesMap.forEach(element => {
+            console.log(element.nombre)
+        });
+        this._bienesMap.forEach(element => {
+            console.log(element.nombre)
+        });
     }
 
     /**
