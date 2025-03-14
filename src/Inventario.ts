@@ -21,26 +21,34 @@ export default class Inventario{
     private _mercaderesMap = new Map<number, Mercader>
 
 
-    constructor() {
-        this.database = new LowSync(new JSONFileSync("BaseDeDatos/Inventario.json"));
-        this.database.read();
+    constructor(_bienesArray: Bien[] = [], _clientesArray: Cliente[] = [], _mercaderesArray:Mercader[] = []) {
+        if((_bienesArray.length === 0) && (_clientesArray.length === 0) && (_mercaderesArray.length === 0)){
+            this.database = new LowSync(new JSONFileSync("BaseDeDatos/Inventario.json"));
+            this.database.read();
  
-        if (this.database.data == null) {
-            console.log("No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir");
+            if (this.database.data == null) {
+                console.log("No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir");
 
-        } else {
-            this.database.data.clientes.forEach(cliente => 
-                this.clientesMap.set(cliente.ID, 
-                    new Cliente(cliente.ID, cliente.nombre, cliente.raza, cliente.ubicacion)));
+            } else {
+                this.database.data.clientes.forEach(cliente => 
+                    this.clientesMap.set(cliente.ID, 
+                        new Cliente(cliente.ID, cliente.nombre, cliente.raza, cliente.ubicacion)));
             
-            this.database.data.mercaderes.forEach(mercader => 
-                this.mercaderesMap.set(mercader.ID, 
-                    new Mercader(mercader.ID, mercader.nombre, mercader.tipo, mercader.ubicacion)));
+                this.database.data.mercaderes.forEach(mercader => 
+                    this.mercaderesMap.set(mercader.ID, 
+                        new Mercader(mercader.ID, mercader.nombre, mercader.tipo, mercader.ubicacion)));
 
-            this.database.data.bienes.forEach(bien => 
-                this.bienesMap.set(bien.ID, 
-                    new Bien(bien.ID, bien.nombre, bien.descripcion, bien.material, bien.peso, bien.precio, bien.cantidad)));
+                this.database.data.bienes.forEach(bien => 
+                    this.bienesMap.set(bien.ID, 
+                        new Bien(bien.ID, bien.nombre, bien.descripcion, bien.material, bien.peso, bien.precio, bien.cantidad)));
+            }
+        }else{
+            this.database = new LowSync(new JSONFileSync("BaseDeDatos/Dummy.json"));
+            this.database.read();
+            this.database.data = { bienes: _bienesArray, clientes: _clientesArray, mercaderes: _mercaderesArray };
+            this.database.write();
         }
+        
     }
 
     get clientesMap():Map<number,Cliente>{
