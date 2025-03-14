@@ -6,7 +6,8 @@
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "doc": "typedoc",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "prettier": "prettier --write ."
   },
   "repository": {
     "type": "git",
