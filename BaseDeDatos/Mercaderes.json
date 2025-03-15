@@ -1,0 +1,16 @@
+{
+    "mercaderes": [
+      {
+        "ID": 1,
+        "nombre": "Mercader1",
+        "tipo": "herreros",
+        "ubicacion": "habitacion nº1"
+      },
+      {
+        "ID": 2,
+        "nombre": "Mercader2",
+        "tipo": "escudero",
+        "ubicacion": "habitacion nº2"
+      }
+    ]
+  }

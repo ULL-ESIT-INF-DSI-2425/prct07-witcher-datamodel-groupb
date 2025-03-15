@@ -34,6 +34,11 @@ export default class Bien {
   get nombre() {
     return this._nombre;
   }
+
+  set nombre(nombre:string){
+    this._nombre = nombre;
+  }
+
   /**
    * Getter de la propiedad descripción.
    * @returns Descripción del bien.
@@ -41,6 +46,11 @@ export default class Bien {
   get descripcion() {
     return this._descripcion;
   }
+
+  set descripcion(descripcion:string){
+    this._descripcion = descripcion;
+  }
+
   /**
    * Getter de la propiedad material.
    * @returns Material del bien.
@@ -48,6 +58,11 @@ export default class Bien {
   get material() {
     return this._material;
   }
+
+  set material(material: string) {
+    this._material = material;
+  }
+
   /**
    * Getter de la propiedad peso.
    * @returns Peso del bien.
@@ -55,6 +70,14 @@ export default class Bien {
   get peso() {
     return this._peso;
   }
+
+  set peso(peso: number) {
+    if (peso <= 0) {
+      throw new Error("El peso debe ser un valor positivo.");
+    }
+    this._peso = peso;
+  }
+
   /**
    * Getter de la propiedad precio.
    * @returns Precio del bien.
@@ -62,6 +85,14 @@ export default class Bien {
   get precio() {
     return this._precio;
   }
+
+  set precio(precio: number) {
+    if (precio < 0) {
+      throw new Error("El precio no puede ser negativo.");
+    }
+    this._precio = precio;
+  }
+
   /**
    * Getter de la propiedad cantidad.
    * @returns Cantidad de bienes en stock.
@@ -69,4 +100,12 @@ export default class Bien {
   get cantidad() {
     return this._cantidad;
   }
+
+  set cantidad(cantidad: number) {
+    if (!Number.isInteger(cantidad) || cantidad < 0) {
+      throw new Error("La cantidad debe ser un número entero no negativo.");
+    }
+    this._cantidad = cantidad;
+  }
+  
 }

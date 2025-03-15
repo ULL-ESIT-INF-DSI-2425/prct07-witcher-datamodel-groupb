@@ -27,6 +27,11 @@ export default class Mercader {
   get nombre() {
     return this._nombre;
   }
+
+  set nombre(nombre:string){
+    this._nombre = nombre;
+  }
+
   /**
    * Getter de la propiedad tipo.
    * @returns Tipo de mercader.
@@ -34,11 +39,20 @@ export default class Mercader {
   get tipo() {
     return this._tipo;
   }
+
+  set tipo(tipo:string){
+    this._tipo = tipo;
+  }
+
   /**
    * Getter de la propiedad ubicación.
    * @returns Ubicación del mercader.
    */
   get ubicacion() {
     return this._ubicacion;
+  }
+
+  set ubicacion(ubicacion:string){
+    this._ubicacion = ubicacion;
   }
 }

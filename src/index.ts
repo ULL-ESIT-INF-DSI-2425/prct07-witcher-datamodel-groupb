@@ -1,5 +1,7 @@
 import inquirer from "inquirer";
 import Inventario from "./Inventario.js";
+import GestorClientes from "./GestorClientes.js";
+import GestorMercaderes from "./GestorMercaderes.js";
 
 enum comandosPrincipales {
   Interactuar_bienes = "Gestionar bienes",
@@ -130,9 +132,13 @@ function menuPrincipal(): void {
 
         case comandosPrincipales.Test_Imprimir:
           inventario.ImprimirTest();
+          clientes.ImprimirTest();
+          mercaderes.ImprimirTest();
       }
     });
 }
 
-const inventario: Inventario = new Inventario();
+let inventario: Inventario = new Inventario();
+let clientes: GestorClientes = new GestorClientes();
+let mercaderes: GestorMercaderes = new GestorMercaderes();
 menuPrincipal();

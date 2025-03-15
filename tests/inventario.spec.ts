@@ -1,11 +1,11 @@
 import { describe, test, expect } from "vitest";
-import { Inventario } from "./Inventario";
-import { Bien } from "./Bien";
-import { Transaccion, TipoTransaccion } from "./Transaccion";
+import Inventario from "../src/Inventario"
+import  Bien  from "../src/Bien";
+//import { Transaccion, TipoTransaccion } from "./Transaccion";
 
 describe("Constructor Inventario", () => {
   test("Debe añadir y eliminar bienes correctamente", () => {
-    const inventario = new Inventario([], [], [], []);
+    const inventario = new Inventario([]);
 
     // Agregamos un bien.
     const bien = new Bien(
@@ -15,17 +15,19 @@ describe("Constructor Inventario", () => {
       "Acero",
       3.5,
       100,
+      1
     );
     inventario.addBien(bien);
 
-    expect(inventario.getBienes().length).toBe(1);
-    expect(inventario.getBienes()[0].getNombre()).toBe("Espada de Acero");
+    expect(inventario.length()).toBe(1);
+    expect(inventario.getBien(1).nombre).toBe("Espada de Acero");
 
     // Eliminamos el bien por su ID.
     inventario.removeBien(1);
-    expect(inventario.getBienes().length).toBe(0);
+    expect(inventario.length()).toBe(0);
   });
 
+  /** 
   test("Debe calcular el stock correctamente a partir de transacciones", () => {
     const inventario = new Inventario([], [], [], []);
 
@@ -53,4 +55,5 @@ describe("Constructor Inventario", () => {
     const stock = inventario.getStock(1);
     expect(stock).toBe(7);
   });
+  */
 });

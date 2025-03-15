@@ -28,6 +28,11 @@ export default class Cliente {
   get nombre() {
     return this._nombre;
   }
+  
+  set nombre(nombre:string){
+    this._nombre = nombre;
+  }
+
   /**
    * Getter de la propiedad raza.
    * @returns Raza del cliente.
@@ -35,11 +40,20 @@ export default class Cliente {
   get raza() {
     return this._raza;
   }
+
+  set raza(raza:string){
+    this._raza = raza;
+  }
+  
   /**
    * Getter de la propiedad ubicación.
    * @returns Ubicación actual del cliente.
    */
   get ubicacion() {
     return this._ubicacion;
+  }
+
+  set ubicacion(ubicacion:string){
+    this._ubicacion = ubicacion;
   }
 }
