@@ -57,19 +57,6 @@ export default class Inventario extends Gestor<Bien> {
   }
 
 
-  /**
-   * Eliminar bien de la base de datos
-   * @param ID - ID del bien a eliminar
-   */
-  removeBien(ID: number): void {
-    if (!this.almacenMap.has(ID)) {
-      throw new Error(`Bien con ID ${ID} no encontrado.`);
-    } else {
-      this.almacenMap.delete(ID);
-      this.storeInventario();
-    }
-  }
-
   // TODO: Implementar funciones para consultar información de bienes específicos (ordenación).
   // TODO: Implementar funcion para localizar mercaderes y clientes por su nombre, tipo, raza o ubicación.
   
