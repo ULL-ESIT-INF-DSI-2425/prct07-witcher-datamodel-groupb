@@ -27,6 +27,43 @@ describe("Constructor Inventario", () => {
     expect(inventario.length()).toBe(0);
   });
 
+  test('debería que cada elemento cargado en _almacenMap sea una instancia de Bien', () => {
+    const inventario = new Inventario();
+    const almacenMap = (inventario as any)._almacenMap as Map<number, Bien>;
+    for (const bien of almacenMap.values()) {
+      expect(bien).toBeInstanceOf(Bien);
+    }
+  });
+
+  test('debería crear una instancia de Inventario con un array de bienes personalizado', () => {
+    const bien1 = new Bien(3, 'Espada', 'Espada legendaria', 'Acero', 2, 1500, 10);
+    const bien2 = new Bien(4, 'Escudo', 'Escudo robusto', 'Madera', 3, 800, 5);
+    const bienesArray = [bien1, bien2];
+    
+    // Al pasar un array que no es el dummy se ejecuta la rama else
+    const inventario = new Inventario(bienesArray);
+    expect(inventario).toBeInstanceOf(Inventario);
+    
+    // En esta rama, el _almacenMap no se actualiza, por lo que debe quedar vacío.
+    const almacenMap = (inventario as any)._almacenMap as Map<number, Bien>;
+    expect(almacenMap.size).toBe(0);
+
+    // Se asigna el array personalizado a database.data y se ejecuta write()
+    const databaseData = (inventario as any).database.data;
+    expect(databaseData).toEqual(bienesArray);
+  });
+
+  test('debería crear una instancia de Inventario con un array vacío personalizado', () => {
+    // Probar la rama else pasando un array vacío
+    const inventario = new Inventario([]);
+    expect(inventario).toBeInstanceOf(Inventario);
+    const almacenMap = (inventario as any)._almacenMap as Map<number, Bien>;
+    // Al no haber bienes, _almacenMap debe quedar vacío
+    expect(almacenMap.size).toBe(0);
+    const databaseData = (inventario as any).database.data;
+    expect(databaseData).toEqual([]);
+  });
+
   /** 
   test("Debe calcular el stock correctamente a partir de transacciones", () => {
     const inventario = new Inventario([], [], [], []);

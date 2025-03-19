@@ -5,6 +5,7 @@
     "dist",
   ],
   "compilerOptions": {
+    "types": ["vitest", "node"],
     "target": "ES2024",
     "module": "Node16",
     "rootDir": "./src",
