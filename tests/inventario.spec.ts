@@ -20,7 +20,7 @@ describe("Constructor Inventario", () => {
     inventario.addBien(bien);
 
     expect(inventario.length()).toBe(1);
-    expect(inventario.getBien(1).nombre).toBe("Espada de Acero");
+    expect(inventario.get(1).nombre).toBe("Espada de Acero");
 
     // Eliminamos el bien por su ID.
     inventario.removeBien(1);

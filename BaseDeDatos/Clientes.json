@@ -1,16 +1,14 @@
-{
-    "clientes": [
-      {
-        "ID": 1,
-        "nombre": "Cliente1",
-        "raza": "humano",
-        "ubicacion": "habitacion nº1"
-      },
-      {
-        "ID": 2,
-        "nombre": "Cliente2",
-        "raza": "elfo",
-        "ubicacion": "habitacion nº2"
-      }
-    ]
+[
+  {
+    "ID": 1,
+    "nombre": "Cliente1",
+    "raza": "humano",
+    "ubicacion": "habitacion nº1"
+  },
+  {
+    "ID": 2,
+    "nombre": "Cliente2",
+    "raza": "elfo",
+    "ubicacion": "habitacion nº2"
   }
+]

@@ -1,5 +1,4 @@
-{
-  "bienes": [
+[
     {
       "ID": 1,
       "nombre": "Bien1",
@@ -18,5 +17,5 @@
       "precio": 20,
       "cantidad": 1
     }
-  ]
-}
+]
+

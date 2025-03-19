@@ -1,3 +1,5 @@
+import { Entidad } from "./Interfaces.js";
+
 /**
  * Clase que representa un bien.
  * @param _ID - ID único del bien
@@ -9,7 +11,7 @@
  * @param _cantidad - Cantidad de bienes en stock.
  * @returns Instancia de la clase Bien.
  */
-export default class Bien {
+export default class Bien implements Entidad{
   constructor(
     private _ID: number,
     private _nombre: string,

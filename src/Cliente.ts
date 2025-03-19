@@ -1,3 +1,5 @@
+import { Entidad } from "./Interfaces.js";
+
 /**
  * Clase que representa un cazador de monstruos u otro cliente.
  * @param _ID - ID único del cliente
@@ -6,7 +8,7 @@
  * @param _ubicacion - Ubicación actual del cliente (Ejemplo: Kaer Morhen, Vizima, Novigrado).
  * @returns Instancia de la clase Cliente.
  */
-export default class Cliente {
+export default class Cliente implements Entidad{
   constructor(
     private _ID: number,
     private _nombre: string,

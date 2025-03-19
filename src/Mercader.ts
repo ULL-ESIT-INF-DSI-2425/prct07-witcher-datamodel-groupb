@@ -1,3 +1,5 @@
+import { Entidad } from "./Interfaces.js";
+
 /**
  * Clase que representa un mercader.
  * @param _ID - ID único del mercader
@@ -6,7 +8,7 @@
  * @param _ubicacion - Ubicación del mercader (Ejemplo: Novigrado, Velen, Kaer Trolde).
  * @returns Instancia de la clase Mercader.
  */
-export default class Mercader {
+export default class Mercader implements Entidad{
   constructor(
     private _ID: number,
     private _nombre: string,

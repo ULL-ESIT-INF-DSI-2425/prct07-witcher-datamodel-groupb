@@ -1,18 +1,8 @@
 import Cliente from "./Cliente.js";
+import Gestor from "./Gestor.js";
 
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
-
-/**
- * Tipo de datos que se almacenan en el fichero JSON.
- * Contiene un array de clientes y mercaderes.
- * @param clientes - Array de clientes.
- * @param mercaderes - Array de mercaderes.
- * @returns Objeto de tipo schemaType.
- */
-type schemaType = {
-  clientes: Cliente[];
-};
 
 /**
  * Clase que representa el inventario de la `Posada del Lobo Blanco`.
@@ -27,30 +17,23 @@ type schemaType = {
  *  - Registrar transacciones, como ventas, compras o devoluciones.
  *  - Generar informes con estado del stock, bienes más vendidos y más demandados, total de ingresos y gastos, etc.
  */
-export default class GestorClientes {
-  private database: LowSync<schemaType>;
+export default class GestorClientes extends Gestor<Cliente>{
 
-  private _clientesMap = new Map<number, Cliente>();
+  protected _almacenMap = new Map<number, Cliente>();
 
   constructor(
     _clientesArray: Cliente[] = [new Cliente(-1, "dummy", "cliente dummy", "tests")],
   ) {
-    if (
-        _clientesArray.length === 1 &&
-      _clientesArray[0].nombre === "dummy"
-    ) {
-      this.database = new LowSync(
-        new JSONFileSync("BaseDeDatos/Clientes.json"),
-      );
-      this.database.read();
-
+    
+    if (_clientesArray.length === 1 && _clientesArray[0].nombre === "dummy") {
+      super("BaseDeDatos/Clientes.json");
       if (this.database.data == null) {
         console.log(
           "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
         );
       } else {
-        this.database.data.clientes.forEach((cliente) =>
-          this.clientesMap.set(
+        this.database.data.forEach((cliente) =>
+          this._almacenMap.set(
             cliente.ID,
             new Cliente(
               cliente.ID,
@@ -62,33 +45,10 @@ export default class GestorClientes {
         );
       }
     } else {
-      this.database = new LowSync(new JSONFileSync("BaseDeDatos/Dummy.json"));
-      this.database.read();
-      this.database.data = {
-        clientes: _clientesArray,
-      };
+    super("BaseDeDatos/Dummy.json");
+      this.database.data = _clientesArray;
       this.database.write();
     }
-  }
-
-  get clientesMap(): Map<number, Cliente> {
-    return this._clientesMap;
-  }
-
-
-  public ImprimirTest(): void {
-    this._clientesMap.forEach((element) => {
-      console.log(element.nombre);
-    });
-  }
-
-  /**
-   * Función para almacenar el contenido de los Mapas dentro del fichero json.
-   * data tiene ! para que el compilador confie en que data no está vacío y no se queje.
-   */
-  private storeInventario(): void {
-    this.database.data!.clientes = [...this.clientesMap.values()];
-    this.database.write();
   }
 
   /**
@@ -96,10 +56,10 @@ export default class GestorClientes {
    * @param cliente - Cliente a añadir, su ID debe ser único
    */
   addCliente(cliente: Cliente): void {
-    if (this.clientesMap.has(cliente.ID)) {
+    if (this.almacenMap.has(cliente.ID)) {
       throw new Error(`Error, ID ${cliente.ID} ya está en uso`);
     } else {
-      this.clientesMap.set(cliente.ID, cliente);
+      this._almacenMap.set(cliente.ID, cliente);
       this.storeInventario();
     }
   }
@@ -110,10 +70,10 @@ export default class GestorClientes {
    * @param ID - ID del cliente a eliminar
    */
   removeCliente(ID: number): void {
-    if (!this.clientesMap.has(ID)) {
+    if (!this.almacenMap.has(ID)) {
       throw new Error(`Cliente con ID ${ID} no encontrado.`);
     } else {
-      this.clientesMap.delete(ID);
+      this.almacenMap.delete(ID);
       this.storeInventario();
     }
   }
