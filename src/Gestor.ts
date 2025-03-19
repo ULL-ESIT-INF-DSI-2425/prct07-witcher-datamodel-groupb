@@ -38,6 +38,34 @@ export default abstract class Gestor<T extends Entidad> {
     }
 
 
+    /**
+    * Función para almacenar una nueva entidad en la base de datos
+    * @param entidad - entidad a añadir, su ID debe ser único
+    */
+    add(entidad: T): void {
+        if (this.almacenMap.has(entidad.ID)) {
+            throw new Error(`Error, ID ${entidad.ID} ya está en uso`);
+        } else {
+            this._almacenMap.set(entidad.ID, entidad);
+            this.storeInventario();
+        }
+    }
+
+    /**
+    * Eliminar entidad de la base de datos
+    * @param ID - ID de la entidad a eliminar
+    */
+    remove(ID: number): void {
+        if (!this.almacenMap.has(ID)) {
+            throw new Error(`Entidad con ID ${ID} no encontrado.`);
+        } else {
+            this.almacenMap.delete(ID);
+            this.storeInventario();
+        }
+    }
+
+
+
     public ImprimirTest(): void {
         this._almacenMap.forEach((element) => {
           console.log(element.nombre);

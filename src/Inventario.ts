@@ -58,20 +58,6 @@ export default class Inventario extends Gestor<Bien> {
 
 
   /**
-   * Función para almacenar un nuevo bien en la base de datos
-   * @param bien - Bien a añadir, su ID debe ser único
-   */
-  addBien(bien: Bien): void {
-    if (this.almacenMap.has(bien.ID)) {
-      throw new Error(`Error, ID ${bien.ID} ya está en uso`);
-    } else {
-      this._almacenMap.set(bien.ID, bien);
-      this.storeInventario();
-    }
-  }
-
-
-  /**
    * Eliminar bien de la base de datos
    * @param ID - ID del bien a eliminar
    */

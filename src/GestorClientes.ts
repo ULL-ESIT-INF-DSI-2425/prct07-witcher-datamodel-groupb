@@ -51,31 +51,4 @@ export default class GestorClientes extends Gestor<Cliente>{
     }
   }
 
-  /**
-   * Función para almacenar un nuevo cliente en la base de datos
-   * @param cliente - Cliente a añadir, su ID debe ser único
-   */
-  addCliente(cliente: Cliente): void {
-    if (this.almacenMap.has(cliente.ID)) {
-      throw new Error(`Error, ID ${cliente.ID} ya está en uso`);
-    } else {
-      this._almacenMap.set(cliente.ID, cliente);
-      this.storeInventario();
-    }
-  }
-
-
-  /**
-   * Eliminar cliente de la base de datos
-   * @param ID - ID del cliente a eliminar
-   */
-  removeCliente(ID: number): void {
-    if (!this.almacenMap.has(ID)) {
-      throw new Error(`Cliente con ID ${ID} no encontrado.`);
-    } else {
-      this.almacenMap.delete(ID);
-      this.storeInventario();
-    }
-  }
-
 }

@@ -52,32 +52,4 @@ export default class GestorMercaderes extends Gestor<Mercader>{
     }
   }
 
-
-
-  /**
-   * Función para almacenar un nuevo mercader en la base de datos
-   * @param mercader - Mercader a añadir, su ID debe ser único
-   */
-  addMercader(mercader: Mercader): void {
-    if (this.almacenMap.has(mercader.ID)) {
-      throw new Error(`Error, ID ${mercader.ID} ya está en uso`);
-    } else {
-      this._almacenMap.set(mercader.ID, mercader);
-      this.storeInventario();
-    }
-  }
-
-  /**
-   * Eliminar mercader de la base de datos
-   * @param ID - ID del mercader a eliminar
-   */
-  removeMercader(ID: number): void {
-    if (!this.almacenMap.has(ID)) {
-      throw new Error(`Mercader con ID ${ID} no encontrado.`);
-    } else {
-      this.almacenMap.delete(ID);
-      this.storeInventario();
-    }
-  }
-
 }

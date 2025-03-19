@@ -17,13 +17,13 @@ describe("Constructor Inventario", () => {
       100,
       1
     );
-    inventario.addBien(bien);
+    inventario.add(bien);
 
     expect(inventario.length()).toBe(1);
     expect(inventario.get(1).nombre).toBe("Espada de Acero");
 
     // Eliminamos el bien por su ID.
-    inventario.removeBien(1);
+    inventario.remove(1);
     expect(inventario.length()).toBe(0);
   });
 
