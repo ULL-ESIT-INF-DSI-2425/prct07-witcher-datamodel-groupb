@@ -10,7 +10,7 @@ export default class GestorTransacciones extends Gestor<Transaccion>{
   
     private constructor(_transaccionesArray: Transaccion[]) {
       if (_transaccionesArray.length === 1 && _transaccionesArray[0].ID === -1) {
-        super("BaseDeDatos/transaccions.json");
+        super("BaseDeDatos/transacciones.json");
         if (this.database.data == null) {
           console.log(
             "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
@@ -26,16 +26,16 @@ export default class GestorTransacciones extends Gestor<Transaccion>{
           );
         }
       } else {
-        super("BaseDeDatos/Dummytransaccions.json");
+        super("BaseDeDatos/Dummytransacciones.json");
         this.database.data = _transaccionesArray;
         this.database.write();
         _transaccionesArray.forEach(transaccion => this._almacenMap.set(transaccion.ID, transaccion));
       }
     }
   
-    public static getGestorInstancia(_transaccionsArray: Transaccion[] = [new Transaccion(-1)]): GestorTransacciones {
+    public static getGestorInstancia(_transaccionesArray: Transaccion[] = [new Transaccion(-1)]): GestorTransacciones {
       if (!GestorTransacciones.GestorInstancia) {
-          GestorTransacciones.GestorInstancia = new GestorTransacciones(_transaccionsArray);
+          GestorTransacciones.GestorInstancia = new GestorTransacciones(_transaccionesArray);
       }
       return GestorTransacciones.GestorInstancia;
     }
