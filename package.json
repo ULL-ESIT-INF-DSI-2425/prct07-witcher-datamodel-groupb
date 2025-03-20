@@ -6,7 +6,7 @@
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "doc": "typedoc --skipErrorChecking",
     "test": "vitest run",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest run --coverage --coverage.exclude=src/index.ts",
     "prettier": "prettier --write ."
   },
   "repository": {
