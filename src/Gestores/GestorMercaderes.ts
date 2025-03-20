@@ -1,4 +1,4 @@
-import Mercader from "./Mercader.js";
+import Mercader from "../Entidades/Mercader.js";
 import Gestor from "./Gestor.js";
 
 import { LowSync } from "lowdb";

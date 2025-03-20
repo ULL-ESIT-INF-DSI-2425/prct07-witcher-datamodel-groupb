@@ -1,4 +1,4 @@
-import Bien from "./Bien.js";
+import Bien from "../Entidades/Bien.js";
 import Gestor from "./Gestor.js";
 
 import { LowSync } from "lowdb";

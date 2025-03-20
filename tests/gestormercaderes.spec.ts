@@ -1,6 +1,6 @@
 import { describe, test, expect, afterEach } from "vitest";
-import GestorMercaderes from '../src/GestorMercaderes';
-import Mercader from '../src/Mercader';
+import GestorMercaderes from '../src/Gestores/GestorMercaderes';
+import Mercader from '../src/Entidades/Mercader';
 
 describe('GestorMercaderes', () => {
 

@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
-import Inventario from "./Inventario.js";
-import GestorClientes from "./GestorClientes.js";
-import GestorMercaderes from "./GestorMercaderes.js";
+import Inventario from "./Gestores/Inventario.js";
+import GestorClientes from "./Gestores/GestorClientes.js";
+import GestorMercaderes from "./Gestores/GestorMercaderes.js";
 
 enum comandosPrincipales {
   Interactuar_bienes = "Gestionar bienes",

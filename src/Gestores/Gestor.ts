@@ -1,12 +1,7 @@
-import Cliente from "./Cliente.js";
-import Mercader from "./Mercader.js";
-import Bien from "./Bien.js";
+import { Entidad } from "../Interfaces.js";
 
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
-import { Entidad } from "./Interfaces.js";
-import { resourceUsage } from "process";
-import { resourceLimits } from "worker_threads";
 
 
 export default abstract class Gestor<T extends Entidad> {

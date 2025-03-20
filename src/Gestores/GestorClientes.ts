@@ -1,4 +1,4 @@
-import Cliente from "./Cliente.js";
+import Cliente from "../Entidades/Cliente.js";
 import Gestor from "./Gestor.js";
 
 import { LowSync } from "lowdb";

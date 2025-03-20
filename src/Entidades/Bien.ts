@@ -1,4 +1,4 @@
-import { Entidad } from "./Interfaces.js";
+import { Entidad } from "../Interfaces.js";
 
 /**
  * Clase que representa un bien.
