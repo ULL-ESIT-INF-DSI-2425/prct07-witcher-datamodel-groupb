@@ -50,9 +50,10 @@ export default class Inventario extends Gestor<Bien> {
       }
 
     } else {
-      super("BaseDeDatos/Dummy.json");
+      super("BaseDeDatos/DummyInventario.json");
       this.database.data = _bienesArray;
       this.database.write();
+      _bienesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
   }
 

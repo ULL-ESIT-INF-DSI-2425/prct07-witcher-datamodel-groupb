@@ -46,9 +46,10 @@ export default class GestorMercaderes extends Gestor<Mercader>{
         );
       }
     } else {
-      super("BaseDeDatos/Dummy.json");
+      super("BaseDeDatos/DummyMercaderes.json");
       this.database.data = _mercaderesArray;
       this.database.write();
+      _mercaderesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
   }
 

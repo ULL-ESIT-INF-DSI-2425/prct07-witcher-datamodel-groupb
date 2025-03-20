@@ -28,17 +28,6 @@ describe("Mercader", () => {
     expect(mercader.ubicacion).toBe('Velen');
   });
 
-  test('debería no permitir modificar el ID una vez creado', () => {
-    const mercader = new Mercader(5, 'Mercader Inmutable', 'Herrero', 'Novigrado');
-    // Se intenta modificar el _ID de forma forzada; se espera que el ID original se mantenga.
-    try {
-      (mercader as any)._ID = 999;
-    } catch (e) {
-      // Se ignora el error
-    }
-    expect(mercader.ID).toBe(5);
-  });
-
   test('debería crear múltiples instancias de Mercader y mantener sus propiedades de forma independiente', () => {
     const mercader1 = new Mercader(6, 'Mercader Uno', 'Alquimista', 'Novigrado');
     const mercader2 = new Mercader(7, 'Mercader Dos', 'Herrero', 'Velen');

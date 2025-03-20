@@ -5,6 +5,8 @@ import Bien from "./Bien.js";
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
 import { Entidad } from "./Interfaces.js";
+import { resourceUsage } from "process";
+import { resourceLimits } from "worker_threads";
 
 
 export default abstract class Gestor<T extends Entidad> {
@@ -26,6 +28,16 @@ export default abstract class Gestor<T extends Entidad> {
         } else {
           return this._almacenMap.get(ID)!;
         }
+    }
+
+    public getArray():T[]{
+        let result:T[] = [];
+
+        this._almacenMap.forEach(element => {
+            result.push(element);
+        });
+
+        return result;
     }
 
     /**

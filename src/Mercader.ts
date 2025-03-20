@@ -10,7 +10,7 @@ import { Entidad } from "./Interfaces.js";
  */
 export default class Mercader implements Entidad{
   constructor(
-    private _ID: number,
+    private readonly _ID: number,
     private _nombre: string,
     private _tipo: string,
     private _ubicacion: string,

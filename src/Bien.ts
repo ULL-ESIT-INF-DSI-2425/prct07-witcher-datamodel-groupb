@@ -13,7 +13,7 @@ import { Entidad } from "./Interfaces.js";
  */
 export default class Bien implements Entidad{
   constructor(
-    private _ID: number,
+    private readonly _ID: number,
     private _nombre: string,
     private _descripcion: string,
     private _material: string,

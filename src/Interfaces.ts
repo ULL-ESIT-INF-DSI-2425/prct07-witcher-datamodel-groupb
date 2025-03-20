@@ -1,4 +1,4 @@
 export interface Entidad {
-    ID:number;
+    readonly ID:number;
     nombre: string;
   }

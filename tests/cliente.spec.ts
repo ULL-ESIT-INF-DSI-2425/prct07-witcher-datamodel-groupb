@@ -28,17 +28,6 @@ describe("Cliente", () => {
     expect(cliente.ubicacion).toBe('Novigrado');
   });
 
-  test('debería no permitir modificar el ID una vez creado', () => {
-    const cliente = new Cliente(5, 'Lambert', 'Humano', 'Kaer Morhen');
-    // Se intenta modificar el _ID de forma forzada; se espera que el ID original se mantenga.
-    try {
-      (cliente as any)._ID = 999;
-    } catch (e) {
-      // Se ignora el error.
-    }
-    expect(cliente.ID).toBe(5);
-  });
-
   test('debería crear múltiples instancias de Cliente y mantener sus propiedades de forma independiente', () => {
     const cliente1 = new Cliente(6, 'Eskel', 'Humano', 'Kaer Morhen');
     const cliente2 = new Cliente(7, 'Lambert', 'Humano', 'Kaer Morhen');

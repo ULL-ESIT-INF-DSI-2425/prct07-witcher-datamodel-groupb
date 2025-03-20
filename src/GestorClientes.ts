@@ -45,9 +45,10 @@ export default class GestorClientes extends Gestor<Cliente>{
         );
       }
     } else {
-    super("BaseDeDatos/Dummy.json");
+      super("BaseDeDatos/DummyClientes.json");
       this.database.data = _clientesArray;
       this.database.write();
+      _clientesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
   }
 

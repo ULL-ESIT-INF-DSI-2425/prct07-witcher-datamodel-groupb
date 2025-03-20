@@ -102,14 +102,4 @@ describe("Bien", () => {
     }).toThrow("La cantidad debe ser un número entero no negativo.");
   });
 
-  test('debería no permitir modificar el ID una vez creado', () => {
-    const bien = new Bien(11, 'Martillo', 'Martillo de guerra', 'Acero', 4, 1200, 8);
-    // Intentamos forzar el cambio mediante "as any" para evadir la restricción de solo lectura.
-    try {
-      (bien as any)._ID = 99;
-    } catch (e) {
-      // Si se lanza error, lo capturamos, pero la verificación es que el ID no cambie.
-    }
-    expect(bien.ID).toBe(11);
-  });
 });

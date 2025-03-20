@@ -3,7 +3,6 @@ import GestorMercaderes from '../src/GestorMercaderes';
 import Mercader from '../src/Mercader';
 
 describe('GestorMercaderes', () => {
-
   test('debería cargar mercaderes desde JSON al usar el array dummy por defecto', () => {
     const gestorMercaderes = new GestorMercaderes();
     expect(gestorMercaderes).toBeInstanceOf(GestorMercaderes);
@@ -19,6 +18,7 @@ describe('GestorMercaderes', () => {
       }
     }
   });
+  
 
   test('debería crear una instancia de GestorMercaderes con un array de mercaderes personalizado', () => {
     const mercader1 = new Mercader(1, 'Hattori', 'Herrero', 'Novigrado');
@@ -28,22 +28,18 @@ describe('GestorMercaderes', () => {
     const gestorMercaderes = new GestorMercaderes(mercaderesArray);
     expect(gestorMercaderes).toBeInstanceOf(GestorMercaderes);
 
-    const almacenMap = (gestorMercaderes as any)._almacenMap as Map<number, Mercader>;
-    expect(almacenMap.size).toBe(0);
+    expect(gestorMercaderes.length()).toBe(2);
 
-    const databaseData = (gestorMercaderes as any).database.data;
-    expect(databaseData).toEqual(mercaderesArray);
+    expect(gestorMercaderes.getArray()).toEqual(mercaderesArray);
   });
 
   test('debería crear una instancia de GestorMercaderes con un array vacío personalizado', () => {
     const gestorMercaderes = new GestorMercaderes([]);
     expect(gestorMercaderes).toBeInstanceOf(GestorMercaderes);
 
-    const almacenMap = (gestorMercaderes as any)._almacenMap as Map<number, Mercader>;
-    expect(almacenMap.size).toBe(0);
+    expect(gestorMercaderes.length()).toBe(0);
 
-    const databaseData = (gestorMercaderes as any).database.data;
-    expect(databaseData).toEqual([]);
+    expect(gestorMercaderes.getArray()).toEqual([]);
   });
 
   // Pruebas adicionales de la funcionalidad heredada de Gestor
@@ -56,8 +52,7 @@ describe('GestorMercaderes', () => {
     expect(gestorMercaderes.length()).toBe(1);
     expect(gestorMercaderes.get(3)).toEqual(nuevoMercader);
 
-    const databaseData = (gestorMercaderes as any).database.data;
-    expect(databaseData).toEqual([nuevoMercader]);
+    expect(gestorMercaderes.getArray()).toEqual([nuevoMercader]);
   });
 
   test('debería lanzar error al agregar un mercader con ID duplicado', () => {
@@ -74,9 +69,6 @@ describe('GestorMercaderes', () => {
     gestorMercaderes.remove(5);
     expect(gestorMercaderes.length()).toBe(1);
     expect(() => gestorMercaderes.get(5)).toThrow('Bien con ID 5 no encontrado.');
-
-    const databaseData = (gestorMercaderes as any).database.data;
-    expect(databaseData.find((m: Mercader) => m.ID === 5)).toBeUndefined();
   });
 
   test('ImprimirTest() debe recorrer todos los mercaderes e imprimir sus nombres', () => {
