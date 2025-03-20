@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import Mercader from "../src/Entidades/Mercader";
+import Mercader from "../../src/Entidades/Mercader";
 
 describe("Mercader", () => {
   test("Los getters deben devolver los valores asignados", () => {

@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import Bien from "../src/Entidades/Bien";
+import Bien from "../../src/Entidades/Bien";
 
 describe("Bien", () => {
   test("Los getters deben devolver los valores asignados", () => {

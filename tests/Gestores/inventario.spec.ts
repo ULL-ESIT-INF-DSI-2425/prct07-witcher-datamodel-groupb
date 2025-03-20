@@ -1,6 +1,6 @@
 import { describe, test, expect, afterEach } from "vitest";
-import Inventario from "../src/Gestores/Inventario"
-import  Bien  from "../src/Entidades/Bien";
+import Inventario from "../../src/Gestores/Inventario"
+import  Bien  from "../../src/Entidades/Bien";
 //import { Transaccion, TipoTransaccion } from "./Transaccion";
 
 describe("Constructor Inventario", () => {
