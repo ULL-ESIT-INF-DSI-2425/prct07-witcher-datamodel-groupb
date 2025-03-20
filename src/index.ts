@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+
 import Inventario from "./Gestores/Inventario.js";
 import GestorClientes from "./Gestores/GestorClientes.js";
 import GestorMercaderes from "./Gestores/GestorMercaderes.js";
@@ -41,8 +42,7 @@ function promptInteracturarMercaderes(): void {
     .then((answers) => {
       switch (answers["Comandos mercaderes"]) {
         case comandosProveedores.nuevo_proveedor:
-          console.log("LLamada a crear proveedor");
-          menuPrincipal();
+          mercaderes.crear();
           break;
         case comandosProveedores.proveedor_existente:
           console.log("LLamada a modificar proveedor");
@@ -67,8 +67,7 @@ function promptInteracturarBienes(): void {
     .then((answers) => {
       switch (answers["Comandos bienes"]) {
         case comandosBienes.nuevo_bien:
-          console.log("Llamada a crear bien");
-          menuPrincipal();
+          inventario.crear();
           break;
         case comandosBienes.bien_existente:
           console.log("Llamada a modificar bien");
@@ -93,8 +92,8 @@ function promptInteracturarClientes(): void {
     .then((answers) => {
       switch (answers["Comandos clientes"]) {
         case comandosClientes.nuevo_cliente:
-          console.log("Llamada a crear Cliente");
-          menuPrincipal();
+          clientes.crear();
+          //menuPrincipal();
           break;
         case comandosClientes.cliente_existente:
           console.log("Llamada a modificar cliente");

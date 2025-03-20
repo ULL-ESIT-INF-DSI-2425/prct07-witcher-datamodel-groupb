@@ -10,5 +10,11 @@
     "nombre": "Cliente2",
     "raza": "elfo",
     "ubicacion": "habitacion nº2"
+  },
+  {
+    "ID": 8,
+    "nombre": "borrar",
+    "raza": "si",
+    "ubicacion": "aqui"
   }
 ]

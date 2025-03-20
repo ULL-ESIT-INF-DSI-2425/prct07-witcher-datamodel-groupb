@@ -1,4 +1,4 @@
-import { Entidad } from "../Interfaces.js";
+import { Entidad } from "./Entidad.js";
 
 /**
  * Clase que representa un mercader.
@@ -15,6 +15,16 @@ export default class Mercader implements Entidad{
     private _tipo: string,
     private _ubicacion: string,
   ) {}
+
+  toJSON(): Record<string, number|string> {
+    return {
+      ID: this._ID,
+      nombre: this._nombre,
+      tipo: this._tipo,
+      ubicacion: this._ubicacion,
+    };
+  }
+  
   /**
    * Getter de la propiedad ID.
    * @returns ID del mercader.

@@ -1,4 +1,4 @@
-import { Entidad } from "../Interfaces.js";
+import { Entidad } from "../Entidades/Entidad.js";
 
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
@@ -42,7 +42,9 @@ export default abstract class Gestor<T extends Entidad> {
     * data tiene ! para que el compilador confie en que data no está vacío y no se queje.
     */
     protected storeInventario(): void {
-        this.database.data = [...this._almacenMap.values()];
+        this.database.data = [...this._almacenMap.values()].map(obj =>
+            JSON.parse(JSON.stringify(obj))
+        );
         this.database.write();
     }
 

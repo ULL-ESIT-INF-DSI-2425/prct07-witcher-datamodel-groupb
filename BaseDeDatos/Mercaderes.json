@@ -1,20 +1,20 @@
 [
   {
-    "_ID": 1,
-    "_nombre": "Mercader1",
-    "_tipo": "herreros",
-    "_ubicacion": "habitacion nº1"
+    "ID": 1,
+    "nombre": "Mercader1",
+    "tipo": "herreros",
+    "ubicacion": "habitacion nº1"
   },
   {
-    "_ID": 2,
-    "_nombre": "Mercader2",
-    "_tipo": "escudero",
-    "_ubicacion": "habitacion nº2"
+    "ID": 2,
+    "nombre": "Mercader2",
+    "tipo": "escudero",
+    "ubicacion": "habitacion nº2"
   },
   {
-    "_ID": 4,
-    "_nombre": "Mercader Y",
-    "_tipo": "Herrero",
-    "_ubicacion": "Novigrado"
+    "ID": 4,
+    "nombre": "Mercader Y",
+    "tipo": "Herrero",
+    "ubicacion": "Novigrado"
   }
 ]

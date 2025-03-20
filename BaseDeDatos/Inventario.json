@@ -1,21 +1,20 @@
 [
-    {
-      "ID": 1,
-      "nombre": "Bien1",
-      "descripcion": "Primer bien",
-      "material": "hierro",
-      "peso": 10,
-      "precio": 50,
-      "cantidad": 2
-    },
-    {
-      "ID": 2,
-      "nombre": "Bien2",
-      "descripcion": "Segundo bien",
-      "material": "madera",
-      "peso": 5,
-      "precio": 20,
-      "cantidad": 1
-    }
+  {
+    "ID": 1,
+    "nombre": "Bien1",
+    "descripcion": "Primer bien",
+    "material": "hierro",
+    "peso": 10,
+    "precio": 50,
+    "cantidad": 2
+  },
+  {
+    "ID": 2,
+    "nombre": "Bien2",
+    "descripcion": "Segundo bien",
+    "material": "madera",
+    "peso": 5,
+    "precio": 20,
+    "cantidad": 1
+  }
 ]
-

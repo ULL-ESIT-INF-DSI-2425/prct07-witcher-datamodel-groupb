@@ -1,4 +1,4 @@
-import { Entidad } from "../Interfaces.js";
+import { Entidad } from "./Entidad.js";
 
 /**
  * Clase que representa un bien.
@@ -21,6 +21,18 @@ export default class Bien implements Entidad{
     private _precio: number,
     private _cantidad: number,
   ) {}
+
+  toJSON(): Record<string, string|number> {
+    return {
+      ID: this._ID,
+      nombre: this._nombre,
+      descripcion: this._descripcion,
+      material: this._material,
+      peso: this._peso,
+      precio: this._precio,
+      cantidad: this._cantidad
+    };
+  }
 
   /**
    * Getter de la propiedad ID.

@@ -1,6 +1,7 @@
 {
   "name": "prct-witcher-groupb",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
@@ -35,6 +36,5 @@
     "typedoc": "^0.27.7",
     "typescript-eslint": "^8.23.0",
     "vitest": "^3.0.6"
-  },
-  "type": "module"
+  }
 }

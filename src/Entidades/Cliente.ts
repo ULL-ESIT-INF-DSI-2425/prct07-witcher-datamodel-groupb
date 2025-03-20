@@ -1,4 +1,4 @@
-import { Entidad } from "../Interfaces.js";
+import { Entidad } from "./Entidad.js";
 
 /**
  * Clase que representa un cazador de monstruos u otro cliente.
@@ -15,6 +15,15 @@ export default class Cliente implements Entidad{
     private _raza: string,
     private _ubicacion: string,
   ) {}
+
+  toJSON(): Record<string, number|string> {
+    return {
+      ID: this._ID,
+      nombre: this._nombre,
+      raza: this._raza,
+      ubicacion: this._ubicacion,
+    };
+  }
 
   /**
    * Getter de la propiedad ID.

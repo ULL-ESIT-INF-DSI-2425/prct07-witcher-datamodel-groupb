@@ -8,6 +8,7 @@
     "types": ["vitest", "node"],
     "target": "ES2024",
     "module": "Node16",
+    "skipLibCheck": true,
     "rootDir": "./src",
     "declaration": true,
     "outDir": "./dist",
