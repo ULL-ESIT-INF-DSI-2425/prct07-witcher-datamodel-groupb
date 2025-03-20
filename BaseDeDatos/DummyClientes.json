@@ -1,14 +1,14 @@
 [
   {
-    "_ID": 7,
-    "_nombre": "Lambert",
-    "_raza": "Humano",
-    "_ubicacion": "Kaer Morhen"
+    "ID": 7,
+    "nombre": "Lambert",
+    "raza": "Humano",
+    "ubicacion": "Kaer Morhen"
   },
   {
-    "_ID": 8,
-    "_nombre": "Eskel",
-    "_raza": "Humano",
-    "_ubicacion": "Kaer Morhen"
+    "ID": 8,
+    "nombre": "Eskel",
+    "raza": "Humano",
+    "ubicacion": "Kaer Morhen"
   }
 ]

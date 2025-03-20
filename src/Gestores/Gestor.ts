@@ -79,7 +79,8 @@ export default abstract class Gestor<T extends Entidad> {
 
     public ImprimirTest(): void {
         this._almacenMap.forEach((element) => {
-          console.log(element.nombre);
+            console.log(element.ID);
+            if(element && 'nombre' in element) console.log(element.nombre);
         });
     }
 

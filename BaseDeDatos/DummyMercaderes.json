@@ -1,14 +1,14 @@
 [
   {
-    "_ID": 7,
-    "_nombre": "Hattori",
-    "_tipo": "Herrero",
-    "_ubicacion": "Novigrado"
+    "ID": 7,
+    "nombre": "Hattori",
+    "tipo": "Herrero",
+    "ubicacion": "Novigrado"
   },
   {
-    "_ID": 8,
-    "_nombre": "Fergus Graem",
-    "_tipo": "Mercader General",
-    "_ubicacion": "Velen"
+    "ID": 8,
+    "nombre": "Fergus Graem",
+    "tipo": "Mercader General",
+    "ubicacion": "Velen"
   }
 ]
