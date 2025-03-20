@@ -1,11 +1,17 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, afterEach } from "vitest";
 import Inventario from "../src/Inventario"
 import  Bien  from "../src/Bien";
 //import { Transaccion, TipoTransaccion } from "./Transaccion";
 
 describe("Constructor Inventario", () => {
+
+  afterEach(() => {
+      Inventario.resetInstance();
+    });
+
+
   test("Debe añadir y eliminar bienes correctamente", () => {
-    const inventario = new Inventario([]);
+    const inventario = Inventario.getGestorInstancia([]);
 
     // Agregamos un bien.
     const bien = new Bien(
@@ -28,7 +34,7 @@ describe("Constructor Inventario", () => {
   });
 
   test('debería que cada elemento cargado en _almacenMap sea una instancia de Bien', () => {
-    const inventario = new Inventario();
+    const inventario = Inventario.getGestorInstancia();
     const almacenMap = (inventario as any)._almacenMap as Map<number, Bien>;
     for (const bien of almacenMap.values()) {
       expect(bien).toBeInstanceOf(Bien);
@@ -40,7 +46,7 @@ describe("Constructor Inventario", () => {
     const bien2 = new Bien(4, 'Escudo', 'Escudo robusto', 'Madera', 3, 800, 5);
     const bienesArray = [bien1, bien2];
     
-    const inventario = new Inventario(bienesArray);
+    const inventario = Inventario.getGestorInstancia(bienesArray);
     expect(inventario).toBeInstanceOf(Inventario);
     
     expect(inventario.length()).toBe(2);
@@ -50,7 +56,7 @@ describe("Constructor Inventario", () => {
 
   test('debería crear una instancia de Inventario con un array vacío personalizado', () => {
     // Probar la rama else pasando un array vacío
-    const inventario = new Inventario([]);
+    const inventario = Inventario.getGestorInstancia([]);
     expect(inventario).toBeInstanceOf(Inventario);
 
     // Al no haber bienes, _almacenMap debe quedar vacío

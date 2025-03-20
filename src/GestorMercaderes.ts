@@ -3,6 +3,7 @@ import Gestor from "./Gestor.js";
 
 import { LowSync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
+import GestorClientes from "./GestorClientes.js";
 
 
 /**
@@ -21,10 +22,9 @@ import { JSONFileSync } from "lowdb/node";
 export default class GestorMercaderes extends Gestor<Mercader>{
 
   protected _almacenMap = new Map<number, Mercader>();
+  private static GestorInstancia?: GestorMercaderes;
 
-  constructor(
-    _mercaderesArray: Mercader[] = [new Mercader(-1, "dummy", "mercader dummy", "tests")],
-  ) {
+  private constructor(_mercaderesArray: Mercader[]) {
     if (_mercaderesArray.length === 1 && _mercaderesArray[0].nombre === "dummy") {
       super("BaseDeDatos/Mercaderes.json");
 
@@ -52,5 +52,16 @@ export default class GestorMercaderes extends Gestor<Mercader>{
       _mercaderesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
   }
+
+    public static getGestorInstancia(_mercaderesArray: Mercader[] = [new Mercader(-1, "dummy", "mercader dummy", "tests")]): GestorMercaderes {
+        if (!GestorMercaderes.GestorInstancia) {
+            GestorMercaderes.GestorInstancia = new GestorMercaderes(_mercaderesArray);
+        }
+        return GestorMercaderes.GestorInstancia;
+    }
+
+    static resetInstance():void {
+        GestorMercaderes.GestorInstancia = undefined;
+    }
 
 }

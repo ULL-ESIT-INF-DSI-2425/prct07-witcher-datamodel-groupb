@@ -20,11 +20,9 @@ import { JSONFileSync } from "lowdb/node";
 export default class GestorClientes extends Gestor<Cliente>{
 
   protected _almacenMap = new Map<number, Cliente>();
+  private static GestorInstancia?: GestorClientes;
 
-  constructor(
-    _clientesArray: Cliente[] = [new Cliente(-1, "dummy", "cliente dummy", "tests")],
-  ) {
-    
+  private constructor(_clientesArray: Cliente[]) {
     if (_clientesArray.length === 1 && _clientesArray[0].nombre === "dummy") {
       super("BaseDeDatos/Clientes.json");
       if (this.database.data == null) {
@@ -50,6 +48,17 @@ export default class GestorClientes extends Gestor<Cliente>{
       this.database.write();
       _clientesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
+  }
+
+  public static getGestorInstancia(_clientesArray: Cliente[] = [new Cliente(-1, "dummy", "cliente dummy", "tests")]): GestorClientes {
+    if (!GestorClientes.GestorInstancia) {
+        GestorClientes.GestorInstancia = new GestorClientes(_clientesArray);
+    }
+    return GestorClientes.GestorInstancia;
+  }
+
+  static resetInstance():void {
+    GestorClientes.GestorInstancia = undefined;
   }
 
 }

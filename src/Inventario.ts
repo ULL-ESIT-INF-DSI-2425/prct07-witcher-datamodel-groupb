@@ -20,10 +20,9 @@ import { JSONFileSync } from "lowdb/node";
 export default class Inventario extends Gestor<Bien> {
 
   protected _almacenMap = new Map<number, Bien>();
+  private static GestorInstancia?: Inventario;
 
-  constructor(
-    _bienesArray: Bien[] = [new Bien(-1,"dummy", "Bien dummy", "vacio", 0, 0, 0)],
-  ) {
+  private constructor(_bienesArray: Bien[]) {
     if (
       _bienesArray.length === 1 && _bienesArray[0].nombre === "dummy") {
         super("BaseDeDatos/Inventario.json");
@@ -56,6 +55,17 @@ export default class Inventario extends Gestor<Bien> {
       _bienesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
     }
   }
+
+    public static getGestorInstancia(_bienesArray: Bien[] = [new Bien(-1,"dummy", "Bien dummy", "vacio", 0, 0, 0)]): Inventario {
+        if (!Inventario.GestorInstancia) {
+            Inventario.GestorInstancia = new Inventario(_bienesArray);
+        }
+        return Inventario.GestorInstancia;
+    }
+
+    static resetInstance():void {
+        Inventario.GestorInstancia = undefined;
+    }
 
 
   // TODO: Implementar funciones para consultar información de bienes específicos (ordenación).

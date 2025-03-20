@@ -12,12 +12,14 @@ import { resourceLimits } from "worker_threads";
 export default abstract class Gestor<T extends Entidad> {
     protected database: LowSync<T[]>;
     protected _almacenMap = new Map<number, T>();
+
+    //abstract resetInstance():void;
   
     constructor(jsonPath: string) {
         this.database = new LowSync(new JSONFileSync(jsonPath));
         this.database.read();
     }
-
+    
     get almacenMap(): Map<number, T> {
         return this._almacenMap;
     }
