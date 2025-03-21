@@ -1,1 +1,31 @@
-[]
+[
+  {
+    "ID": 7,
+    "fecha": "2025-04-23T18:25:43.511Z",
+    "bienes": [
+      {
+        "bien": {
+          "ID": 1,
+          "nombre": "Bien1",
+          "descripcion": "Primer bien",
+          "material": "hierro",
+          "peso": 10,
+          "precio": 50
+        },
+        "cantidad": 3
+      },
+      {
+        "bien": {
+          "ID": 2,
+          "nombre": "Bien2",
+          "descripcion": "Segundo bien",
+          "material": "madera",
+          "peso": 5,
+          "precio": 20
+        },
+        "cantidad": 5
+      }
+    ],
+    "total": 250
+  }
+]

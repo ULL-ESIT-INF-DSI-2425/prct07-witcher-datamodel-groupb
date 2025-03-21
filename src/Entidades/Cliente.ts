@@ -16,6 +16,10 @@ export default class Cliente implements Entidad {
     private _ubicacion: string,
   ) {}
 
+  /**
+   * Método que devuelve un JSON con los detalles del cliente.
+   * @returns Record\<string, number | string\> - JSON con detalles del cliente.
+   */
   toJSON(): Record<string, number | string> {
     return {
       ID: this._ID,
@@ -40,6 +44,10 @@ export default class Cliente implements Entidad {
     return this._nombre;
   }
 
+  /**
+   * Setter de la propiedad nombre.
+   * @param nombre - Nombre del cliente.
+   */
   set nombre(nombre: string) {
     this._nombre = nombre;
   }
@@ -52,6 +60,10 @@ export default class Cliente implements Entidad {
     return this._raza;
   }
 
+  /**
+   * Setter de la propiedad raza.
+   * @param raza - Raza del cliente.
+   */
   set raza(raza: string) {
     this._raza = raza;
   }
@@ -64,6 +76,10 @@ export default class Cliente implements Entidad {
     return this._ubicacion;
   }
 
+  /**
+   * Setter de la propiedad ubicación.
+   * @param ubicacion - Ubicación actual del cliente.
+   */
   set ubicacion(ubicacion: string) {
     this._ubicacion = ubicacion;
   }

@@ -1,8 +1,19 @@
 import Transaccion from "../Entidades/Transaccion.js";
 import Gestor from "./Gestor.js";
-
 import inquirer from "inquirer";
 
+/**
+ * Clase que gestiona las transacciones realizadas en la `Posada del Lobo Blanco`.
+ * Extiende de la clase `Gestor`. Contiene un mapa de transacciones.
+ * Los datos se almacenan en un fichero JSON.
+ * Entre sus funciones están:
+ *  - Crear una transacción.
+ *  - Añadir una transacción.
+ *  - Eliminar una transacción.
+ *  - Consultar las ventas.
+ *  - Consultar las compras.
+ *  - Consultar las devoluciones.
+ */
 export default class GestorTransacciones extends Gestor<Transaccion> {
   protected _almacenMap = new Map<number, Transaccion>();
   private static GestorInstancia?: GestorTransacciones;

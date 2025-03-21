@@ -6,17 +6,25 @@ export default abstract class Gestor<T extends Entidad> {
   protected database: LowSync<T[]>;
   protected _almacenMap = new Map<number, T>();
 
-  //abstract resetInstance():void;
+  // abstract resetInstance():void;
 
   constructor(jsonPath: string) {
     this.database = new LowSync(new JSONFileSync(jsonPath));
     this.database.read();
   }
 
+  /**
+   * Getter de la propiedad `database`.
+   * @returns LowSync - Objeto LowDB que administra el fichero json
+   */
   get almacenMap(): Map<number, T> {
     return this._almacenMap;
   }
 
+  /**
+   * Getter de la propiedad `almacenMap`.
+   * @returns Map - Mapa con los elementos almacenados
+   */
   public get(ID: number): T {
     if (!this.almacenMap.has(ID)) {
       throw new Error(`Bien con ID ${ID} no encontrado.`);
@@ -76,6 +84,11 @@ export default abstract class Gestor<T extends Entidad> {
     }
   }
 
+  /**
+   * Función para imprimir el contenido del Mapa `almacenMap`.
+   * Se usa para comprobar que los datos se han almacenado correctamente.
+   * @returns void
+   */
   public ImprimirTest(): void {
     this._almacenMap.forEach((element) => {
       console.log(element.ID);
@@ -83,6 +96,10 @@ export default abstract class Gestor<T extends Entidad> {
     });
   }
 
+  /**
+   * Función para obtener el número de elementos en el Mapa `almacenMap`.
+   * @returns number - Número de elementos en el Mapa
+   */
   public length(): number {
     return this.almacenMap.size;
   }

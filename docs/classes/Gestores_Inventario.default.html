@@ -89,29 +89,16 @@
           <div class="tsd-comment tsd-typography">
             <p>
               Clase que representa el inventario de la
-              <code>Posada del Lobo Blanco</code>. Contiene un mapa de bienes,
-              clientes y mercaderes. Los datos se almacenan en un fichero JSON.
-              Entre sus funciones están:
+              <code>Posada del Lobo Blanco</code>. Contiene un mapa de bienes
+              almacenados tal que &lt;ID, ElementoAlmacen{Bien, cantidad}&gt;.
+              Los datos se almacenan en un fichero JSON. Entre sus funciones
+              están:
             </p>
             <ul>
-              <li>Añadir un cliente, mercader o bien.</li>
-              <li>Eliminar un cliente, mercader o bien.</li>
-              <li>Consultar información de bienes específicos.</li>
-              <li>
-                Localizar mercaderes y clientes por su nombre, tipo, raza o
-                ubicación.
-              </li>
-              <li>
-                Llevar el control automatizado del stock, gestionando la
-                cantidad de bienes disponibles.
-              </li>
-              <li>
-                Registrar transacciones, como ventas, compras o devoluciones.
-              </li>
-              <li>
-                Generar informes con estado del stock, bienes más vendidos y más
-                demandados, total de ingresos y gastos, etc.
-              </li>
+              <li>Crear un bien.</li>
+              <li>Añadir un bien.</li>
+              <li>Eliminar un bien.</li>
+              <li>Consultar el inventario.</li>
             </ul>
           </div>
           <div class="tsd-comment tsd-typography"></div>
@@ -121,8 +108,8 @@
             <li>
               Defined in
               <a
-                href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L26"
-                >Gestores/Inventario.ts:26</a
+                href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L17"
+                >Gestores/Inventario.ts:17</a
               >
             </li>
           </ul>
@@ -256,7 +243,7 @@
                 ><span class="tsd-signature-type">number</span
                 ><span class="tsd-signature-symbol">,</span>
                 <a
-                  href="../types/Gestores_Inventario.ElementoAlmacen.html"
+                  href="../types/Entidades_ElementoAlmacen.ElementoAlmacen.html"
                   class="tsd-signature-type tsd-kind-type-alias"
                   >ElementoAlmacen</a
                 ><span class="tsd-signature-symbol">&gt;</span
@@ -267,8 +254,8 @@
                   <li>
                     Defined in
                     <a
-                      href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L27"
-                      >Gestores/Inventario.ts:27</a
+                      href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L18"
+                      >Gestores/Inventario.ts:18</a
                     >
                   </li>
                 </ul>
@@ -318,16 +305,24 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
+                    <div class="tsd-comment tsd-typography">
+                      <p>
+                        Método que crea un bien. Se usa inquier para preguntar
+                        al usuario los datos del bien.
+                      </p>
+                    </div>
                     <h4 class="tsd-returns-title">
                       Returns <span class="tsd-signature-type">void</span>
                     </h4>
+                    <p>void</p>
+                    <div class="tsd-comment tsd-typography"></div>
                     <aside class="tsd-sources">
                       <ul>
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L87"
-                            >Gestores/Inventario.ts:87</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L95"
+                            >Gestores/Inventario.ts:95</a
                           >
                         </li>
                       </ul>
@@ -365,16 +360,25 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
+                    <div class="tsd-comment tsd-typography">
+                      <p>
+                        Método que imprime el contenido del inventario. Se usa
+                        para comprobar que los datos se han almacenado
+                        correctamente.
+                      </p>
+                    </div>
                     <h4 class="tsd-returns-title">
                       Returns <span class="tsd-signature-type">void</span>
                     </h4>
+                    <p>void</p>
+                    <div class="tsd-comment tsd-typography"></div>
                     <aside class="tsd-sources">
                       <ul>
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L197"
-                            >Gestores/Inventario.ts:197</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L210"
+                            >Gestores/Inventario.ts:210</a
                           >
                         </li>
                       </ul>
@@ -425,6 +429,12 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
+                    <div class="tsd-comment tsd-typography">
+                      <p>
+                        Getter de la propiedad <code>almacenMap</code> que
+                        devuelve el inventario.
+                      </p>
+                    </div>
                     <div class="tsd-parameters">
                       <h4 class="tsd-parameters-title">Parameters</h4>
                       <ul class="tsd-parameter-list">
@@ -452,13 +462,15 @@
                         >default</a
                       >
                     </h4>
+                    <p>Map - Mapa con los elementos almacenados.</p>
+                    <div class="tsd-comment tsd-typography"></div>
                     <aside class="tsd-sources">
                       <ul>
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L74"
-                            >Gestores/Inventario.ts:74</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L75"
+                            >Gestores/Inventario.ts:75</a
                           >
                         </li>
                       </ul>
@@ -497,16 +509,20 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
+                    <div class="tsd-comment tsd-typography">
+                      <p>Método que resetea la instancia del inventario.</p>
+                    </div>
                     <h4 class="tsd-returns-title">
                       Returns <span class="tsd-signature-type">void</span>
                     </h4>
+                    <div class="tsd-comment tsd-typography"></div>
                     <aside class="tsd-sources">
                       <ul>
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/40827bae7ed55882a65175822a8651f56ceb6a4f/src/Gestores/Inventario.ts#L83"
-                            >Gestores/Inventario.ts:83</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/2d8ae046a497ca0e20c15b9676ba659786f7616b/src/Gestores/Inventario.ts#L87"
+                            >Gestores/Inventario.ts:87</a
                           >
                         </li>
                       </ul>

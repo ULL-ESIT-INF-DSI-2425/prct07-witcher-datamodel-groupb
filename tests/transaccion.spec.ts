@@ -4,10 +4,10 @@ import { describe, test, expect } from "vitest";
 describe("Transaccion", () => {
   test("Tests vacios para poder ejecutar el resto", () => {});
   /**
-  test("Los getters deben devolver los valores asignados", () => {
+  test("Los getters deben devolver los valores asignados", () =\> \{
     const bienes = [
-      { bienId: 1, cantidad: 5 },
-      { bienId: 2, cantidad: 3 },
+      \{ bienId: 1, cantidad: 5 \},
+      \{ bienId: 2, cantidad: 3 \},
     ];
     const fecha = new Date("2023-04-01");
     const transaccion = new Transaccion(
@@ -23,6 +23,6 @@ describe("Transaccion", () => {
     expect(transaccion.getCantidad()).toBe(500);
     expect(transaccion.getTipo()).toBe(TipoTransaccion.Compra);
     expect(transaccion.getClienteId()).toBe(100);
-  });
+  \});
    */
 });

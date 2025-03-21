@@ -71,14 +71,14 @@ describe("Constructor Inventario", () => {
   });
 
   /** 
-  test("Debe calcular el stock correctamente a partir de transacciones", () => {
+  test("Debe calcular el stock correctamente a partir de transacciones", () =\> \{
     const inventario = new Inventario([], [], [], []);
 
     // Simulamos transacciones para el bien con ID 1:
     // Compra de 10 unidades.
     const compra = new Transaccion(
       new Date(),
-      [{ idBien: 1, cantidad: 10 }],
+      [\{ idBien: 1, cantidad: 10 \}],
       500,
       TipoTransaccion.Compra,
       100,
@@ -86,7 +86,7 @@ describe("Constructor Inventario", () => {
     // Venta de 3 unidades.
     const venta = new Transaccion(
       new Date(),
-      [{ idBien: 1, cantidad: 3 }],
+      [\{ idBien: 1, cantidad: 3 \}],
       150,
       TipoTransaccion.Venta,
       200,
@@ -97,6 +97,6 @@ describe("Constructor Inventario", () => {
 
     const stock = inventario.getStock(1);
     expect(stock).toBe(7);
-  });
+  \});
   */
 });

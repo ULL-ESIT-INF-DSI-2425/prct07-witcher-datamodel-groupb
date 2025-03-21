@@ -20,6 +20,10 @@ export default class Bien implements Entidad {
     private _precio: number,
   ) {}
 
+  /**
+   * Método que devuelve una cadena con toda la información del bien.
+   * @returns String - Cadena con la información del bien.
+   */
   toJSON(): Record<string, string | number> {
     return {
       ID: this._ID,
@@ -38,6 +42,7 @@ export default class Bien implements Entidad {
   get ID() {
     return this._ID;
   }
+
   /**
    * Getter de la propiedad nombre.
    * @returns Nombre del bien.
@@ -46,6 +51,10 @@ export default class Bien implements Entidad {
     return this._nombre;
   }
 
+  /**
+   * Setter de la propiedad nombre.
+   * @param nombre - Nombre del bien.
+   */
   set nombre(nombre: string) {
     this._nombre = nombre;
   }
@@ -58,6 +67,10 @@ export default class Bien implements Entidad {
     return this._descripcion;
   }
 
+  /**
+   * Setter de la propiedad descripción.
+   * @param descripcion - Descripción del bien.
+   */
   set descripcion(descripcion: string) {
     this._descripcion = descripcion;
   }
@@ -70,6 +83,10 @@ export default class Bien implements Entidad {
     return this._material;
   }
 
+  /**
+   * Setter de la propiedad material.
+   * @param material - Material del bien.
+   */
   set material(material: string) {
     this._material = material;
   }
@@ -82,6 +99,10 @@ export default class Bien implements Entidad {
     return this._peso;
   }
 
+  /**
+   * Setter de la propiedad peso.
+   * @param peso - Peso del bien.
+   */
   set peso(peso: number) {
     if (peso <= 0) {
       throw new Error("El peso debe ser un valor positivo.");
@@ -97,6 +118,11 @@ export default class Bien implements Entidad {
     return this._precio;
   }
 
+  /**
+   * Setter de la propiedad precio.
+   * @param precio - Precio del bien.
+   * @throws Error si el precio es negativo.
+   */
   set precio(precio: number) {
     if (precio < 0) {
       throw new Error("El precio no puede ser negativo.");

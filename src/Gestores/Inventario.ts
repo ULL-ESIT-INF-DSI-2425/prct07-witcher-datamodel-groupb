@@ -2,26 +2,17 @@ import Bien from "../Entidades/Bien.js";
 import inquirer from "inquirer";
 import { JSONFileSync } from "lowdb/node";
 import { LowSync } from "lowdb";
-// import { LowSync } from "lowdb";
-// import { JSONFileSync } from "lowdb/node";
-
-export type ElementoAlmacen = {
-  bien: Bien;
-  cantidad: number;
-};
+import { ElementoAlmacen } from "../Entidades/ElementoAlmacen.js";
 
 /**
  * Clase que representa el inventario de la `Posada del Lobo Blanco`.
- * Contiene un mapa de bienes, clientes y mercaderes.
+ * Contiene un mapa de bienes almacenados tal que \<ID, ElementoAlmacen\{Bien, cantidad\}\>.
  * Los datos se almacenan en un fichero JSON.
  * Entre sus funciones están:
- *  - Añadir un cliente, mercader o bien.
- *  - Eliminar un cliente, mercader o bien.
- *  - Consultar información de bienes específicos.
- *  - Localizar mercaderes y clientes por su nombre, tipo, raza o ubicación.
- *  - Llevar el control automatizado del stock, gestionando la cantidad de bienes disponibles.
- *  - Registrar transacciones, como ventas, compras o devoluciones.
- *  - Generar informes con estado del stock, bienes más vendidos y más demandados, total de ingresos y gastos, etc.
+ *  - Crear un bien.
+ *  - Añadir un bien.
+ *  - Eliminar un bien.
+ *  - Consultar el inventario.
  */
 export default class Inventario {
   protected _almacenMap = new Map<number, ElementoAlmacen>();
@@ -56,6 +47,11 @@ export default class Inventario {
     }
   }
 
+  /**
+   * Método que crea un array de elementos almacenados a partir de un array de bienes.
+   * @param bienesArray - Array de bienes.
+   * @returns Array - Array de elementos almacenados.
+   */
   private createElementosAlmacen(bienesArray: Bien[]): ElementoAlmacen[] {
     const elementosInventario: ElementoAlmacen[] = [];
     bienesArray.forEach((bien) => {
@@ -71,6 +67,11 @@ export default class Inventario {
 
     return elementosInventario;
   }
+
+  /**
+   * Getter de la propiedad `almacenMap` que devuelve el inventario.
+   * @returns Map - Mapa con los elementos almacenados.
+   */
   public static getGestorInstancia(
     _bienesArray: Bien[] = [new Bien(-1, "dummy", "Bien dummy", "vacio", 0, 0)],
   ): Inventario {
@@ -80,10 +81,17 @@ export default class Inventario {
     return Inventario.GestorInstancia;
   }
 
+  /**
+   * Método que resetea la instancia del inventario.
+   */
   static resetInstance(): void {
     Inventario.GestorInstancia = undefined;
   }
 
+  /**
+   * Método que crea un bien. Se usa inquier para preguntar al usuario los datos del bien.
+   * @returns void
+   */
   public crear(): void {
     inquirer
       .prompt([
@@ -194,6 +202,11 @@ export default class Inventario {
       });
   }
 
+  /**
+   * Método que imprime el contenido del inventario.
+   * Se usa para comprobar que los datos se han almacenado correctamente.
+   * @returns void
+   */
   public ImprimirTest(): void {
     this._almacenMap.forEach((element) => {
       console.log(element.bien.ID);

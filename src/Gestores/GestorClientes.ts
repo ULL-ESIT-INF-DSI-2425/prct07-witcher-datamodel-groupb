@@ -1,9 +1,6 @@
 import Cliente from "../Entidades/Cliente.js";
 import Gestor from "./Gestor.js";
-
 import inquirer from "inquirer";
-import { LowSync } from "lowdb";
-import { JSONFileSync } from "lowdb/node";
 
 /**
  * Clase que representa el inventario de la `Posada del Lobo Blanco`.
