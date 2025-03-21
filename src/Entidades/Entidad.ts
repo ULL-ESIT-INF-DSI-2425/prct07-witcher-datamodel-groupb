@@ -1,4 +1,4 @@
 export interface Entidad {
-    readonly ID:number;
-    toJSON(): Record<string, unknown>;
-  }
+  readonly ID: number;
+  toJSON(): Record<string, unknown>;
+}

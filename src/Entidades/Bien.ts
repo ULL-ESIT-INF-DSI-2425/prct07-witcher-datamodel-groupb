@@ -8,10 +8,9 @@ import { Entidad } from "./Entidad.js";
  * @param _material - Material del que está hecho el bien (Ejemplo: Acero de Mahakam, cuero endurecido, esencia mágica o mutágenos de bestias antiguas).
  * @param _peso - Peso del bien en kilogramos.
  * @param _precio - Precio del bien en coronas.
- * @param _cantidad - Cantidad de bienes en stock.
  * @returns Instancia de la clase Bien.
  */
-export default class Bien implements Entidad{
+export default class Bien implements Entidad {
   constructor(
     private readonly _ID: number,
     private _nombre: string,
@@ -19,10 +18,9 @@ export default class Bien implements Entidad{
     private _material: string,
     private _peso: number,
     private _precio: number,
-    private _cantidad: number,
   ) {}
 
-  toJSON(): Record<string, string|number> {
+  toJSON(): Record<string, string | number> {
     return {
       ID: this._ID,
       nombre: this._nombre,
@@ -30,7 +28,6 @@ export default class Bien implements Entidad{
       material: this._material,
       peso: this._peso,
       precio: this._precio,
-      cantidad: this._cantidad
     };
   }
 
@@ -49,7 +46,7 @@ export default class Bien implements Entidad{
     return this._nombre;
   }
 
-  set nombre(nombre:string){
+  set nombre(nombre: string) {
     this._nombre = nombre;
   }
 
@@ -61,7 +58,7 @@ export default class Bien implements Entidad{
     return this._descripcion;
   }
 
-  set descripcion(descripcion:string){
+  set descripcion(descripcion: string) {
     this._descripcion = descripcion;
   }
 
@@ -106,20 +103,4 @@ export default class Bien implements Entidad{
     }
     this._precio = precio;
   }
-
-  /**
-   * Getter de la propiedad cantidad.
-   * @returns Cantidad de bienes en stock.
-   */
-  get cantidad() {
-    return this._cantidad;
-  }
-
-  set cantidad(cantidad: number) {
-    if (!Number.isInteger(cantidad) || cantidad < 0) {
-      throw new Error("La cantidad debe ser un número entero no negativo.");
-    }
-    this._cantidad = cantidad;
-  }
-  
 }

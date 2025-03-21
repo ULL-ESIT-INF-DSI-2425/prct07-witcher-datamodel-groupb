@@ -8,7 +8,7 @@ import { Entidad } from "./Entidad.js";
  * @param _ubicacion - Ubicación actual del cliente (Ejemplo: Kaer Morhen, Vizima, Novigrado).
  * @returns Instancia de la clase Cliente.
  */
-export default class Cliente implements Entidad{
+export default class Cliente implements Entidad {
   constructor(
     private readonly _ID: number,
     private _nombre: string,
@@ -16,7 +16,7 @@ export default class Cliente implements Entidad{
     private _ubicacion: string,
   ) {}
 
-  toJSON(): Record<string, number|string> {
+  toJSON(): Record<string, number | string> {
     return {
       ID: this._ID,
       nombre: this._nombre,
@@ -39,8 +39,8 @@ export default class Cliente implements Entidad{
   get nombre() {
     return this._nombre;
   }
-  
-  set nombre(nombre:string){
+
+  set nombre(nombre: string) {
     this._nombre = nombre;
   }
 
@@ -52,10 +52,10 @@ export default class Cliente implements Entidad{
     return this._raza;
   }
 
-  set raza(raza:string){
+  set raza(raza: string) {
     this._raza = raza;
   }
-  
+
   /**
    * Getter de la propiedad ubicación.
    * @returns Ubicación actual del cliente.
@@ -64,7 +64,7 @@ export default class Cliente implements Entidad{
     return this._ubicacion;
   }
 
-  set ubicacion(ubicacion:string){
+  set ubicacion(ubicacion: string) {
     this._ubicacion = ubicacion;
   }
 }

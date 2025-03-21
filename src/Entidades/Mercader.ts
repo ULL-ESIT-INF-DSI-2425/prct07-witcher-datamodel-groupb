@@ -8,7 +8,7 @@ import { Entidad } from "./Entidad.js";
  * @param _ubicacion - Ubicación del mercader (Ejemplo: Novigrado, Velen, Kaer Trolde).
  * @returns Instancia de la clase Mercader.
  */
-export default class Mercader implements Entidad{
+export default class Mercader implements Entidad {
   constructor(
     private readonly _ID: number,
     private _nombre: string,
@@ -16,7 +16,7 @@ export default class Mercader implements Entidad{
     private _ubicacion: string,
   ) {}
 
-  toJSON(): Record<string, number|string> {
+  toJSON(): Record<string, number | string> {
     return {
       ID: this._ID,
       nombre: this._nombre,
@@ -24,7 +24,7 @@ export default class Mercader implements Entidad{
       ubicacion: this._ubicacion,
     };
   }
-  
+
   /**
    * Getter de la propiedad ID.
    * @returns ID del mercader.
@@ -40,7 +40,7 @@ export default class Mercader implements Entidad{
     return this._nombre;
   }
 
-  set nombre(nombre:string){
+  set nombre(nombre: string) {
     this._nombre = nombre;
   }
 
@@ -52,7 +52,7 @@ export default class Mercader implements Entidad{
     return this._tipo;
   }
 
-  set tipo(tipo:string){
+  set tipo(tipo: string) {
     this._tipo = tipo;
   }
 
@@ -64,7 +64,7 @@ export default class Mercader implements Entidad{
     return this._ubicacion;
   }
 
-  set ubicacion(ubicacion:string){
+  set ubicacion(ubicacion: string) {
     this._ubicacion = ubicacion;
   }
 }

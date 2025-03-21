@@ -137,7 +137,7 @@ function menuPrincipal(): void {
     });
 }
 
-let inventario: Inventario = Inventario.getGestorInstancia();
-let clientes: GestorClientes = GestorClientes.getGestorInstancia();
-let mercaderes: GestorMercaderes = GestorMercaderes.getGestorInstancia();
+const inventario: Inventario = Inventario.getGestorInstancia();
+const clientes: GestorClientes = GestorClientes.getGestorInstancia();
+const mercaderes: GestorMercaderes = GestorMercaderes.getGestorInstancia();
 menuPrincipal();

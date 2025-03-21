@@ -18,8 +18,7 @@ import { JSONFileSync } from "lowdb/node";
  *  - Registrar transacciones, como ventas, compras o devoluciones.
  *  - Generar informes con estado del stock, bienes más vendidos y más demandados, total de ingresos y gastos, etc.
  */
-export default class GestorClientes extends Gestor<Cliente>{
-
+export default class GestorClientes extends Gestor<Cliente> {
   protected _almacenMap = new Map<number, Cliente>();
   private static GestorInstancia?: GestorClientes;
 
@@ -47,18 +46,24 @@ export default class GestorClientes extends Gestor<Cliente>{
       super("BaseDeDatos/DummyClientes.json");
       this.database.data = _clientesArray;
       this.database.write();
-      _clientesArray.forEach(cliente => this._almacenMap.set(cliente.ID, cliente));
+      _clientesArray.forEach((cliente) =>
+        this._almacenMap.set(cliente.ID, cliente),
+      );
     }
   }
 
-  public static getGestorInstancia(_clientesArray: Cliente[] = [new Cliente(-1, "dummy", "cliente dummy", "tests")]): GestorClientes {
+  public static getGestorInstancia(
+    _clientesArray: Cliente[] = [
+      new Cliente(-1, "dummy", "cliente dummy", "tests"),
+    ],
+  ): GestorClientes {
     if (!GestorClientes.GestorInstancia) {
-        GestorClientes.GestorInstancia = new GestorClientes(_clientesArray);
+      GestorClientes.GestorInstancia = new GestorClientes(_clientesArray);
     }
     return GestorClientes.GestorInstancia;
   }
 
-  static resetInstance():void {
+  static resetInstance(): void {
     GestorClientes.GestorInstancia = undefined;
   }
 
@@ -66,49 +71,49 @@ export default class GestorClientes extends Gestor<Cliente>{
     inquirer
       .prompt([
         {
-          type: 'input',
-          name: '_ID',
-          message: 'Ingrese el ID del cliente:',
+          type: "input",
+          name: "_ID",
+          message: "Ingrese el ID del cliente:",
           validate(value) {
             const id = Number(value);
             if (isNaN(id)) {
-              return 'El ID debe ser un número';
+              return "El ID debe ser un número";
             }
             return true;
-          }
+          },
         },
         {
-          type: 'input',
-          name: '_nombre',
-          message: 'Ingrese el nombre del cliente:',
+          type: "input",
+          name: "_nombre",
+          message: "Ingrese el nombre del cliente:",
           validate(value) {
-            if (value.trim() === '') {
-              return 'El nombre no puede estar vacío';
+            if (value.trim() === "") {
+              return "El nombre no puede estar vacío";
             }
             return true;
-          }
+          },
         },
         {
-          type: 'input',
-          name: '_raza',
-          message: 'Ingrese la raza del cliente:',
+          type: "input",
+          name: "_raza",
+          message: "Ingrese la raza del cliente:",
           validate(value) {
-            if (value.trim() === '') {
-              return 'La raza no puede estar vacía';
+            if (value.trim() === "") {
+              return "La raza no puede estar vacía";
             }
             return true;
-          }
+          },
         },
         {
-          type: 'input',
-          name: '_ubicacion',
-          message: 'Ingrese la ubicación del cliente:',
+          type: "input",
+          name: "_ubicacion",
+          message: "Ingrese la ubicación del cliente:",
           validate(value) {
-            if (value.trim() === '') {
-              return 'La ubicación no puede estar vacía';
+            if (value.trim() === "") {
+              return "La ubicación no puede estar vacía";
             }
             return true;
-          }
+          },
         },
       ])
       .then((answers) => {
@@ -116,20 +121,19 @@ export default class GestorClientes extends Gestor<Cliente>{
           parseInt(answers._ID), // Convertimos el ID a número
           answers._nombre,
           answers._raza,
-          answers._ubicacion
+          answers._ubicacion,
         );
-  
+
         try {
           this.add(cliente);
-          console.log('Cliente creado y añadido exitosamente');
+          console.log("Cliente creado y añadido exitosamente");
         } catch (error: unknown) {
           if (error instanceof Error) {
             console.error(error.message); // Si el ID ya está en uso, mostramos el error
           } else {
-            console.error('Ha ocurrido un error desconocido');
+            console.error("Ha ocurrido un error desconocido");
           }
         }
       });
   }
-
 }

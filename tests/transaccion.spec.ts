@@ -2,9 +2,7 @@ import { describe, test, expect } from "vitest";
 //import { Transaccion, TipoTransaccion } from "../src/Transaccion";
 
 describe("Transaccion", () => {
-  test("Tests vacios para poder ejecutar el resto", () => {
-
-    });
+  test("Tests vacios para poder ejecutar el resto", () => {});
   /**
   test("Los getters deben devolver los valores asignados", () => {
     const bienes = [

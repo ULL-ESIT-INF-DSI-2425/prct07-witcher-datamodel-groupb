@@ -1,14 +1,12 @@
 import { describe, test, expect, afterEach } from "vitest";
-import Inventario from "../../src/Gestores/Inventario"
-import  Bien  from "../../src/Entidades/Bien";
+import Inventario from "../../src/Gestores/Inventario";
+import Bien from "../../src/Entidades/Bien";
 //import { Transaccion, TipoTransaccion } from "./Transaccion";
 
 describe("Constructor Inventario", () => {
-
   afterEach(() => {
-      Inventario.resetInstance();
-    });
-
+    Inventario.resetInstance();
+  });
 
   test("Debe añadir y eliminar bienes correctamente", () => {
     const inventario = Inventario.getGestorInstancia([]);
@@ -21,7 +19,7 @@ describe("Constructor Inventario", () => {
       "Acero",
       3.5,
       100,
-      1
+      1,
     );
     inventario.add(bien);
 
@@ -33,7 +31,7 @@ describe("Constructor Inventario", () => {
     expect(inventario.length()).toBe(0);
   });
 
-  test('debería que cada elemento cargado en _almacenMap sea una instancia de Bien', () => {
+  test("debería que cada elemento cargado en _almacenMap sea una instancia de Bien", () => {
     const inventario = Inventario.getGestorInstancia();
     const almacenMap = (inventario as any)._almacenMap as Map<number, Bien>;
     for (const bien of almacenMap.values()) {
@@ -41,20 +39,28 @@ describe("Constructor Inventario", () => {
     }
   });
 
-  test('debería crear una instancia de Inventario con un array de bienes personalizado', () => {
-    const bien1 = new Bien(3, 'Espada', 'Espada legendaria', 'Acero', 2, 1500, 10);
-    const bien2 = new Bien(4, 'Escudo', 'Escudo robusto', 'Madera', 3, 800, 5);
+  test("debería crear una instancia de Inventario con un array de bienes personalizado", () => {
+    const bien1 = new Bien(
+      3,
+      "Espada",
+      "Espada legendaria",
+      "Acero",
+      2,
+      1500,
+      10,
+    );
+    const bien2 = new Bien(4, "Escudo", "Escudo robusto", "Madera", 3, 800, 5);
     const bienesArray = [bien1, bien2];
-    
+
     const inventario = Inventario.getGestorInstancia(bienesArray);
     expect(inventario).toBeInstanceOf(Inventario);
-    
+
     expect(inventario.length()).toBe(2);
 
     expect(inventario.getArray()).toEqual(bienesArray);
   });
 
-  test('debería crear una instancia de Inventario con un array vacío personalizado', () => {
+  test("debería crear una instancia de Inventario con un array vacío personalizado", () => {
     // Probar la rama else pasando un array vacío
     const inventario = Inventario.getGestorInstancia([]);
     expect(inventario).toBeInstanceOf(Inventario);
