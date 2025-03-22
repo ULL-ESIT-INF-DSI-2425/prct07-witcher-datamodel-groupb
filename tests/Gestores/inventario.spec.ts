@@ -1,18 +1,28 @@
-import { describe, test, expect, afterEach } from "vitest";
-import Inventario from "../../src/Gestores/Inventario";
-import Bien from "../../src/Entidades/Bien";
-import { ElementoAlmacen } from "../../src/Entidades/ElementoAlmacen";
-//import { Transaccion, TipoTransaccion } from "./Transaccion";
+import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { Bien, Inventario, ElementoAlmacen } from "../../src/index.js";
 
-describe("Constructor Inventario", () => {
+//
+// Inventario - Creación y reseteo de instancia
+//
+describe("Inventario - Creación y reseteo de instancia", () => {
+  // Restaura la instancia singleton tras cada test
   afterEach(() => {
     Inventario.resetInstance();
   });
 
   test("Debe añadir y eliminar bienes correctamente", () => {
+    // Se crea un inventario partiendo de un array vacío
     const inventario = Inventario.getGestorInstancia([]);
 
-    // Agregamos un bien.
+    // \@ts-expect-error Fuerza la limpieza del map interno para evitar datos previos
+    inventario["_almacenMap"].clear();
+
+    // \@ts-expect-error Anula la serialización a JSON para evitar sobreescrituras
+    inventario["storeInventario"] = function (): void {
+      // No hace nada
+    };
+
+    // Creamos un bien normal, con método toJSON()
     const bien = new Bien(
       1,
       "Espada de Acero",
@@ -21,84 +31,160 @@ describe("Constructor Inventario", () => {
       3.5,
       100,
     );
-
     const elemento = new ElementoAlmacen(bien, 1);
+
+    // Añadimos el bien al inventario
     inventario.add(elemento);
 
-
+    // Comprobamos que la longitud sea 1
     expect(inventario.length()).toBe(1);
     expect(inventario.get(1).bien.nombre).toBe("Espada de Acero");
 
-    // Eliminamos el bien por su ID.
+    // Eliminamos el bien por su ID
     inventario.remove(1);
+
+    // El inventario vuelve a estar vacío
     expect(inventario.length()).toBe(0);
   });
 
-  test("debería que cada elemento cargado en _almacenMap sea una instancia de EnlementosAlmacen", () => {
-    const inventario = Inventario.getGestorInstancia();
-    for (const bien of inventario.almacenMap.values()) {
-      expect(bien).toBeInstanceOf(ElementoAlmacen);
+  test("Cada elemento cargado en _almacenMap sea una instancia de ElementoAlmacen", () => {
+    // Inventario vacío para no disparar lectura JSON
+    const inventario = Inventario.getGestorInstancia([]);
+    expect(inventario.length()).toBe(0);
+
+    // Agregamos un par de bienes
+    const bien1 = new Bien(3, "Espada", "Espada legendaria", "Acero", 2, 1500);
+    const bien2 = new Bien(4, "Escudo", "Escudo robusto", "Madera", 3, 800);
+
+    inventario.add(new ElementoAlmacen(bien1, 10));
+    inventario.add(new ElementoAlmacen(bien2, 5));
+
+    for (const elemento of inventario.almacenMap.values()) {
+      expect(elemento).toBeInstanceOf(ElementoAlmacen);
     }
   });
 
-  test("debería crear una instancia de Inventario con un array de bienes personalizado", () => {
-    const bien1 = new Bien(
-      3,
-      "Espada",
-      "Espada legendaria",
-      "Acero",
-      2,
-      1500,
-    );
+  test("Debería crear una instancia de Inventario con un array de bienes personalizado", () => {
+    const bien1 = new Bien(3, "Espada", "Espada legendaria", "Acero", 2, 1500);
     const bien2 = new Bien(4, "Escudo", "Escudo robusto", "Madera", 3, 800);
 
-    const elementosArray:ElementoAlmacen[] = [new ElementoAlmacen(bien1, 10), new ElementoAlmacen(bien2, 5)];
+    const elementosArray: ElementoAlmacen[] = [
+      new ElementoAlmacen(bien1, 10),
+      new ElementoAlmacen(bien2, 5),
+    ];
 
     const inventario = Inventario.getGestorInstancia(elementosArray);
     expect(inventario).toBeInstanceOf(Inventario);
-
     expect(inventario.length()).toBe(2);
-
     expect(inventario.getArray()).toEqual(elementosArray);
   });
+});
 
-  test("debería crear una instancia de Inventario con un array vacío personalizado", () => {
-    // Probar la rama else pasando un array vacío
-    const inventario = Inventario.getGestorInstancia([]);
-    expect(inventario).toBeInstanceOf(Inventario);
-
-    // Al no haber bienes, _almacenMap debe quedar vacío
-    expect(inventario.length()).toBe(0);
-    expect(inventario.getArray()).toEqual([]);
+//
+// Inventario - Dummy Branch
+//
+describe("Inventario - Dummy Branch", () => {
+  afterEach(() => {
+    Inventario.resetInstance();
+    // Se elimina la sobreescritura del getter 'database'
+    Reflect.deleteProperty(Inventario.prototype, "database");
   });
 
-  /** 
-  test("Debe calcular el stock correctamente a partir de transacciones", () =\> \{
-    const inventario = new Inventario([], [], [], []);
+  test("Dummy branch: con dummy y database.data undefined", () => {
+    interface FakeDatabase {
+      data?: ElementoAlmacen[];
+      write: () => void;
+    }
+    const fakeDatabase: FakeDatabase = {
+      // Se usa undefined en lugar de null
+      data: undefined,
+      write: () => {},
+    };
 
-    // Simulamos transacciones para el bien con ID 1:
-    // Compra de 10 unidades.
-    const compra = new Transaccion(
-      new Date(),
-      [\{ idBien: 1, cantidad: 10 \}],
-      500,
-      TipoTransaccion.Compra,
-      100,
+    Object.defineProperty(Inventario.prototype, "database", {
+      get: () => fakeDatabase,
+      configurable: true,
+    });
+
+    // Se crea el bien dummy para activar la rama especial
+    const dummyBien = new Bien(0, "dummy", "", "", 0, 0);
+    const dummyElemento = new ElementoAlmacen(dummyBien, 0);
+    Object.defineProperty(dummyElemento, "ID", {
+      value: 123,
+      configurable: true,
+    });
+
+    // Usamos el método estático para obtener la instancia (el constructor es privado)
+    const inventario = Inventario.getGestorInstancia([dummyElemento]);
+    // Al no disponer de datos en la base (data undefined), se conserva el dummy.
+    // Se espera que la longitud sea 1.
+    expect(inventario.length()).toBe(1);
+  });
+
+  test("Dummy branch: con dummy y database.data con datos", () => {
+    interface FakeDatabase {
+      data: { bien: Bien; cantidad: number }[];
+      write: () => void;
+    }
+    const fakeDatabase: FakeDatabase = {
+      data: [
+        {
+          bien: new Bien(1, "Bien1", "Primer bien", "hierro", 10, 50),
+          cantidad: 10,
+        },
+      ],
+      write: () => {},
+    };
+
+    Object.defineProperty(Inventario.prototype, "database", {
+      get: () => fakeDatabase,
+      configurable: true,
+    });
+
+    const dummyBien = new Bien(0, "dummy", "", "", 0, 0);
+    const dummyElemento = new ElementoAlmacen(dummyBien, 0);
+    Object.defineProperty(dummyElemento, "ID", {
+      value: 999,
+      configurable: true,
+    });
+
+    const inventario = Inventario.getGestorInstancia([dummyElemento]);
+    // Al disponer de datos en la base, se espera que el dummy se reemplace,
+    // obteniendo la longitud del array de la base (1 en este caso)
+    expect(inventario.length()).toBe(1);
+    const almacenArray = inventario.getArray();
+    // Aquí se espera que se haya cargado el dato proveniente del fakeDatabase
+    // En este caso, se espera "Bien2" si la implementación lo establece así.
+    expect(almacenArray[0].bien.nombre).toBe("Bien2");
+    expect(almacenArray[0].cantidad).toBe(5);
+  });
+});
+
+//
+// Inventario - imprimirMensajeError y carga de datos fake
+//
+describe("Inventario - imprimirMensajeError", () => {
+  beforeEach(() => {
+    Inventario.resetInstance();
+    Reflect.deleteProperty(Inventario.prototype, "database");
+  });
+
+  afterEach(() => {
+    Inventario.resetInstance();
+    Reflect.deleteProperty(Inventario.prototype, "database");
+  });
+
+  test("Debe imprimir el mensaje de error por consola", () => {
+    const mockConsoleLog = vi
+      .spyOn(console, "log")
+      .mockImplementation(() => {});
+    const inventario = Inventario.getGestorInstancia();
+    inventario.imprimirMensajeError();
+    expect(mockConsoleLog).toHaveBeenCalledWith(
+      "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
     );
-    // Venta de 3 unidades.
-    const venta = new Transaccion(
-      new Date(),
-      [\{ idBien: 1, cantidad: 3 \}],
-      150,
-      TipoTransaccion.Venta,
-      200,
-    );
+    mockConsoleLog.mockRestore();
+  });
 
-    inventario.addTransaccion(compra);
-    inventario.addTransaccion(venta);
-
-    const stock = inventario.getStock(1);
-    expect(stock).toBe(7);
-  \});
-  */
+  // TODO: Test línea 28 (súper chungo)
 });

@@ -1,4 +1,4 @@
-import { ElementoAlmacen } from "./ElementoAlmacen.js";
+import ElementoAlmacen from "./ElementoAlmacen.js";
 import { Entidad } from "./Entidad.js";
 
 /**
@@ -12,12 +12,20 @@ export type DetallesTransaccion = {
 };
 
 export default class Transaccion implements Entidad {
-  private _total: number;
+  private readonly _total: number;
 
+  /**
+   * Constructor de la clase `Transaccion`.
+   * @param _ID - ID de la transacción. Es `readonly` porque debe ser único y no deben ser modificados.
+   * @param _fecha - Fecha de la transacción.
+   * @param _elementosEnTransaccion - Elementos de la transacción.
+   * @returns Transaccion - Objeto de la clase `Transaccion`.
+   * @remarks `fecha` y `elementosEnTransaccion` son `readonly` para que el `SonarCloud` no se queje.
+   */
   constructor(
     private readonly _ID: number,
-    private _fecha: Date,
-    private _elementosEnTransaccion: ElementoAlmacen[],
+    private readonly _fecha: Date,
+    private readonly _elementosEnTransaccion: ElementoAlmacen[],
   ) {
     this._total = this.CalcularTotalVentas();
   }

@@ -18,7 +18,7 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
   protected _almacenMap = new Map<number, Transaccion>();
   private static GestorInstancia?: GestorTransacciones;
 
-  private constructor(private _transaccionesArray: Transaccion[]) {
+  private constructor(private readonly _transaccionesArray: Transaccion[]) {
     if (_transaccionesArray.length === 1 && _transaccionesArray[0].ID === -1) {
       super("BaseDeDatos/transacciones.json");
       if (this.database.data == null) {

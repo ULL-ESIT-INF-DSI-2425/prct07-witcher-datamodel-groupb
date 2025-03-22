@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "ID": 3,
+    "bien": "{\"ID\":3,\"nombre\":\"Espada\",\"descripcion\":\"Espada legendaria\",\"material\":\"Acero\",\"peso\":2,\"precio\":1500}",
+    "cantidad": 10
+  },
+  {
+    "ID": 4,
+    "bien": "{\"ID\":4,\"nombre\":\"Escudo\",\"descripcion\":\"Escudo robusto\",\"material\":\"Madera\",\"peso\":3,\"precio\":800}",
+    "cantidad": 5
+  }
+]

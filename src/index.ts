@@ -1,5 +1,22 @@
-import inquirer from "inquirer";
+// Entidades exportadas por defecto:
+export { default as Bien } from "./Entidades/Bien.js";
+export { default as Cliente } from "./Entidades/Cliente.js";
+export { default as Mercader } from "./Entidades/Mercader.js";
+export { default as ElementoAlmacen } from "./Entidades/ElementoAlmacen.js";
+export { default as Transaccion } from "./Entidades/Transaccion.js";
 
+// Entidades reexportadas con *:
+export * as Entidad from "./Entidades/Entidad.js";
+
+// Gestores exportados por defecto:
+export { default as Gestor } from "./Gestores/Gestor.js";
+export { default as GestorClientes } from "./Gestores/GestorClientes.js";
+export { default as GestorMercaderes } from "./Gestores/GestorMercaderes.js";
+export { default as GestorTransacciones } from "./Gestores/GestorTransacciones.js";
+export { default as Inventario } from "./Gestores/Inventario.js";
+
+// Reexportar utilidades:
+import inquirer from "inquirer";
 import Inventario from "./Gestores/Inventario.js";
 import GestorClientes from "./Gestores/GestorClientes.js";
 import GestorMercaderes from "./Gestores/GestorMercaderes.js";
@@ -93,7 +110,6 @@ function promptInteracturarClientes(): void {
       switch (answers["Comandos clientes"]) {
         case comandosClientes.nuevo_cliente:
           clientes.crear();
-          //menuPrincipal();
           break;
         case comandosClientes.cliente_existente:
           console.log("Llamada a modificar cliente");

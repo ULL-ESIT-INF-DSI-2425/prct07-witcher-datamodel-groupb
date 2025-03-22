@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import Bien from "../../src/Entidades/Bien";
+import { Bien } from "../../src/index.js";
 
 describe("Bien", () => {
   test("Los getters deben devolver los valores asignados", () => {
@@ -59,14 +59,7 @@ describe("Bien", () => {
   });
 
   test("debería permitir modificar el material", () => {
-    const bien = new Bien(
-      4,
-      "Casco",
-      "Casco de batalla",
-      "Hierro",
-      1.5,
-      300,
-    );
+    const bien = new Bien(4, "Casco", "Casco de batalla", "Hierro", 1.5, 300);
     bien.material = "Acero";
     expect(bien.material).toBe("Acero");
   });

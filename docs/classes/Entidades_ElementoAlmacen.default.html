@@ -78,19 +78,21 @@
           <ul class="tsd-breadcrumb">
             <li><a href="../modules.html">prct-witcher-groupb</a></li>
             <li>
-              <a href="../modules/Entidades_Transaccion.html"
-                >Entidades/Transaccion</a
+              <a href="../modules/Entidades_ElementoAlmacen.html"
+                >Entidades/ElementoAlmacen</a
               >
             </li>
-            <li><a href="Entidades_Transaccion.default.html">default</a></li>
+            <li>
+              <a href="Entidades_ElementoAlmacen.default.html">default</a>
+            </li>
           </ul>
           <h1>Class default</h1>
         </div>
         <section class="tsd-panel tsd-comment">
           <div class="tsd-comment tsd-typography">
             <p>
-              Interfaz que define el comportamiento de una entidad. Las
-              entidades deben tener un ID y un método toJSON.
+              Interfaz que representa un elemento almacenado en el inventario.
+              Contiene un bien y la cantidad de ese bien almacenada.
             </p>
           </div>
           <div class="tsd-comment tsd-typography"></div>
@@ -112,8 +114,8 @@
             <li>
               Defined in
               <a
-                href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L14"
-                >Entidades/Transaccion.ts:14</a
+                href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L8"
+                >Entidades/ElementoAlmacen.ts:8</a
               >
             </li>
           </ul>
@@ -145,7 +147,7 @@
                   <h3 class="tsd-index-heading">Constructors</h3>
                   <div class="tsd-index-list">
                     <a
-                      href="Entidades_Transaccion.default.html#constructor"
+                      href="Entidades_ElementoAlmacen.default.html#constructor"
                       class="tsd-index-link"
                       ><svg
                         class="tsd-kind-icon"
@@ -158,39 +160,39 @@
                   </div>
                 </section>
                 <section class="tsd-index-section">
-                  <h3 class="tsd-index-heading">Accessors</h3>
+                  <h3 class="tsd-index-heading">Properties</h3>
                   <div class="tsd-index-list">
                     <a
-                      href="Entidades_Transaccion.default.html#bienes"
+                      href="Entidades_ElementoAlmacen.default.html#bien"
                       class="tsd-index-link"
                       ><svg
                         class="tsd-kind-icon"
                         viewBox="0 0 24 24"
-                        aria-label="Accessor"
+                        aria-label="Property"
                       >
-                        <use href="../assets/icons.svg#icon-262144"></use></svg
-                      ><span>bienes</span></a
+                        <use href="../assets/icons.svg#icon-1024"></use></svg
+                      ><span>bien</span></a
                     >
                     <a
-                      href="Entidades_Transaccion.default.html#fecha"
+                      href="Entidades_ElementoAlmacen.default.html#cantidad"
                       class="tsd-index-link"
                       ><svg
                         class="tsd-kind-icon"
                         viewBox="0 0 24 24"
-                        aria-label="Accessor"
+                        aria-label="Property"
                       >
-                        <use href="../assets/icons.svg#icon-262144"></use></svg
-                      ><span>fecha</span></a
+                        <use href="../assets/icons.svg#icon-1024"></use></svg
+                      ><span>cantidad</span></a
                     >
                     <a
-                      href="Entidades_Transaccion.default.html#id"
+                      href="Entidades_ElementoAlmacen.default.html#id"
                       class="tsd-index-link"
                       ><svg
                         class="tsd-kind-icon"
                         viewBox="0 0 24 24"
-                        aria-label="Accessor"
+                        aria-label="Property"
                       >
-                        <use href="../assets/icons.svg#icon-262144"></use></svg
+                        <use href="../assets/icons.svg#icon-1024"></use></svg
                       ><span>ID</span></a
                     >
                   </div>
@@ -199,7 +201,7 @@
                   <h3 class="tsd-index-heading">Methods</h3>
                   <div class="tsd-index-list">
                     <a
-                      href="Entidades_Transaccion.default.html#tojson"
+                      href="Entidades_ElementoAlmacen.default.html#tojson"
                       class="tsd-index-link"
                       ><svg
                         class="tsd-kind-icon"
@@ -252,31 +254,21 @@
                     <a id="constructordefault" class="tsd-anchor"></a
                     ><span class="tsd-signature-keyword">new</span>
                     <span class="tsd-kind-constructor-signature">default</span
-                    ><span class="tsd-signature-symbol">(</span><br />    <span
-                      class="tsd-kind-parameter"
-                      >_ID</span
+                    ><span class="tsd-signature-symbol">(</span
+                    ><span class="tsd-kind-parameter">bien</span
+                    ><span class="tsd-signature-symbol">:</span>
+                    <a
+                      href="Entidades_Bien.default.html"
+                      class="tsd-signature-type tsd-kind-class"
+                      >default</a
+                    ><span class="tsd-signature-symbol">,</span>
+                    <span class="tsd-kind-parameter">cantidad</span
                     ><span class="tsd-signature-symbol">:</span>
                     <span class="tsd-signature-type">number</span
-                    ><span class="tsd-signature-symbol">,</span><br />    <span
-                      class="tsd-kind-parameter"
-                      >_fecha</span
-                    ><span class="tsd-signature-symbol">:</span>
-                    <span class="tsd-signature-type">Date</span
-                    ><span class="tsd-signature-symbol">,</span><br />    <span
-                      class="tsd-kind-parameter"
-                      >_elementosEnTransaccion</span
+                    ><span class="tsd-signature-symbol">)</span
                     ><span class="tsd-signature-symbol">:</span>
                     <a
                       href="Entidades_ElementoAlmacen.default.html"
-                      class="tsd-signature-type tsd-kind-class"
-                      >default</a
-                    ><span class="tsd-signature-symbol">[]</span
-                    ><span class="tsd-signature-symbol">,</span><br /><span
-                      class="tsd-signature-symbol"
-                      >)</span
-                    ><span class="tsd-signature-symbol">:</span>
-                    <a
-                      href="Entidades_Transaccion.default.html"
                       class="tsd-signature-type tsd-kind-class"
                       >default</a
                     ><a
@@ -288,93 +280,42 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
-                    <div class="tsd-comment tsd-typography">
-                      <p>Constructor de la clase <code>Transaccion</code>.</p>
-                    </div>
                     <div class="tsd-parameters">
                       <h4 class="tsd-parameters-title">Parameters</h4>
                       <ul class="tsd-parameter-list">
                         <li>
                           <span
-                            ><span class="tsd-kind-parameter">_ID</span>:
-                            <span class="tsd-signature-type">number</span></span
-                          >
-                          <div class="tsd-comment tsd-typography">
-                            <p>
-                              ID de la transacción. Es
-                              <code>readonly</code> porque debe ser único y no
-                              deben ser modificados.
-                            </p>
-                          </div>
-                          <div class="tsd-comment tsd-typography"></div>
-                        </li>
-                        <li>
-                          <span
-                            ><span class="tsd-kind-parameter">_fecha</span>:
-                            <span class="tsd-signature-type">Date</span></span
-                          >
-                          <div class="tsd-comment tsd-typography">
-                            <p>Fecha de la transacción.</p>
-                          </div>
-                          <div class="tsd-comment tsd-typography"></div>
-                        </li>
-                        <li>
-                          <span
-                            ><span class="tsd-kind-parameter"
-                              >_elementosEnTransaccion</span
-                            >:
+                            ><span class="tsd-kind-parameter">bien</span>:
                             <a
-                              href="Entidades_ElementoAlmacen.default.html"
+                              href="Entidades_Bien.default.html"
                               class="tsd-signature-type tsd-kind-class"
                               >default</a
-                            ><span class="tsd-signature-symbol">[]</span></span
+                            ></span
                           >
-                          <div class="tsd-comment tsd-typography">
-                            <p>Elementos de la transacción.</p>
-                          </div>
-                          <div class="tsd-comment tsd-typography"></div>
+                        </li>
+                        <li>
+                          <span
+                            ><span class="tsd-kind-parameter">cantidad</span>:
+                            <span class="tsd-signature-type">number</span></span
+                          >
                         </li>
                       </ul>
                     </div>
                     <h4 class="tsd-returns-title">
                       Returns
                       <a
-                        href="Entidades_Transaccion.default.html"
+                        href="Entidades_ElementoAlmacen.default.html"
                         class="tsd-signature-type tsd-kind-class"
                         >default</a
                       >
                     </h4>
-                    <p>
-                      Transaccion - Objeto de la clase <code>Transaccion</code>.
-                    </p>
-                    <div class="tsd-comment tsd-typography">
-                      <div class="tsd-tag-remarks">
-                        <h4 class="tsd-anchor-link">
-                          <a id="remarks" class="tsd-anchor"></a>Remarks<a
-                            href="#remarks"
-                            aria-label="Permalink"
-                            class="tsd-anchor-icon"
-                            ><svg viewBox="0 0 24 24" aria-hidden="true">
-                              <use
-                                href="../assets/icons.svg#icon-anchor"
-                              ></use></svg
-                          ></a>
-                        </h4>
-                        <p>
-                          <code>fecha</code> y
-                          <code>elementosEnTransaccion</code> son
-                          <code>readonly</code> para que el
-                          <code>SonarCloud</code> no se queje.
-                        </p>
-                      </div>
-                    </div>
                     <aside class="tsd-sources">
                       <ul>
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L25"
-                            >Entidades/Transaccion.ts:25</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L11"
+                            >Entidades/ElementoAlmacen.ts:11</a
                           >
                         </li>
                       </ul>
@@ -386,7 +327,7 @@
           </section>
         </details>
         <details class="tsd-panel-group tsd-member-group tsd-accordion" open>
-          <summary class="tsd-accordion-summary" data-key="section-Accessors">
+          <summary class="tsd-accordion-summary" data-key="section-Properties">
             <h2>
               <svg
                 width="20"
@@ -397,151 +338,102 @@
               >
                 <use href="../assets/icons.svg#icon-chevronDown"></use>
               </svg>
-              Accessors
+              Properties
             </h2>
           </summary>
           <section>
             <section class="tsd-panel tsd-member">
-              <a id="bienes" class="tsd-anchor"></a>
+              <a id="bien" class="tsd-anchor"></a>
               <h3 class="tsd-anchor-link">
-                <span>bienes</span
+                <span>bien</span
+                ><a href="#bien" aria-label="Permalink" class="tsd-anchor-icon"
+                  ><svg viewBox="0 0 24 24" aria-hidden="true">
+                    <use href="../assets/icons.svg#icon-anchor"></use></svg
+                ></a>
+              </h3>
+              <div class="tsd-signature">
+                <span class="tsd-kind-property">bien</span
+                ><span class="tsd-signature-symbol">:</span>
+                <a
+                  href="Entidades_Bien.default.html"
+                  class="tsd-signature-type tsd-kind-class"
+                  >default</a
+                >
+              </div>
+              <aside class="tsd-sources">
+                <ul>
+                  <li>
+                    Defined in
+                    <a
+                      href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L12"
+                      >Entidades/ElementoAlmacen.ts:12</a
+                    >
+                  </li>
+                </ul>
+              </aside>
+            </section>
+            <section class="tsd-panel tsd-member">
+              <a id="cantidad" class="tsd-anchor"></a>
+              <h3 class="tsd-anchor-link">
+                <span>cantidad</span
                 ><a
-                  href="#bienes"
+                  href="#cantidad"
                   aria-label="Permalink"
                   class="tsd-anchor-icon"
                   ><svg viewBox="0 0 24 24" aria-hidden="true">
                     <use href="../assets/icons.svg#icon-anchor"></use></svg
                 ></a>
               </h3>
-              <ul class="tsd-signatures">
-                <li class="">
-                  <div class="tsd-signature" id="bienes-1">
-                    <span class="tsd-signature-keyword">get</span>
-                    <span class="tsd-kind-get-signature">bienes</span
-                    ><span class="tsd-signature-symbol">()</span
-                    ><span class="tsd-signature-symbol">:</span>
+              <div class="tsd-signature">
+                <span class="tsd-kind-property">cantidad</span
+                ><span class="tsd-signature-symbol">:</span>
+                <span class="tsd-signature-type">number</span>
+              </div>
+              <aside class="tsd-sources">
+                <ul>
+                  <li>
+                    Defined in
                     <a
-                      href="Entidades_ElementoAlmacen.default.html"
-                      class="tsd-signature-type tsd-kind-class"
-                      >default</a
-                    ><span class="tsd-signature-symbol">[]</span>
-                  </div>
-                  <div class="tsd-description">
-                    <h4 class="tsd-returns-title">
-                      Returns
-                      <a
-                        href="Entidades_ElementoAlmacen.default.html"
-                        class="tsd-signature-type tsd-kind-class"
-                        >default</a
-                      ><span class="tsd-signature-symbol">[]</span>
-                    </h4>
-                    <aside class="tsd-sources">
-                      <ul>
-                        <li>
-                          Defined in
-                          <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L61"
-                            >Entidades/Transaccion.ts:61</a
-                          >
-                        </li>
-                      </ul>
-                    </aside>
-                  </div>
-                </li>
-              </ul>
-            </section>
-            <section class="tsd-panel tsd-member">
-              <a id="fecha" class="tsd-anchor"></a>
-              <h3 class="tsd-anchor-link">
-                <span>fecha</span
-                ><a href="#fecha" aria-label="Permalink" class="tsd-anchor-icon"
-                  ><svg viewBox="0 0 24 24" aria-hidden="true">
-                    <use href="../assets/icons.svg#icon-anchor"></use></svg
-                ></a>
-              </h3>
-              <ul class="tsd-signatures">
-                <li class="">
-                  <div class="tsd-signature" id="fecha-1">
-                    <span class="tsd-signature-keyword">get</span>
-                    <span class="tsd-kind-get-signature">fecha</span
-                    ><span class="tsd-signature-symbol">()</span
-                    ><span class="tsd-signature-symbol">:</span>
-                    <span class="tsd-signature-type">Date</span>
-                  </div>
-                  <div class="tsd-description">
-                    <div class="tsd-comment tsd-typography">
-                      <p>Getter de la propiedad fecha.</p>
-                    </div>
-                    <h4 class="tsd-returns-title">
-                      Returns <span class="tsd-signature-type">Date</span>
-                    </h4>
-                    <p>Fecha de la transacción.</p>
-                    <div class="tsd-comment tsd-typography"></div>
-                    <aside class="tsd-sources">
-                      <ul>
-                        <li>
-                          Defined in
-                          <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L58"
-                            >Entidades/Transaccion.ts:58</a
-                          >
-                        </li>
-                      </ul>
-                    </aside>
-                  </div>
-                </li>
-              </ul>
+                      href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L13"
+                      >Entidades/ElementoAlmacen.ts:13</a
+                    >
+                  </li>
+                </ul>
+              </aside>
             </section>
             <section class="tsd-panel tsd-member">
               <a id="id" class="tsd-anchor"></a>
               <h3 class="tsd-anchor-link">
-                <span>ID</span
+                <code class="tsd-tag">Readonly</code><span>ID</span
                 ><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"
                   ><svg viewBox="0 0 24 24" aria-hidden="true">
                     <use href="../assets/icons.svg#icon-anchor"></use></svg
                 ></a>
               </h3>
-              <ul class="tsd-signatures">
-                <li class="">
-                  <div class="tsd-signature" id="id-1">
-                    <span class="tsd-signature-keyword">get</span>
-                    <span class="tsd-kind-get-signature">ID</span
-                    ><span class="tsd-signature-symbol">()</span
-                    ><span class="tsd-signature-symbol">:</span>
-                    <span class="tsd-signature-type">number</span>
-                  </div>
-                  <div class="tsd-description">
-                    <div class="tsd-comment tsd-typography">
-                      <p>Getter de la propiedad ID.</p>
-                    </div>
-                    <h4 class="tsd-returns-title">
-                      Returns <span class="tsd-signature-type">number</span>
-                    </h4>
-                    <p>ID del mercader.</p>
-                    <div class="tsd-comment tsd-typography"></div>
-                    <aside class="tsd-sources">
-                      <p>
-                        Implementation of
-                        <a href="../interfaces/Entidades_Entidad.Entidad.html"
-                          >Entidad</a
-                        >.<a
-                          href="../interfaces/Entidades_Entidad.Entidad.html#id"
-                          >ID</a
-                        >
-                      </p>
-                      <ul>
-                        <li>
-                          Defined in
-                          <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L50"
-                            >Entidades/Transaccion.ts:50</a
-                          >
-                        </li>
-                      </ul>
-                    </aside>
-                  </div>
-                </li>
-              </ul>
+              <div class="tsd-signature">
+                <span class="tsd-kind-property">ID</span
+                ><span class="tsd-signature-symbol">:</span>
+                <span class="tsd-signature-type">number</span>
+              </div>
+              <aside class="tsd-sources">
+                <p>
+                  Implementation of
+                  <a href="../interfaces/Entidades_Entidad.Entidad.html"
+                    >Entidad</a
+                  >.<a href="../interfaces/Entidades_Entidad.Entidad.html#id"
+                    >ID</a
+                  >
+                </p>
+                <ul>
+                  <li>
+                    Defined in
+                    <a
+                      href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L9"
+                      >Entidades/ElementoAlmacen.ts:9</a
+                    >
+                  </li>
+                </ul>
+              </aside>
             </section>
           </section>
         </details>
@@ -580,10 +472,14 @@
                     ><span class="tsd-kind-call-signature">toJSON</span
                     ><span class="tsd-signature-symbol">()</span
                     ><span class="tsd-signature-symbol">:</span>
-                    <a
-                      href="../types/Entidades_Transaccion.DetallesTransaccion.html"
-                      class="tsd-signature-type tsd-kind-type-alias"
-                      >DetallesTransaccion</a
+                    <span class="tsd-signature-type">Record</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">string</span
+                    ><span class="tsd-signature-symbol">,</span>
+                    <span class="tsd-signature-type">string</span>
+                    <span class="tsd-signature-symbol">|</span>
+                    <span class="tsd-signature-type">number</span
+                    ><span class="tsd-signature-symbol">&gt;</span
                     ><a
                       href="#tojson-1"
                       aria-label="Permalink"
@@ -593,24 +489,16 @@
                     ></a>
                   </div>
                   <div class="tsd-description">
-                    <div class="tsd-comment tsd-typography">
-                      <p>
-                        Método que devuelve un JSON con los detalles de la
-                        transacción.
-                      </p>
-                    </div>
                     <h4 class="tsd-returns-title">
-                      Returns
-                      <a
-                        href="../types/Entidades_Transaccion.DetallesTransaccion.html"
-                        class="tsd-signature-type tsd-kind-type-alias"
-                        >DetallesTransaccion</a
-                      >
+                      Returns <span class="tsd-signature-type">Record</span
+                      ><span class="tsd-signature-symbol">&lt;</span
+                      ><span class="tsd-signature-type">string</span
+                      ><span class="tsd-signature-symbol">,</span>
+                      <span class="tsd-signature-type">string</span>
+                      <span class="tsd-signature-symbol">|</span>
+                      <span class="tsd-signature-type">number</span
+                      ><span class="tsd-signature-symbol">&gt;</span>
                     </h4>
-                    <p>
-                      DetallesTransaccion - JSON con detalles de la transacción.
-                    </p>
-                    <div class="tsd-comment tsd-typography"></div>
                     <aside class="tsd-sources">
                       <p>
                         Implementation of
@@ -625,8 +513,8 @@
                         <li>
                           Defined in
                           <a
-                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/Transaccion.ts#L37"
-                            >Entidades/Transaccion.ts:37</a
+                            href="https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb/blob/0fc3cb4b57fe8541beba3dd2d7bea71d79652e62/src/Entidades/ElementoAlmacen.ts#L18"
+                            >Entidades/ElementoAlmacen.ts:18</a
                           >
                         </li>
                       </ul>
@@ -814,7 +702,7 @@
               <details open class="tsd-accordion tsd-page-navigation-section">
                 <summary
                   class="tsd-accordion-summary"
-                  data-key="section-Accessors"
+                  data-key="section-Properties"
                 >
                   <svg
                     width="20"
@@ -824,32 +712,32 @@
                     aria-hidden="true"
                   >
                     <use href="../assets/icons.svg#icon-chevronDown"></use></svg
-                  >Accessors
+                  >Properties
                 </summary>
                 <div>
-                  <a href="#bienes" class=""
+                  <a href="#bien" class=""
                     ><svg
                       class="tsd-kind-icon"
                       viewBox="0 0 24 24"
-                      aria-label="Accessor"
+                      aria-label="Property"
                     >
-                      <use href="../assets/icons.svg#icon-262144"></use></svg
-                    ><span>bienes</span></a
-                  ><a href="#fecha" class=""
+                      <use href="../assets/icons.svg#icon-1024"></use></svg
+                    ><span>bien</span></a
+                  ><a href="#cantidad" class=""
                     ><svg
                       class="tsd-kind-icon"
                       viewBox="0 0 24 24"
-                      aria-label="Accessor"
+                      aria-label="Property"
                     >
-                      <use href="../assets/icons.svg#icon-262144"></use></svg
-                    ><span>fecha</span></a
+                      <use href="../assets/icons.svg#icon-1024"></use></svg
+                    ><span>cantidad</span></a
                   ><a href="#id" class=""
                     ><svg
                       class="tsd-kind-icon"
                       viewBox="0 0 24 24"
-                      aria-label="Accessor"
+                      aria-label="Property"
                     >
-                      <use href="../assets/icons.svg#icon-262144"></use></svg
+                      <use href="../assets/icons.svg#icon-1024"></use></svg
                     ><span>ID</span></a
                   >
                 </div>

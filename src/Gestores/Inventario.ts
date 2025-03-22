@@ -1,9 +1,7 @@
 import Bien from "../Entidades/Bien.js";
 import inquirer from "inquirer";
-import { JSONFileSync } from "lowdb/node";
-import { LowSync } from "lowdb";
-import { ElementoAlmacen } from "../Entidades/ElementoAlmacen.js";
 import Gestor from "./Gestor.js";
+import ElementoAlmacen from "../Entidades/ElementoAlmacen.js";
 
 /**
  * Clase que representa el inventario de la `Posada del Lobo Blanco`.
@@ -18,27 +16,50 @@ import Gestor from "./Gestor.js";
 export default class Inventario extends Gestor<ElementoAlmacen> {
   protected _almacenMap = new Map<number, ElementoAlmacen>();
   private static GestorInstancia?: Inventario;
-  
-  private constructor(private _elementosArray: ElementoAlmacen[]) {
-    if (_elementosArray.length === 1 && _elementosArray[0].bien.nombre === "dummy") {
+
+  private constructor(private readonly _elementosArray: ElementoAlmacen[]) {
+    if (
+      _elementosArray.length === 1 &&
+      _elementosArray[0].bien.nombre === "dummy"
+    ) {
+      // Si el bien es dummy, se carga el fichero JSON
       super("BaseDeDatos/Inventario.json");
+      // Si no hay datos en el fichero, se crea un bien dummy
       if (this.database.data == null) {
-        console.log(
-          "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
-        );
+        this.imprimirMensajeError();
       } else {
+        // Si hay datos, se cargan
+        // Limpiamos el mapa para asegurarnos de cargar TODOS los elementos del JSON
+        this._almacenMap.clear();
         this.database.data.forEach((elemento) =>
-          this._almacenMap.set(elemento.ID, new ElementoAlmacen(elemento.bien, elemento.cantidad)),
+          this._almacenMap.set(
+            elemento.ID,
+            new ElementoAlmacen(elemento.bien, elemento.cantidad),
+          ),
         );
       }
     } else {
+      // Si no es dummy, se crea un bien dummy y se añaden los elementos
       super("BaseDeDatos/DummyInventario.json");
-      this.database.data = _elementosArray
+      // Es lo mismo que `this.storeInventario();` pero sin el dummy
+      this.database.data = _elementosArray;
       this.database.write();
+      // Limpiamos el mapa para asegurarnos de cargar TODOS los elementos del JSON
       _elementosArray.forEach((elemento) =>
         this._almacenMap.set(elemento.ID, elemento),
       );
     }
+  }
+
+  /**
+   * Método para imprimir un mensaje de error por pantalla.
+   * Se hace de esta forma para poder hacer bien los tests.
+   * @returns void
+   */
+  public imprimirMensajeError(): void {
+    console.log(
+      "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
+    );
   }
 
   /**
@@ -47,12 +68,14 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
    * @param elemento - Elemento a añadir.
    */
   add(elemento: ElementoAlmacen): void {
-    if(elemento.cantidad <= 0) {
+    if (elemento.cantidad <= 0) {
       throw new Error("La cantidad debe ser mayor que 0");
     }
     if (this._almacenMap.has(elemento.ID)) {
+      // Si ya existe, se suma la cantidad
       this.get(elemento.ID).cantidad += elemento.cantidad;
     } else {
+      // Si no existe, se añade
       this._almacenMap.set(elemento.ID, elemento);
     }
     this.storeInventario();
@@ -63,7 +86,12 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
    * @returns Map - Mapa con los elementos almacenados.
    */
   public static getGestorInstancia(
-    elementosArray: ElementoAlmacen[] = [new ElementoAlmacen((new Bien(-1, "dummy", "Bien dummy", "vacio", 0, 0)), 1) ],
+    elementosArray: ElementoAlmacen[] = [
+      new ElementoAlmacen(
+        new Bien(-1, "dummy", "Bien dummy", "vacio", 0, 0),
+        1,
+      ),
+    ],
   ): Inventario {
     if (!Inventario.GestorInstancia) {
       Inventario.GestorInstancia = new Inventario(elementosArray);
