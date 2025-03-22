@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
-    "doc": "typedoc --skipErrorChecking",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage --coverage.exclude=src/index.ts",
+    "doc": "typedoc --skipErrorChecking --out ./docs --customCss custom-styles.css",
+    "test": "vitest run --watch",
+    "coverage": "vitest run --watch --coverage --coverage.exclude=src/index.ts",
     "prettier": "prettier --write .",
     "lint": "eslint --fix ."
   },
@@ -16,7 +16,7 @@
     "url": "git+https://github.com/ULL-ESIT-INF-DSI-2425/prct07-witcher-datamodel-groupb"
   },
   "keywords": [],
-  "author": "Daniel Marhuenda",
+  "author": "Daniel Marhuenda, Laura Álvarez y Francisco Javier Cañas",
   "license": "ISC",
   "description": "Práctica de la asignatura DSI en el curso 2024/2025",
   "dependencies": {
