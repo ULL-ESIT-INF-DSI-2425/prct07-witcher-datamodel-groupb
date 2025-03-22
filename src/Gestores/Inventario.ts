@@ -3,6 +3,7 @@ import inquirer from "inquirer";
 import { JSONFileSync } from "lowdb/node";
 import { LowSync } from "lowdb";
 import { ElementoAlmacen } from "../Entidades/ElementoAlmacen.js";
+import Gestor from "./Gestor.js";
 
 /**
  * Clase que representa el inventario de la `Posada del Lobo Blanco`.
@@ -14,58 +15,47 @@ import { ElementoAlmacen } from "../Entidades/ElementoAlmacen.js";
  *  - Eliminar un bien.
  *  - Consultar el inventario.
  */
-export default class Inventario {
+export default class Inventario extends Gestor<ElementoAlmacen> {
   protected _almacenMap = new Map<number, ElementoAlmacen>();
   private static GestorInstancia?: Inventario;
-  private database: LowSync<ElementoAlmacen[]>;
-
-  private constructor(bienesArray: Bien[]) {
-    if (bienesArray.length === 1 && bienesArray[0].nombre === "dummy") {
-      this.database = new LowSync(
-        new JSONFileSync("BaseDeDatos/Inventario.json"),
-      );
-      this.database.read();
+  
+  private constructor(private _elementosArray: ElementoAlmacen[]) {
+    if (_elementosArray.length === 1 && _elementosArray[0].bien.nombre === "dummy") {
+      super("BaseDeDatos/Inventario.json");
       if (this.database.data == null) {
         console.log(
           "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
         );
       } else {
         this.database.data.forEach((elemento) =>
-          this._almacenMap.set(elemento.bien.ID, {
-            bien: elemento.bien,
-            cantidad: elemento.cantidad,
-          }),
+          this._almacenMap.set(elemento.ID, new ElementoAlmacen(elemento.bien, elemento.cantidad)),
         );
       }
     } else {
-      this.database = new LowSync(
-        new JSONFileSync("BaseDeDatos/DummyInventario.json"),
-      );
-      this.database.read();
-      this.database.data = this.createElementosAlmacen(bienesArray);
+      super("BaseDeDatos/DummyInventario.json");
+      this.database.data = _elementosArray
       this.database.write();
+      _elementosArray.forEach((elemento) =>
+        this._almacenMap.set(elemento.ID, elemento),
+      );
     }
   }
 
   /**
-   * Método que crea un array de elementos almacenados a partir de un array de bienes.
-   * @param bienesArray - Array de bienes.
-   * @returns Array - Array de elementos almacenados.
+   * Método que añade un elemento al inventario.
+   * Si el elemento ya existe, se suma la cantidad.
+   * @param elemento - Elemento a añadir.
    */
-  private createElementosAlmacen(bienesArray: Bien[]): ElementoAlmacen[] {
-    const elementosInventario: ElementoAlmacen[] = [];
-    bienesArray.forEach((bien) => {
-      const elementoExistente = elementosInventario.find(
-        (e) => e.bien.ID === bien.ID,
-      );
-      if (elementoExistente) {
-        elementoExistente.cantidad += 1;
-      } else {
-        elementosInventario.push({ bien, cantidad: 1 });
-      }
-    });
-
-    return elementosInventario;
+  add(elemento: ElementoAlmacen): void {
+    if(elemento.cantidad <= 0) {
+      throw new Error("La cantidad debe ser mayor que 0");
+    }
+    if (this._almacenMap.has(elemento.ID)) {
+      this.get(elemento.ID).cantidad += elemento.cantidad;
+    } else {
+      this._almacenMap.set(elemento.ID, elemento);
+    }
+    this.storeInventario();
   }
 
   /**
@@ -73,10 +63,10 @@ export default class Inventario {
    * @returns Map - Mapa con los elementos almacenados.
    */
   public static getGestorInstancia(
-    _bienesArray: Bien[] = [new Bien(-1, "dummy", "Bien dummy", "vacio", 0, 0)],
+    elementosArray: ElementoAlmacen[] = [new ElementoAlmacen((new Bien(-1, "dummy", "Bien dummy", "vacio", 0, 0)), 1) ],
   ): Inventario {
     if (!Inventario.GestorInstancia) {
-      Inventario.GestorInstancia = new Inventario(_bienesArray);
+      Inventario.GestorInstancia = new Inventario(elementosArray);
     }
     return Inventario.GestorInstancia;
   }
@@ -184,17 +174,11 @@ export default class Inventario {
           parseFloat(answers._precio), // Convertimos precio a número
         );
         try {
-          if (this._almacenMap.has(bien.ID)) {
-            throw new Error("El ID ya está en uso");
-          }
-          this._almacenMap.set(bien.ID, {
-            bien,
-            cantidad: parseInt(answers._cantidad),
-          });
-          console.log("Bien creado y añadido exitosamente");
+          this.add(new ElementoAlmacen(bien, parseInt(answers._cantidad)));
+          console.log("Cliente creado y añadido exitosamente");
         } catch (error: unknown) {
           if (error instanceof Error) {
-            console.error(error.message); // Si el ID ya está en uso, mostramos el error
+            console.error(error.message);
           } else {
             console.error("Ha ocurrido un error desconocido");
           }
@@ -209,7 +193,7 @@ export default class Inventario {
    */
   public ImprimirTest(): void {
     this._almacenMap.forEach((element) => {
-      console.log(element.bien.ID);
+      console.log(element.ID);
       if (element && "nombre" in element) console.log(element.bien.nombre);
       if (element) console.log(element.cantidad);
     });

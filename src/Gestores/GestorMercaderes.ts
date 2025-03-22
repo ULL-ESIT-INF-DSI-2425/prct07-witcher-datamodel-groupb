@@ -19,7 +19,7 @@ export default class GestorMercaderes extends Gestor<Mercader> {
   protected _almacenMap = new Map<number, Mercader>();
   private static GestorInstancia?: GestorMercaderes;
 
-  private constructor(_mercaderesArray: Mercader[]) {
+  private constructor(private _mercaderesArray: Mercader[]) {
     if (
       _mercaderesArray.length === 1 &&
       _mercaderesArray[0].nombre === "dummy"

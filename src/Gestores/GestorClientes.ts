@@ -19,7 +19,7 @@ export default class GestorClientes extends Gestor<Cliente> {
   protected _almacenMap = new Map<number, Cliente>();
   private static GestorInstancia?: GestorClientes;
 
-  private constructor(_clientesArray: Cliente[]) {
+  private constructor(private _clientesArray: Cliente[]) {
     if (_clientesArray.length === 1 && _clientesArray[0].nombre === "dummy") {
       super("BaseDeDatos/Clientes.json");
       if (this.database.data == null) {
