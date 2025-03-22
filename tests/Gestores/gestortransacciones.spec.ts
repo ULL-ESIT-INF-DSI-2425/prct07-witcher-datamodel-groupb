@@ -1,4 +1,5 @@
-import { describe, test, expect, beforeEach } from "vitest";
+import { describe, test, expect, beforeEach, vi } from "vitest";
+import inquirer from "inquirer";
 import GestorTransacciones from '../../src/Gestores/GestorTransacciones';
 import Transaccion from '../../src/Entidades/Transaccion';
 import Bien from '../../src/Entidades/Bien';
@@ -155,4 +156,63 @@ describe('GestorTransacciones - Pruebas', () => {
     expect(logs).toContain('60');
     expect(logs).toContain('61');
   });
+
+  test('Constructor - else branch: cargar desde Dummytransacciones.json', () => {
+    // Usamos un array vacio para forzar la rama del else
+    const gestor = GestorTransacciones.getGestorInstancia([]);
+
+    // Comprobamos que el gestor se crea correctamente
+    expect(gestor).toBeInstanceOf(GestorTransacciones);
+  });
+});
+
+// Mock crea una versión "falsa" de una funcion para verificar interacciones
+// Como se importa inquirer por defecto, el mock debe incluir la propiedad "default".
+vi.mock('inquirer', () => {
+  return {
+    default: { prompt: vi.fn(), },
+  };
+});  
+
+describe('GestorTransacciones - Método crear()', () => {
+beforeEach(() => {
+  GestorTransacciones.resetInstance();
+});
+
+test('crear() con ID válido agrega una transacción', async () => {
+  // Simulamos que el usuario introduce "10" como ID
+  (inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void }).mockResolvedValue({ _ID: '10' });
+
+  const gestor = GestorTransacciones.getGestorInstancia([]);
+  // Llamamos al método crear(), que hace inquirer.prompt(...)
+  gestor.crear();
+
+  // El método crear() retorna una promesa (por el .then). Esperamos a que se resuelva:
+  await new Promise(process.nextTick);
+
+  // Verificamos que la transacción con ID 10 se haya agregado
+  const tx = gestor.get(10);
+  expect(tx).toBeInstanceOf(Transaccion);
+  expect(tx.ID).toBe(10);
+});
+
+test('crear() con ID duplicado muestra error', async () => {
+  // Simulamos que el usuario introduce "10" como ID
+  (inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void }).mockResolvedValue({ _ID: '10' });
+
+  const gestor = GestorTransacciones.getGestorInstancia([]);
+  // Agregamos una transacción con ID 10 antes
+  gestor.add(new Transaccion(10, new Date(), []));
+
+  // Sobrescribimos console.error para capturar el mensaje
+  const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+  gestor.crear();
+  await new Promise(process.nextTick);
+
+  // Verificamos que se llamó a console.error con el mensaje de error
+  expect(consoleSpy).toHaveBeenCalledWith('Error, ID 10 ya está en uso');
+
+  consoleSpy.mockRestore();
+});
 });

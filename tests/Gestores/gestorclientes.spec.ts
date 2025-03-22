@@ -1,4 +1,5 @@
-import { describe, test, expect, afterEach } from "vitest";
+import { describe, test, expect,beforeEach, afterEach, vi } from "vitest";
+import inquirer from "inquirer";
 import GestorClientes from "../../src/Gestores/GestorClientes";
 import Cliente from "../../src/Entidades/Cliente";
 
@@ -89,5 +90,77 @@ describe("GestorClientes", () => {
     // Verificamos que los mensajes esperados se encuentren en el array
     expect(logs).toContain("Lambert");
     expect(logs).toContain("Eskel");
+  });
+});
+
+// Mock crea una versión "falsa" de una funcion para verificar interacciones
+// Como se importa inquirer por defecto, el mock debe incluir la propiedad "default".
+vi.mock("inquirer", () => {
+  return {
+    default: {
+      prompt: vi.fn(),
+    },
+  };
+});
+
+// Para acceder a prompt y poder llamar a mockResolvedValue sin definir una interfaz separada,
+// usamos un cast inline a un objeto con la propiedad mockResolvedValue:
+const getPromptMock = (): { mockResolvedValue: (val: unknown) => void } =>
+  inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void };
+
+describe("GestorClientes - Método crear()", () => {
+  beforeEach(() => {
+    GestorClientes.resetInstance();
+  });
+
+  test("crear() debe agregar un cliente cuando se ingresan datos válidos", async () => {
+    // Simulamos respuestas válidas
+    getPromptMock().mockResolvedValue({
+      _ID: "10",
+      _nombre: "Geralt de Rivia",
+      _raza: "Humano",
+      _ubicacion: "Kaer Morhen",
+    });
+
+    const gestor = GestorClientes.getGestorInstancia([]);
+    // Evitamos efectos secundarios sobrescribiendo storeInventario para que no escriba en disco.
+    (gestor as unknown as { storeInventario: () => void }).storeInventario = () => {};
+
+    const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    // Llamamos a crear(), que internamente usará el mock de inquirer
+    gestor.crear();
+    // Esperamos a que se resuelvan las promesas internas
+    await new Promise((resolve) => process.nextTick(resolve));
+
+    // Verificamos que se agregó un cliente con ID 10
+    const cliente = gestor.get(10);
+    expect(cliente).toBeInstanceOf(Cliente);
+    expect(cliente.nombre).toBe("Geralt de Rivia");
+    expect(consoleLogSpy).toHaveBeenCalledWith("Cliente creado y añadido exitosamente");
+    consoleLogSpy.mockRestore();
+  });
+
+  test("crear() debe mostrar error cuando se ingresa un ID duplicado", async () => {
+    // Simulamos respuestas con un ID duplicado
+    getPromptMock().mockResolvedValue({
+      _ID: "11",
+      _nombre: "Ciri",
+      _raza: "Elfo",
+      _ubicacion: "Vizima",
+    });
+
+    const gestor = GestorClientes.getGestorInstancia([]);
+    (gestor as unknown as { storeInventario: () => void }).storeInventario = () => {};
+    // Preagregamos un cliente con ID 11 para forzar duplicidad
+    const preCliente = new Cliente(11, "Ciri", "Elfo", "Vizima");
+    gestor.add(preCliente);
+
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    gestor.crear();
+    await new Promise((resolve) => process.nextTick(resolve));
+
+    // Verificamos que se haya llamado a console.error con el mensaje exacto.
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Error, ID 11 ya está en uso");
+    consoleErrorSpy.mockRestore();
   });
 });

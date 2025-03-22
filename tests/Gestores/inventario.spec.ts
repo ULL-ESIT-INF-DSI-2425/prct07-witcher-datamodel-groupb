@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
 import { Bien, Inventario, ElementoAlmacen } from "../../src/index.js";
+import inquirer from "inquirer";
 
 //
 // Inventario - Creación y reseteo de instancia
@@ -78,6 +79,31 @@ describe("Inventario - Creación y reseteo de instancia", () => {
     expect(inventario.length()).toBe(2);
     expect(inventario.getArray()).toEqual(elementosArray);
   });
+
+  test("Agregar bien con ID duplicado debe sumar la cantidad", () => {
+    // Creamos un bien
+    const bien = new Bien(101, "Escudo de Madera", "Escudo resistente", "Madera", 4, 80);
+    // Creamos el ElementoAlmacen con cantidad 1
+    const elementoInicial = new ElementoAlmacen(bien, 1);
+    
+    const inventario = Inventario.getGestorInstancia([]);
+    // Sobrescribimos storeInventario para evitar escritura en disco
+    (inventario as unknown as { storeInventario: () => void }).storeInventario = () => {};
+    
+    // Agregamos el elemento por primera vez
+    inventario.add(elementoInicial);
+    expect(inventario.length()).toBe(1);
+    expect(inventario.get(101).cantidad).toBe(1);
+  
+    // Creamos otro ElementoAlmacen para el mismo bien, con cantidad 2
+    const elementoDuplicado = new ElementoAlmacen(bien, 2);
+    // Agregamos de nuevo el mismo bien
+    inventario.add(elementoDuplicado);
+    
+    // Ahora se debería haber sumado la cantidad: 1 + 2 = 3
+    expect(inventario.length()).toBe(1);
+    expect(inventario.get(101).cantidad).toBe(3);
+  });  
 });
 
 //
@@ -187,4 +213,58 @@ describe("Inventario - imprimirMensajeError", () => {
   });
 
   // TODO: Test línea 28 (súper chungo)
+});
+
+// Mock crea una versión "falsa" de una funcion para verificar interacciones
+// Como se importa inquirer por defecto, el mock debe incluir la propiedad "default".
+vi.mock("inquirer", () => {
+  return {
+    default: {
+      prompt: vi.fn(),
+    },
+  };
+});
+
+// Para acceder al método prompt usamos un cast in-line a un objeto que tenga la función mockResolvedValue.
+const getPromptMock = (): { mockResolvedValue: (val: unknown) => void } =>
+  inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void };
+
+describe("Inventario - Método crear()", () => {
+  beforeEach(() => {
+    Inventario.resetInstance();
+  });
+
+  test("crear() debe agregar un bien cuando se ingresan datos válidos", async () => {
+    // Simulamos las respuestas de inquirer con datos reales.
+    getPromptMock().mockResolvedValue({
+      _ID: "100",
+      _nombre: "Espada de Acero",
+      _descripcion: "Espada forjada en acero templado",
+      _material: "Acero",
+      _peso: "3.5",
+      _precio: "100",
+      _cantidad: "2",
+    });
+
+    const inventario = Inventario.getGestorInstancia([]);
+    // Sobrescribimos storeInventario para evitar escrituras reales
+    (inventario as unknown as { storeInventario: () => void }).storeInventario = () => {};
+
+    const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    // Llamamos a crear(), que internamente usará el mock de inquirer
+    inventario.crear();
+
+    // Esperamos a que se resuelva la promesa del .then() (un tick)
+    await new Promise((resolve) => process.nextTick(resolve));
+
+    // Verificamos que se agregó el bien con ID 100
+    const elemento = inventario.get(100);
+    expect(elemento).toBeDefined();
+    expect(elemento.bien.nombre).toBe("Espada de Acero");
+    expect(elemento.cantidad).toBe(2);
+    expect(consoleLogSpy).toHaveBeenCalledWith("Cliente creado y añadido exitosamente");
+
+    consoleLogSpy.mockRestore();
+  });
 });

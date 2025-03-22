@@ -156,4 +156,8 @@ function menuPrincipal(): void {
 const inventario: Inventario = Inventario.getGestorInstancia();
 const clientes: GestorClientes = GestorClientes.getGestorInstancia();
 const mercaderes: GestorMercaderes = GestorMercaderes.getGestorInstancia();
-menuPrincipal();
+
+if(process.env.NODE_ENV !== "test"){
+  menuPrincipal();
+}
+

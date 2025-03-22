@@ -98,4 +98,44 @@ describe('Transaccion - Pruebas', () => {
     
     expect(transaccion.bienes).toEqual([elementoArmadura]);
   });
+
+  test('CalcularTotalCompras: sin efectivo, retorna 0', () => {
+    // Creamos un bien con un precio > 0 y una cantidad > 0
+    const bienCaro = new Bien(1, 'Bien Caro', 'Desc', 'Material', 1, 1000);
+    // Necesitamos 2 unidades => precio total 2000
+    const elemento = new ElementoAlmacen(bienCaro, 2);
+  
+    // Creamos la transacción
+    const transaccion = new Transaccion(1, new Date(), [elemento]);
+  
+    // Forzamos la llamada al método privado usando cast
+    const resultado = (transaccion as unknown as { CalcularTotalCompras: () => number }).CalcularTotalCompras();
+  
+    // Esperamos que retorne 0 y se imprima "No hay suficiente efectivo..."
+    expect(resultado).toBe(0);
+  });
+
+  test('CalcularTotalCompras: con precio 0 se ejecuta el else', () => {
+    // Creamos un bien "gratuito" (precio = 0)
+    const bienGratis = new Bien(2, 'Bien Gratis', 'Desc', 'Material', 1, 0);
+    // Cantidad 2 => precio * cantidad = 0
+    const elemento = new ElementoAlmacen(bienGratis, 2);
+  
+    // Creamos una instancia vacía de transaccion y forzamos que tenga la propiedad privada
+    const transaccion = Object.create(Transaccion.prototype) as unknown as { _elementosEnTransaccion: ElementoAlmacen[]; CalcularTotalCompras: () => number };
+
+    // Asignamos la propiedad privada
+    transaccion._elementosEnTransaccion = [elemento];
+  
+    // Llamamos al método privado
+    const resultado = transaccion.CalcularTotalCompras();
+  
+    // Aquí, entra en el else, hace total -= 0 y duplica la cantidad (cantidad += cantidad)
+    // Por lo tanto, resultado final de la función será 0
+    expect(resultado).toBe(0);
+  
+    // Verificamos que la cantidad se haya duplicado
+    // Inicialmente era 2, luego elementoTransaccion.cantidad += elementoTransaccion.cantidad => 4
+    expect(elemento.cantidad).toBe(4);
+  });  
 });

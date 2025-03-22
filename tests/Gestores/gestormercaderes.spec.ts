@@ -1,4 +1,5 @@
-import { describe, test, expect, afterEach } from "vitest";
+import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import inquirer from "inquirer";
 import GestorMercaderes from "../../src/Gestores/GestorMercaderes";
 import Mercader from "../../src/Entidades/Mercader";
 
@@ -109,3 +110,83 @@ describe("GestorMercaderes", () => {
     expect(logs).toContain("Fergus Graem");
   });
 });
+
+// Mock crea una versión "falsa" de una funcion para verificar interacciones
+// Como se importa inquirer por defecto, el mock debe incluir la propiedad "default".
+vi.mock("inquirer", () => {
+  return {
+    default: {
+      prompt: vi.fn()
+    }
+  };
+});
+
+// Para acceder a prompt y usar mockResolvedValue sin definir una interfaz separada, usamos un cast inline:
+const getPromptMock = (): { mockResolvedValue: (val: unknown) => void } =>
+  inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void };
+
+describe("GestorMercaderes - Método crear()", () => {
+  beforeEach(() => {
+    GestorMercaderes.resetInstance();
+  });
+
+  test("crear() debe agregar un mercader cuando se ingresan datos válidos", async () => {
+    // Simulamos respuestas válidas para un mercader.
+    // Asegúrate de que los nombres de las propiedades (_ID, _nombre, _tipo, _ubicacion)
+    // sean los que tu implementación utiliza.
+    getPromptMock().mockResolvedValue({
+      _ID: "20",
+      _nombre: "Hattori",
+      _tipo: "Herrero",
+      _ubicacion: "Novigrado"
+    });
+
+    const gestor = GestorMercaderes.getGestorInstancia([]);
+    // Evitamos efectos secundarios sobrescribiendo storeInventario para que no escriba a disco.
+    (gestor as unknown as { storeInventario: () => void }).storeInventario = () => {};
+    const consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+
+    // Llamamos al método crear(), que internamente usa el prompt simulado.
+    gestor.crear();
+    // Esperamos a que se resuelvan las promesas internas (un tick).
+    await new Promise((resolve) => process.nextTick(resolve));
+
+    // Verificamos que se agregó un mercader con ID 20 y que su nombre es "Hattori".
+    const mercader = gestor.get(20);
+    expect(mercader).toBeInstanceOf(Mercader);
+    expect(mercader.nombre).toBe("Hattori");
+
+    // Se espera que se imprima un mensaje de éxito.
+    // Asegúrate de que en tu implementación el mensaje sea exactamente este,
+    // por ejemplo: "Mercader creado y añadido exitosamente"
+    expect(consoleLogSpy).toHaveBeenCalledWith("Mercader creado y añadido exitosamente");
+    consoleLogSpy.mockRestore();
+  });
+
+  test("crear() debe mostrar error cuando se ingresa un ID duplicado", async () => {
+    // Simulamos respuestas con un ID duplicado.
+    getPromptMock().mockResolvedValue({
+      _ID: "21",
+      _nombre: "Fergus Graem",
+      _tipo: "Mercader General",
+      _ubicacion: "Velen"
+    });
+
+    const gestor = GestorMercaderes.getGestorInstancia([]);
+    (gestor as unknown as { storeInventario: () => void }).storeInventario = () => {};
+    // Preagregamos un mercader con ID 21 para forzar duplicidad.
+    const mercaderPre = new Mercader(21, "Fergus Graem", "Mercader General", "Velen");
+    gestor.add(mercaderPre);
+
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    gestor.crear();
+    await new Promise((resolve) => process.nextTick(resolve));
+
+    // Se espera que se llame a console.error con el mensaje de error exacto.
+    // Asegúrate de que tu implementación lance el mensaje: "Error, ID 21 ya está en uso"
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Error, ID 21 ya está en uso");
+    consoleErrorSpy.mockRestore();
+  });
+});
+
