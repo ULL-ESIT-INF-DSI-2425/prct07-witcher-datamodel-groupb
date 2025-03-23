@@ -398,7 +398,7 @@ function promptVender(): void {
               try {
                 //transacciones.vender(cliente, bien, cantidad);
                 inventario.removeBien(bien.ID, cantidad);
-                transacciones.add(new Transaccion(-1, new Date(), [bien], cliente, false));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien], cliente, false));
                 console.log("Venta realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -453,7 +453,7 @@ function promptComprar(): void {
               try {
                 //transacciones.comprar(mercader, bien, cantidad);
                 inventario.addBien(bien.ID, cantidad);
-                transacciones.add(new Transaccion(-1, new Date(), [bien], mercader, false));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien], mercader, false));
                 console.log("Compra realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
