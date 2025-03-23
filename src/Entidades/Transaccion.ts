@@ -1,5 +1,8 @@
+import { D } from "vitest/dist/chunks/reporters.d.CqBhtcTq.js";
+import Cliente from "./Cliente.js";
 import ElementoAlmacen from "./ElementoAlmacen.js";
 import { Entidad } from "./Entidad.js";
+import Mercader from "./Mercader.js";
 
 /**
  * Interfaz que define la estructura de los detalles de una transacción.
@@ -8,26 +11,22 @@ export type DetallesTransaccion = {
   ID: number;
   fecha: Date;
   bienes: ElementoAlmacen[];
-  total: number;
+  persona: Cliente|Mercader;
+  devolucion: boolean;
+  dinero: number;
 };
 
 export default class Transaccion implements Entidad {
-  private readonly _total: number;
+  private readonly _dinero: number = 0;
 
-  /**
-   * Constructor de la clase `Transaccion`.
-   * @param _ID - ID de la transacción. Es `readonly` porque debe ser único y no deben ser modificados.
-   * @param _fecha - Fecha de la transacción.
-   * @param _elementosEnTransaccion - Elementos de la transacción.
-   * @returns Transaccion - Objeto de la clase `Transaccion`.
-   * @remarks `fecha` y `elementosEnTransaccion` son `readonly` para que el `SonarCloud` no se queje.
-   */
-  constructor(
+  constructor( 
     private readonly _ID: number,
     private readonly _fecha: Date,
     private readonly _elementosEnTransaccion: ElementoAlmacen[],
+    private readonly _persona: Cliente | Mercader,
+    private readonly _devolucion: boolean = false,
   ) {
-    this._total = this.CalcularTotalVentas();
+    this._dinero = this.CalcularTotalVentas();
   }
 
   /**
@@ -37,10 +36,12 @@ export default class Transaccion implements Entidad {
   toJSON(): DetallesTransaccion {
     return {
       ID: this._ID,
-      fecha: new Date(),
-      bienes: [],
-      total: 0,
-    };
+      fecha: this._fecha,
+      bienes: this._elementosEnTransaccion,
+      persona: this._persona,
+      devolucion: this._devolucion,
+      dinero: this._dinero,
+    }
   }
 
   /**
@@ -99,4 +100,5 @@ export default class Transaccion implements Entidad {
     }
     return total;
   }
+  
 }

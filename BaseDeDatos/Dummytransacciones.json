@@ -1,8 +1,15 @@
 [
   {
     "ID": 10,
-    "fecha": "2025-03-23T16:20:22.476Z",
+    "fecha": "2025-03-23T16:38:38.143Z",
     "bienes": [],
-    "total": 0
+    "persona": {
+      "ID": 1,
+      "nombre": "Geralt",
+      "raza": "Humano",
+      "ubicacion": "Rivia"
+    },
+    "devolucion": false,
+    "dinero": 0
   }
 ]

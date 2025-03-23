@@ -2,8 +2,10 @@ import { describe, test, expect } from "vitest";
 import Transaccion from '../../src/Entidades/Transaccion';
 import ElementoAlmacen from '../../src/Entidades/ElementoAlmacen';
 import Bien from '../../src/Entidades/Bien';
+import { Cliente } from "../../src";
 
 describe('Transaccion - Pruebas', () => {
+  let cliente:Cliente = new Cliente(1, "Geralt", "Humano", "Rivia");
   test('Debe calcular el total correctamente con un solo elemento y resetear la cantidad del elemento', () => {
     const espada = new Bien(
       1, 
@@ -16,7 +18,7 @@ describe('Transaccion - Pruebas', () => {
     // Creamos un ElementoAlmacen para la espada con cantidad 2.
     const elementoEspada = new ElementoAlmacen(espada, 2);
     const fecha = new Date('2025-01-01');
-    const transaccion = new Transaccion(1, fecha, [elementoEspada]);
+    const transaccion = new Transaccion(1, fecha, [elementoEspada], cliente);
 
     // La lógica interna de Transaccion (CalcularTotalVentas) se espera que use
     // la cantidad del elemento y luego la "resetee" a 0.
@@ -46,7 +48,7 @@ describe('Transaccion - Pruebas', () => {
     const elementoEscudo = new ElementoAlmacen(escudo, 2);  // Total esperado: 2 * 800 = 1600
     
     const fecha = new Date('2025-01-02');
-    const transaccion = new Transaccion(2, fecha, [elementoEspada, elementoEscudo]);
+    const transaccion = new Transaccion(2, fecha, [elementoEspada, elementoEscudo], cliente);
     
     // Verificamos que ambas cantidades hayan sido "reseteadas" a 0 tras el cálculo.
     expect(elementoEspada.cantidad).toBe(0);
@@ -64,7 +66,7 @@ describe('Transaccion - Pruebas', () => {
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 2);
     const fecha = new Date('2025-01-03');
-    const transaccion = new Transaccion(3, fecha, [elementoEscudo]);
+    const transaccion = new Transaccion(3, fecha, [elementoEscudo], cliente);
     
     const json = transaccion.toJSON();
     
@@ -72,12 +74,12 @@ describe('Transaccion - Pruebas', () => {
     expect(json).toHaveProperty('ID', 3);
     expect(json).toHaveProperty('fecha');
     expect(json).toHaveProperty('bienes');
-    expect(json).toHaveProperty('total');
+    expect(json).toHaveProperty('dinero');
     
     // Verificamos que 'bienes' sea un array (en este caso, la implementación retorna un array vacío)
     expect(Array.isArray(json.bienes)).toBe(true);
     // Y que total sea 0 según la implementación de toJSON.
-    expect(json.total).toBe(0);
+    expect(json.dinero).toBe(1600);
     
     // Comprobamos que la fecha sea válida.
     expect(new Date(json.fecha).toString()).not.toBe('Invalid Date');
@@ -94,7 +96,7 @@ describe('Transaccion - Pruebas', () => {
     );
     const elementoArmadura = new ElementoAlmacen(armadura, 1);
     const fecha = new Date('2025-01-04');
-    const transaccion = new Transaccion(4, fecha, [elementoArmadura]);
+    const transaccion = new Transaccion(4, fecha, [elementoArmadura], cliente);
     
     expect(transaccion.bienes).toEqual([elementoArmadura]);
   });
@@ -106,7 +108,7 @@ describe('Transaccion - Pruebas', () => {
     const elemento = new ElementoAlmacen(bienCaro, 2);
   
     // Creamos la transacción
-    const transaccion = new Transaccion(1, new Date(), [elemento]);
+    const transaccion = new Transaccion(1, new Date(), [elemento], cliente);
   
     // Forzamos la llamada al método privado usando cast
     const resultado = (transaccion as unknown as { CalcularTotalCompras: () => number }).CalcularTotalCompras();

@@ -4,12 +4,14 @@ import GestorTransacciones from '../../src/Gestores/GestorTransacciones';
 import Transaccion from '../../src/Entidades/Transaccion';
 import Bien from '../../src/Entidades/Bien';
 import ElementoAlmacen from '../../src/Entidades/ElementoAlmacen';
+import { Cliente } from "../../src";
 
 describe('GestorTransacciones - Pruebas', () => {
   // Reseteamos la instancia del singleton antes de cada prueba.
   beforeEach(() => {
     GestorTransacciones.resetInstance();
   });
+  let cliente:Cliente = new Cliente(1, "Geralt", "Humano", "Rivia");
 
   test('getGestorInstancia debe retornar una instancia y seguir el patrón singleton', () => {
     const gestor1 = GestorTransacciones.getGestorInstancia();
@@ -34,7 +36,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1500
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
-    const transaccion1 = new Transaccion(10, new Date('2025-01-10'), [elementoEspada]);
+    const transaccion1 = new Transaccion(10, new Date('2025-01-10'), [elementoEspada], cliente);
     
     // Forzamos la rama "else" pasando un array personalizado.
     const gestor = GestorTransacciones.getGestorInstancia([transaccion1]);
@@ -49,7 +51,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion2 = new Transaccion(11, new Date('2025-01-11'), [elementoEscudo]);
+    const transaccion2 = new Transaccion(11, new Date('2025-01-11'), [elementoEscudo], cliente);
     gestor.add(transaccion2);
     expect(gestor.length()).toBe(2);
     expect(gestor.get(11)).toEqual(transaccion2);
@@ -65,7 +67,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1500
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
-    const transaccion = new Transaccion(20, new Date('2025-01-12'), [elementoEspada]);
+    const transaccion = new Transaccion(20, new Date('2025-01-12'), [elementoEspada], cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(() => gestor.add(transaccion)).toThrow('Error, ID 20 ya está en uso');
   });
@@ -80,7 +82,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion = new Transaccion(30, new Date('2025-01-13'), [elementoEscudo]);
+    const transaccion = new Transaccion(30, new Date('2025-01-13'), [elementoEscudo], cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(gestor.length()).toBe(1);
     
@@ -99,7 +101,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1200
     );
     const elementoArmadura = new ElementoAlmacen(armadura, 1);
-    const transaccion = new Transaccion(40, new Date('2025-01-14'), [elementoArmadura]);
+    const transaccion = new Transaccion(40, new Date('2025-01-14'), [elementoArmadura], cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     
     const datos = (gestor as any).database.data;
@@ -116,7 +118,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion = new Transaccion(50, new Date('2025-01-15'), [elementoEscudo]);
+    const transaccion = new Transaccion(50, new Date('2025-01-15'), [elementoEscudo], cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(() => gestor.get(999)).toThrow('Bien con ID 999 no encontrado.');
   });
@@ -140,8 +142,8 @@ describe('GestorTransacciones - Pruebas', () => {
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion1 = new Transaccion(60, new Date('2025-01-16'), [elementoEspada]);
-    const transaccion2 = new Transaccion(61, new Date('2025-01-17'), [elementoEscudo]);
+    const transaccion1 = new Transaccion(60, new Date('2025-01-16'), [elementoEspada], cliente);
+    const transaccion2 = new Transaccion(61, new Date('2025-01-17'), [elementoEscudo], cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion1, transaccion2]);
 
     // Para capturar la salida, sobrescribimos console.log manualmente.
@@ -178,8 +180,9 @@ describe('GestorTransacciones - Método crear()', () => {
 beforeEach(() => {
   GestorTransacciones.resetInstance();
 });
-
+let cliente:Cliente = new Cliente(1, "Geralt", "Humano", "Rivia");
 test('crear() con ID válido agrega una transacción', async () => {
+  
   // Simulamos que el usuario introduce "10" como ID
   (inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void }).mockResolvedValue({ _ID: '10' });
 
@@ -202,7 +205,7 @@ test('crear() con ID duplicado muestra error', async () => {
 
   const gestor = GestorTransacciones.getGestorInstancia([]);
   // Agregamos una transacción con ID 10 antes
-  gestor.add(new Transaccion(10, new Date(), []));
+  gestor.add(new Transaccion(10, new Date(), [], cliente));
 
   // Sobrescribimos console.error para capturar el mensaje
   const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
