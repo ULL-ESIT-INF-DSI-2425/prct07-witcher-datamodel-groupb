@@ -106,6 +106,40 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
   }
 
   /**
+   * Devuelve los ID y los nombres de los clientes almacenados.
+   * @returns Pares de ID y nombre de los clientes.
+   */
+  getNombres(): string[] {
+    return Array.from(this._almacenMap.values()).map(
+      (elemento) => `${elemento.ID} - ${elemento.bien.nombre}`,
+    );
+  }
+
+  removeBien(id: number, cantidad:number): void {
+    if (this._almacenMap.has(id)) {
+      let elemento = this.get(id);
+      if (elemento.cantidad >= cantidad) {
+        elemento.cantidad -= cantidad;
+      } else {
+        throw new Error("No hay suficiente cantidad de ese bien");
+      }
+    } else {
+      throw new Error("No existe el bien con ese ID");
+    }
+    this.storeInventario();
+  }
+
+  addBien(id: number, cantidad:number): void {
+    if (this._almacenMap.has(id)) {
+      let elemento = this.get(id);
+      elemento.cantidad += cantidad;
+    } else {
+      throw new Error("No existe el bien con ese ID");
+    }
+    this.storeInventario();
+  }
+
+  /**
    * Método que busca bienes según un filtro dado.
    * @param filtro - Filtro a aplicar.
    * @param valor - Valor del filtro.

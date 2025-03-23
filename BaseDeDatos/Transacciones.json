@@ -1,31 +1,28 @@
 [
   {
-    "ID": 7,
-    "fecha": "2025-04-23T18:25:43.511Z",
+    "ID": -1,
+    "fecha": "2025-03-23T17:10:21.114Z",
     "bienes": [
       {
+        "ID": 1,
         "bien": {
           "ID": 1,
           "nombre": "Bien1",
-          "descripcion": "Primer bien",
+          "descripcion": "Primero bien",
           "material": "hierro",
-          "peso": 10,
-          "precio": 50
+          "peso": 30,
+          "precio": 10
         },
-        "cantidad": 3
-      },
-      {
-        "bien": {
-          "ID": 2,
-          "nombre": "Bien2",
-          "descripcion": "Segundo bien",
-          "material": "madera",
-          "peso": 5,
-          "precio": 20
-        },
-        "cantidad": 5
+        "cantidad": 0
       }
     ],
-    "total": 250
+    "persona": {
+      "ID": 1,
+      "nombre": "Mercader1",
+      "tipo": "herrero",
+      "ubicacion": "habitacion nº1"
+    },
+    "devolucion": false,
+    "dinero": 100
   }
 ]

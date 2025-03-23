@@ -176,6 +176,7 @@ vi.mock('inquirer', () => {
   };
 });  
 
+/** 
 describe('GestorTransacciones - Método crear()', () => {
 beforeEach(() => {
   GestorTransacciones.resetInstance();
@@ -219,3 +220,4 @@ test('crear() con ID duplicado muestra error', async () => {
   consoleSpy.mockRestore();
 });
 });
+*/

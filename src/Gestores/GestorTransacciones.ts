@@ -1,3 +1,4 @@
+import Cliente from "../Entidades/Cliente.js";
 import Transaccion from "../Entidades/Transaccion.js";
 import Gestor from "./Gestor.js";
 import inquirer from "inquirer";
@@ -20,7 +21,7 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
 
   private constructor(transaccionesArray: Transaccion[]) {
     if (transaccionesArray.length === 1 && transaccionesArray[0].ID === -1) {
-      super("BaseDeDatos/transacciones.json");
+      super("BaseDeDatos/Transacciones.json");
       if (this.database.data == null) {
         console.log(
           "No se ha detectado ningún dato en el fichero json. Esto no debería ocurrir",
@@ -33,6 +34,8 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
               transaccion.ID,
               transaccion.fecha,
               transaccion.bienes,
+              transaccion.persona,
+              transaccion.devolucion,
             ),
           ),
         );
@@ -47,8 +50,21 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
     }
   }
 
+  update(entidad: Transaccion): void {
+    throw new Error("No se pueden modificar las transacciones ya creadas.");
+  }
+
+  //Funcion para obtener un ID no usado para una nueva transaccion
+  getTransaccionID(): number {
+    let newID = 1;
+    while (this._almacenMap.has(newID)) {
+      newID++;
+    }
+    return newID;
+  }
+
   public static getGestorInstancia(
-    _transaccionesArray: Transaccion[] = [new Transaccion(-1, new Date(), [])],
+    _transaccionesArray: Transaccion[] = [new Transaccion(-1, new Date(), [], new Cliente(-1, "Dummy", "ninguna", "ningun sitio"))],
   ): GestorTransacciones {
     if (!GestorTransacciones.GestorInstancia) {
       GestorTransacciones.GestorInstancia = new GestorTransacciones(
@@ -60,41 +76,5 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
 
   static resetInstance(): void {
     GestorTransacciones.GestorInstancia = undefined;
-  }
-
-  public crear(): void {
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          name: "_ID",
-          message: "Ingrese el ID del transaccion:",
-          validate(value) {
-            const id = Number(value);
-            if (isNaN(id)) {
-              return "El ID debe ser un número";
-            }
-            return true;
-          },
-        },
-      ])
-      .then((answers) => {
-        const transaccion = new Transaccion(
-          parseInt(answers._ID), // Convertimos el ID a número
-          new Date(),
-          [], // Inicializamos bienes en transaccion en vacío
-        );
-
-        try {
-          this.add(transaccion);
-          console.log("transaccion creado y añadido exitosamente");
-        } catch (error: unknown) {
-          if (error instanceof Error) {
-            console.error(error.message); // Si el ID ya está en uso, mostramos el error
-          } else {
-            console.error("Ha ocurrido un error desconocido");
-          }
-        }
-      });
   }
 }

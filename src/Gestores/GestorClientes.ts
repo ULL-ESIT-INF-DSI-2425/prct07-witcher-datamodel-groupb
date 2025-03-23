@@ -64,6 +64,16 @@ export default class GestorClientes extends Gestor<Cliente> {
   }
 
   /**
+   * Devuelve los ID y los nombres de los clientes almacenados.
+   * @returns Pares de ID y nombre de los clientes.
+   */
+  getNombres(): string[] {
+    return Array.from(this._almacenMap.values()).map(
+      (cliente) => `${cliente.ID} - ${cliente.nombre}`,
+    );
+  }
+
+  /**
   * Método que busca bienes según un filtro dado.
   * @param filtro - Filtro a aplicar.
   * @param valor - Valor del filtro.

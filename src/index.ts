@@ -23,11 +23,16 @@ import GestorMercaderes from "./Gestores/GestorMercaderes.js";
 import Cliente from "./Entidades/Cliente.js";
 import Mercader from "./Entidades/Mercader.js";
 import ElementoAlmacen from "./Entidades/ElementoAlmacen.js";
+import GestorTransacciones from "./Gestores/GestorTransacciones.js";
+import Transaccion from "./Entidades/Transaccion.js";
 
 enum comandosPrincipales {
   Interactuar_bienes = "Gestionar bienes",
   Interactuar_mercaderes = "Gestionar mercaderes",
   Interactuar_clientes = "Gestionar clientes",
+  Vender = "Vender",
+  Comprar = "Comprar",
+  Devolver = "Devolver",
   Test_Imprimir = "Test Comprobar lectura json",
   Quit = "Quit",
 }
@@ -348,6 +353,120 @@ function promptInteracturarClientes(): void {
     });
 }
 
+function promptVender(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "Vender",
+      message: "Seleccione cliente:",
+      choices: clientes.getNombres(),
+    })
+    .then((answers) => {
+      const id = parseInt(answers["Vender"].split(" - ")[0]);
+      const cliente = clientes.get(id);
+      if (cliente === undefined) {
+        console.log("Cliente no encontrado");
+        return;
+      }
+      inquirer
+        .prompt({
+          type: "list",
+          name: "Vender",
+          message: "Seleccione bien:",
+          choices: inventario.getNombres(),
+        })
+        .then((answers) => {
+          const id = parseInt(answers["Vender"].split(" - ")[0]);
+          const bien = inventario.get(id);
+          if (bien === undefined) {
+            console.log("Bien no encontrado");
+            return;
+          }
+          inquirer
+            .prompt({
+              type: "input",
+              name: "Cantidad",
+              message: "Introduzca la cantidad a vender:",
+            })
+            .then((answers) => {
+              const cantidad = parseInt(answers["Cantidad"]);
+              if(bien.cantidad < cantidad){
+                console.log("No hay suficiente cantidad de bienes para vender");
+                return;
+              }
+              try {
+                //transacciones.vender(cliente, bien, cantidad);
+                inventario.removeBien(bien.ID, cantidad);
+                transacciones.add(new Transaccion(-1, new Date(), [bien], cliente, false));
+                console.log("Venta realizada exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+        });
+    });
+  }
+
+function promptComprar(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "Comprar",
+      message: "Seleccione mercader:",
+      choices: mercaderes.getNombres(),
+    })
+    .then((answers) => {
+      const id = parseInt(answers["Comprar"].split(" - ")[0]);
+      const mercader = mercaderes.get(id);
+      if (mercader === undefined) {
+        console.log("Mercader no encontrado");
+        return;
+      }
+      inquirer
+        .prompt({
+          type: "list",
+          name: "Comprar",
+          message: "Seleccione bien:",
+          choices: inventario.getNombres(),
+        })
+        .then((answers) => {
+          const id = parseInt(answers["Comprar"].split(" - ")[0]);
+          const bien = inventario.get(id);
+          if (bien === undefined) {
+            console.log("Bien no encontrado");
+            return;
+          }
+          inquirer
+            .prompt({
+              type: "input",
+              name: "Cantidad",
+              message: "Introduzca la cantidad a comprar:",
+            })
+            .then((answers) => {
+              const cantidad = parseInt(answers["Cantidad"]);
+              try {
+                //transacciones.comprar(mercader, bien, cantidad);
+                inventario.addBien(bien.ID, cantidad);
+                transacciones.add(new Transaccion(-1, new Date(), [bien], mercader, false));
+                console.log("Compra realizada exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+        });
+    });
+}
+
 function menuPrincipal(): void {
   console.clear();
   inquirer
@@ -370,6 +489,12 @@ function menuPrincipal(): void {
           break;
         case comandosPrincipales.Quit:
           break;
+        case comandosPrincipales.Vender:
+          promptVender();
+          break;
+        case comandosPrincipales.Comprar:
+          promptComprar();
+          break;
 
         case comandosPrincipales.Test_Imprimir:
           inventario.ImprimirTest();
@@ -379,9 +504,10 @@ function menuPrincipal(): void {
     });
 }
 
-const inventario: Inventario = Inventario.getGestorInstancia();
-const clientes: GestorClientes = GestorClientes.getGestorInstancia();
-const mercaderes: GestorMercaderes = GestorMercaderes.getGestorInstancia();
+let inventario: Inventario = Inventario.getGestorInstancia();
+let clientes: GestorClientes = GestorClientes.getGestorInstancia();
+let mercaderes: GestorMercaderes = GestorMercaderes.getGestorInstancia();
+let transacciones: GestorTransacciones = GestorTransacciones.getGestorInstancia();
 
 if(process.env.NODE_ENV !== "test"){
   menuPrincipal();

@@ -66,6 +66,16 @@ export default class GestorMercaderes extends Gestor<Mercader> {
   static resetInstance(): void {
     GestorMercaderes.GestorInstancia = undefined;
   }
+
+  /**
+   * Devuelve los ID y los nombres de los clientes almacenados.
+   * @returns Pares de ID y nombre de los clientes.
+   */
+  getNombres(): string[] {
+    return Array.from(this._almacenMap.values()).map(
+      (mercader) => `${mercader.ID} - ${mercader.nombre}`,
+    );
+  }
   
   /**
     * Método que busca bienes según un filtro dado.

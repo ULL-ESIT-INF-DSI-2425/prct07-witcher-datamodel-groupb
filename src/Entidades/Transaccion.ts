@@ -59,8 +59,17 @@ export default class Transaccion implements Entidad {
   get fecha() {
     return this._fecha;
   }
+  
   get bienes() {
     return this._elementosEnTransaccion;
+  }
+
+  get persona() {
+    return this._persona;
+  }
+
+  get devolucion() {
+    return this._devolucion;
   }
 
   /**
