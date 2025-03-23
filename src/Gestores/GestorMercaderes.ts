@@ -66,5 +66,36 @@ export default class GestorMercaderes extends Gestor<Mercader> {
   static resetInstance(): void {
     GestorMercaderes.GestorInstancia = undefined;
   }
+  
+  /**
+    * Método que busca bienes según un filtro dado.
+    * @param filtro - Filtro a aplicar.
+    * @param valor - Valor del filtro.
+    * @returns ElementoAlmacen[] - Array con los elementos que cumplen el filtro.
+    */
+    buscar(filtro: string, valor: string): Mercader[] {
+      let elementosFiltrados: Mercader[] = [];
+      switch (filtro) {
+        case "Nombre":
+          elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+            (mercader) => mercader.nombre === valor,
+          );
+          break;
+        case "Tipo":
+          elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+            (mercader) => mercader.tipo === valor,
+          );
+          break;
+        case "Ubicacion":
+          elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+            (mercader) => mercader.ubicacion === valor,
+          );
+          break;
+        default:
+          console.log("Filtro no válido");
+          break;
+      }
+      return elementosFiltrados;
+    }
 
 }

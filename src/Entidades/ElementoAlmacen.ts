@@ -15,14 +15,23 @@ export default class ElementoAlmacen implements Entidad {
     this.ID = bien.ID;
   }
 
-  toJSON(): Record<string, number | string> {
-    const bienjson = this.bien.toJSON();
-    const bienjsonstring = JSON.stringify(bienjson);
+  toJSON(): Record<string, any> {
     return {
       ID: this.ID,
-      bien: bienjsonstring,
+      bien:{
+        ID: this.bien.ID,
+        nombre: this.bien.nombre,
+        descripcion: this.bien.descripcion,
+        material: this.bien.material,
+        peso: this.bien.peso,
+        precio: this.bien.precio,
+      },
       cantidad: this.cantidad,
     };
+  }
+
+  tostring(): string {
+    return `ID: ${this.ID}, Nombre: ${this.bien.nombre}, Descripción: ${this.bien.descripcion}, Material: ${this.bien.material}, Peso: ${this.bien.peso}, Precio: ${this.bien.precio}, Cantidad: ${this.cantidad}`;
   }
 
   /**
@@ -145,7 +154,6 @@ export default class ElementoAlmacen implements Entidad {
           return callback(undefined, new Error("La cantidad debe ser un número positivo"));
         }
   
-        // Si todas las validaciones son correctas, se crea el bien
         const bien = new Bien(
           id,
           answers._nombre,
@@ -155,7 +163,6 @@ export default class ElementoAlmacen implements Entidad {
           precio,
         );
   
-        // Se crea el elemento del almacén
         const elemento = new ElementoAlmacen(bien, cantidad);
         callback(elemento);
       })

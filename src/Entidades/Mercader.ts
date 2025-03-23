@@ -30,6 +30,10 @@ export default class Mercader implements Entidad {
     };
   }
 
+  tostring(): string {
+    return `ID: ${this._ID}, Nombre: ${this._nombre}, Tipo: ${this._tipo}, Ubicación: ${this._ubicacion}`;
+  }
+
   /**
    * Getter de la propiedad ID.
    * @returns ID del mercader.

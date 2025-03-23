@@ -12,9 +12,16 @@
     "ubicacion": "habitacion nº2"
   },
   {
-    "ID": 8,
-    "nombre": "borrar",
-    "raza": "si",
+    "ID": 7,
+    "nombre": "Cliente7",
+    "raza": "humano",
     "ubicacion": "aqui"
+  },
+  {
+    
+    "ID": 8,
+    "nombre": "Cliente8",
+    "raza": "elfo",
+    "ubicacion": "alla"
   }
 ]

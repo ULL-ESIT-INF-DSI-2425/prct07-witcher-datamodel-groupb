@@ -24,7 +24,7 @@ export default class Bien implements Entidad {
    * Método que devuelve una cadena con toda la información del bien.
    * @returns String - Cadena con la información del bien.
    */
-  toJSON(): Record<string, string | number> {
+  toJSON(): Record<string, number | string> {
     return {
       ID: this._ID,
       nombre: this._nombre,
@@ -33,6 +33,10 @@ export default class Bien implements Entidad {
       peso: this._peso,
       precio: this._precio,
     };
+  }
+
+  tostring(): string {
+    return `ID: ${this._ID}, Nombre: ${this._nombre}, Descripción: ${this._descripcion}, Material: ${this._material}, Peso: ${this._peso}, Precio: ${this._precio}`;
   }
 
   /**

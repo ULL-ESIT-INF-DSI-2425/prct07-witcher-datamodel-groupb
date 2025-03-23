@@ -63,4 +63,34 @@ export default class GestorClientes extends Gestor<Cliente> {
     GestorClientes.GestorInstancia = undefined;
   }
 
+  /**
+  * Método que busca bienes según un filtro dado.
+  * @param filtro - Filtro a aplicar.
+  * @param valor - Valor del filtro.
+  * @returns ElementoAlmacen[] - Array con los elementos que cumplen el filtro.
+  */
+  buscar(filtro: string, valor: string): Cliente[] {
+    let elementosFiltrados: Cliente[] = [];
+    switch (filtro) {
+      case "Nombre":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (cliente) => cliente.nombre === valor,
+        );
+        break;
+      case "Raza":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (cliente) => cliente.raza === valor,
+        );
+        break;
+      case "Ubicacion":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (cliente) => cliente.ubicacion === valor,
+        );
+        break;
+      default:
+        console.error("Filtro no válido");
+    }
+    return elementosFiltrados;
+  }
+
 }

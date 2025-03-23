@@ -85,6 +85,19 @@ export default abstract class Gestor<T extends Entidad> {
   }
 
   /**
+   * Función para actualizar una entidad en la base de datos.
+   * @param entidad - entidad a actualizar
+   */
+  update(entidad: T): void {
+    if (!this.almacenMap.has(entidad.ID)) {
+      throw new Error(`Entidad con ID ${entidad.ID} no encontrado.`);
+    } else {
+      this._almacenMap.set(entidad.ID, entidad);
+      this.storeInventario();
+    }
+  }
+
+  /**
    * Función para imprimir el contenido del Mapa `almacenMap`.
    * Se usa para comprobar que los datos se han almacenado correctamente.
    * @returns void

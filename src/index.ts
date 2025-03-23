@@ -34,19 +34,25 @@ enum comandosPrincipales {
 
 enum comandosProveedores {
   nuevo_proveedor = "Proveedor nuevo",
-  proveedor_existente = "Proveedor ya registrado",
+  proveedor_existente = "Modificar proveedor",
+  eliminar_proveedor = "Eliminar proveedor",
+  buscar_proveedor = "Buscar proveedor",
   Volver = "Volver",
 }
 
 enum comandosClientes {
   nuevo_cliente = "Cliente nuevo",
-  cliente_existente = "Cliente ya registrado",
+  cliente_existente = "Modificar cliente",
+  eliminar_cliente = "Eliminar cliente",
+  buscar_cliente = "Buscar cliente",
   Volver = "Volver",
 }
 
 enum comandosBienes {
   nuevo_bien = "Bien nuevo",
-  bien_existente = "Bien ya registrado",
+  bien_existente = "Modificar bien",
+  eliminar_bien = "Eliminar bien",
+  buscar_bien = "Buscar bien",
   Volver = "Volver",
 }
 
@@ -73,10 +79,74 @@ function promptInteracturarMercaderes(): void {
             }
           });
           break;
+
         case comandosProveedores.proveedor_existente:
-          console.log("LLamada a modificar proveedor");
-          menuPrincipal();
+          Mercader.crear((mercader, error) => {
+            if (error) {
+              console.error("Error al crear mercader:", error.message);
+            } else if (mercader !== undefined) {
+              mercaderes.update(mercader);
+              console.log("Mercader creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear mercader");
+            }
+          });
           break;
+        
+        case comandosProveedores.eliminar_proveedor:
+          //Preguntar solamente el id
+          inquirer
+            .prompt({
+              type: "input",
+              name: "ID",
+              message: "Introduzca el ID del mercader a eliminar",
+            })
+            .then((answers) => {
+              const id = parseInt(answers["ID"]);
+              try {
+                mercaderes.remove(id);
+                console.log("Mercader eliminado exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+          break;
+
+        case comandosProveedores.buscar_proveedor:
+          inquirer
+            .prompt({
+              type: "list",
+              name: "Filtro",
+              message: "Seleccione filtro:",
+              choices: ["Nombre", "Tipo", "Ubicacion"],
+            })
+            .then((answers: { Filtro: string }) => {
+              const filtro = answers.Filtro;
+              inquirer
+                .prompt({
+                  type: "input",
+                  name: "Valor",
+                  message: "Introduzca el valor a buscar:",
+                })
+                .then((answers: { Valor: string }) => {
+                  const valor = answers["Valor"];
+                  const mercaderesFiltrados = mercaderes.buscar(filtro, valor);
+                  if (mercaderesFiltrados.length === 0) {
+                    console.log("No se encontraron mercaderes con ese filtro");
+                  } else {
+                    console.log("Mercaderes encontrados:");
+                    mercaderesFiltrados.forEach((mercader) => {
+                      console.log(mercader.tostring());
+                    });
+                  }
+                });
+            });
+          break;
+
         case comandosProveedores.Volver:
           menuPrincipal();
           break;
@@ -108,9 +178,72 @@ function promptInteracturarBienes(): void {
           });
           break;
         case comandosBienes.bien_existente:
-          console.log("Llamada a modificar bien");
-          menuPrincipal();
+          ElementoAlmacen.crear((elemento, error) => {
+            if (error) {
+              console.error("Error al crear elemento:", error.message);
+            } else if (elemento !== undefined) {
+              inventario.update(elemento);
+              console.log("Elemento creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear elemento");
+            }
+          });
           break;
+
+        case comandosBienes.eliminar_bien:
+          //Preguntar solamente el id
+          inquirer
+            .prompt({
+              type: "input",
+              name: "ID",
+              message: "Introduzca el ID del bien a eliminar",
+            })
+            .then((answers) => {
+              const id = parseInt(answers["ID"]);
+              try {
+                inventario.remove(id);
+                console.log("Bien eliminado exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+          break;
+        
+        case comandosBienes.buscar_bien:
+          inquirer
+            .prompt({
+              type: "list",
+              name: "Filtro",
+              message: "Seleccione filtro:",
+              choices: ["Nombre", "Material", "Descripcion"],
+            })
+            .then((answers: { Filtro: string }) => {
+              const filtro = answers.Filtro;
+              inquirer
+                .prompt({
+                  type: "input",
+                  name: "Valor",
+                  message: "Introduzca el valor a buscar:",
+                })
+                .then((answers: { Valor: string }) => {
+                  const valor = answers["Valor"];
+                  const elementosFiltrados = inventario.buscar(filtro, valor);
+                  if (elementosFiltrados.length === 0) {
+                    console.log("No se encontraron elementos con ese filtro");
+                  } else {
+                    console.log("Elementos encontrados:");
+                    elementosFiltrados.forEach((elemento) => {
+                      console.log(elemento.tostring());
+                    });
+                  }
+                });
+            });
+          break;
+
         case comandosBienes.Volver:
           menuPrincipal();
           break;
@@ -142,10 +275,73 @@ function promptInteracturarClientes(): void {
           });
           break;
         case comandosClientes.cliente_existente:
-          console.log("Llamada a modificar cliente");
-          menuPrincipal();
+          Cliente.crear((cliente, error) => {
+            if (error) {
+              console.error("Error al crear cliente:", error.message);
+            } else if (cliente !== undefined) {
+              clientes.update(cliente);
+              console.log("Cliente creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear cliente");
+            }
+          });
           break;
-        case comandosProveedores.Volver:
+
+        case comandosClientes.eliminar_cliente:
+          //Preguntar solamente el id
+          inquirer
+            .prompt({
+              type: "input",
+              name: "ID",
+              message: "Introduzca el ID del cliente a eliminar",
+            })
+            .then((answers) => {
+              const id = parseInt(answers["ID"]);
+              try {
+                clientes.remove(id);
+                console.log("Cliente eliminado exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+          break;
+
+        case comandosClientes.buscar_cliente:
+          inquirer
+            .prompt({
+              type: "list",
+              name: "Filtro",
+              message: "Seleccione filtro:",
+              choices: ["Nombre", "Raza", "Ubicacion"],
+            })
+            .then((answers: { Filtro: string }) => {
+              const filtro = answers.Filtro;
+              inquirer
+                .prompt({
+                  type: "input",
+                  name: "Valor",
+                  message: "Introduzca el valor a buscar:",
+                })
+                .then((answers: { Valor: string }) => {
+                  const valor = answers["Valor"];
+                  const clientesFiltrados = clientes.buscar(filtro, valor);
+                  if (clientesFiltrados.length === 0) {
+                    console.log("No se encontraron clientes con ese filtro");
+                  } else {
+                    console.log("Clientes encontrados:");
+                    clientesFiltrados.forEach((cliente) => {
+                      console.log(cliente.tostring());
+                    });
+                  }
+                });
+            });
+          break;
+
+        case comandosClientes.Volver:
           menuPrincipal();
           break;
       }

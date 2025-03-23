@@ -23,7 +23,6 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
     ) {
       // Si el bien es dummy, se carga el fichero JSON
       super("BaseDeDatos/Inventario.json");
-      // Si no hay datos en el fichero, se crea un bien dummy
       if (this.database.data == null) {
         this.imprimirMensajeError();
       } else {
@@ -107,15 +106,59 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
   }
 
   /**
-   * Método que imprime el contenido del inventario.
-   * Se usa para comprobar que los datos se han almacenado correctamente.
-   * @returns void
+   * Método que busca bienes según un filtro dado.
+   * @param filtro - Filtro a aplicar.
+   * @param valor - Valor del filtro.
+   * @returns ElementoAlmacen[] - Array con los elementos que cumplen el filtro.
    */
-  public ImprimirTest(): void {
-    this._almacenMap.forEach((element) => {
-      console.log(element.ID);
-      if (element && "nombre" in element) console.log(element.bien.nombre);
-      if (element) console.log(element.cantidad);
-    });
+  buscar(filtro: string, valor: string): ElementoAlmacen[] {
+    let elementosFiltrados: ElementoAlmacen[] = [];
+    switch (filtro) {
+      case "Nombre":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (elemento) => elemento.bien.nombre === valor,
+        );
+        break;
+      case "Material":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (elemento) => elemento.bien.material === valor,
+        );
+        break;
+      case "Descripcion":
+        elementosFiltrados = Array.from(this._almacenMap.values()).filter(
+          (elemento) => elemento.bien.descripcion === valor,
+        );
+        break;
+      default:
+        throw new Error("Filtro no válido");
+    }
+  return elementosFiltrados;
   }
+
+  /**
+   * Método que ordena los bienes según un criterio dado.
+   * @param criterio - Criterio de ordenación.
+   * @param ascendente - Booleano que indica si el orden es ascendente o descendente.
+   * @returns ElementoAlmacen[] - Array con los elementos ordenados.
+   */
+  ordenar(criterio: string, ascendente: boolean): ElementoAlmacen[] {
+    let elementosOrdenados: ElementoAlmacen[] = [];
+    switch (criterio) {
+      case "nombre":
+        elementosOrdenados = Array.from(this._almacenMap.values()).sort(
+          (a, b) => a.bien.nombre.localeCompare(b.bien.nombre),
+        );
+        break;
+      case "precio":
+        elementosOrdenados = Array.from(this._almacenMap.values()).sort(
+          (a, b) => a.bien.precio - b.bien.precio,
+        );
+        break;
+      default:
+        throw new Error("Criterio no válido");
+    }
+    return ascendente ? elementosOrdenados : elementosOrdenados.reverse();
+  }
+
+
 }

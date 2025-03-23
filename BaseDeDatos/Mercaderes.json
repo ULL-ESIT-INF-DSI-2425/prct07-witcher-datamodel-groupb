@@ -2,7 +2,7 @@
   {
     "ID": 1,
     "nombre": "Mercader1",
-    "tipo": "herreros",
+    "tipo": "herrero",
     "ubicacion": "habitacion nº1"
   },
   {
@@ -14,7 +14,7 @@
   {
     "ID": 4,
     "nombre": "Mercader Y",
-    "tipo": "Herrero",
+    "tipo": "herrero",
     "ubicacion": "Novigrado"
   }
 ]

@@ -30,6 +30,9 @@ export default class Cliente implements Entidad {
       ubicacion: this._ubicacion,
     };
   }
+  tostring():string{
+    return `ID: ${this._ID}, Nombre: ${this._nombre}, Raza: ${this._raza}, Ubicación: ${this._ubicacion}`;
+  }
 
   /**
    * Getter de la propiedad ID.

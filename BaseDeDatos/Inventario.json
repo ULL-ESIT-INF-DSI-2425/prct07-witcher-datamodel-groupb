@@ -1,24 +1,50 @@
 [
   {
+    "ID": 1,
     "bien": {
       "ID": 1,
       "nombre": "Bien1",
-      "descripcion": "Primer bien",
+      "descripcion": "Primero bien",
       "material": "hierro",
-      "peso": 10,
-      "precio": 50
+      "peso": 30,
+      "precio": 10
     },
-    "cantidad": 10
+    "cantidad": 5
   },
   {
+    "ID": 2,
     "bien": {
       "ID": 2,
       "nombre": "Bien2",
       "descripcion": "Segundo bien",
       "material": "madera",
-      "peso": 5,
-      "precio": 20
+      "peso": 3,
+      "precio": 1
     },
-    "cantidad": 5
+    "cantidad": 2
+  },
+  {
+    "ID": 3,
+    "bien": {
+      "ID": 3,
+      "nombre": "Bien3",
+      "descripcion": "Tercer bien",
+      "material": "hierro",
+      "peso": 3,
+      "precio": 1
+    },
+    "cantidad": 1
+  },
+  {
+    "ID": 4,
+    "bien": {
+      "ID": 4,
+      "nombre": "Bien4",
+      "descripcion": "Cuarto bien",
+      "material": "madera",
+      "peso": 2,
+      "precio": 3
+    },
+    "cantidad": 2
   }
 ]
