@@ -3,6 +3,7 @@ import Cliente from "./Cliente.js";
 import ElementoAlmacen from "./ElementoAlmacen.js";
 import { Entidad } from "./Entidad.js";
 import Mercader from "./Mercader.js";
+import Bien from "./Bien.js";
 
 /**
  * Interfaz que define la estructura de los detalles de una transacción.
@@ -42,6 +43,12 @@ export default class Transaccion implements Entidad {
       devolucion: this._devolucion,
       dinero: this._dinero,
     }
+  }
+
+  static fromJSON(json: any): Transaccion {
+    const bienes = ElementoAlmacen.fromJSON(json.bienes);
+    const persona = json.persona.raza ? Cliente.fromJSON(json.persona) : Mercader.fromJSON(json.persona);
+    return new Transaccion(json.ID, new Date(json.fecha), bienes, persona, json.devolucion);
   }
 
   /**

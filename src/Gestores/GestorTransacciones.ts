@@ -73,18 +73,20 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
 
   /**
    * Función que devuelve los bienes más vendidos
+   * Por alguna razón funciona en node pero no en los test
    * @returns Nombre de los bienes más vendidos
    */
   bienesMasVendidos(): string[] {
     let cantidad_venta = new Map<number, number>();
     this._almacenMap.forEach((transaccion) => {
-      if(transaccion.persona.hasOwnProperty("raza") && transaccion.devolucion === false){
-        let cantidad = cantidad_venta.get(transaccion.bienes.ID) || 0;
-        cantidad_venta.set(transaccion.bienes.ID, cantidad + transaccion.bienes.cantidad);
+      if (transaccion.persona.hasOwnProperty("raza") && transaccion.devolucion === false) {
+        const bienID = transaccion.bienes.ID;
+        const bienCantidad = transaccion.bienes.cantidad;
+        let cantidad = cantidad_venta.get(bienID) || 0;
+        cantidad_venta.set(bienID, cantidad + bienCantidad);
       }
     });
 
-    
     let mayor_cantidad = 0;
     let bienes_mas_vendidos: number[] = [];
     cantidad_venta.forEach((cantidad, ID) => {
@@ -99,9 +101,11 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
     bienes_mas_vendidos.forEach((ID) => {
       const bien = Bien.fromJSON(this._almacenMap.get(ID)?.bienes.bien);
       result.push(`${bien.ID} - ${bien.nombre}`);
+      console.log(`${bien.ID} - ${bien.nombre}`);
     });
     return result;
   }
+
 
   /**
    * Función que suma todas las ventas realizadas y las devoluciones de mercaderes

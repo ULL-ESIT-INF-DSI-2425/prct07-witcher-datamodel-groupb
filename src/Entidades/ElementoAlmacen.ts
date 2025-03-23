@@ -30,6 +30,11 @@ export default class ElementoAlmacen implements Entidad {
     };
   }
 
+  static fromJSON(json: any): ElementoAlmacen {
+    const bien = Bien.fromJSON(json.bien);
+    return new ElementoAlmacen(bien, json.cantidad);
+  }
+
   tostring(): string {
     return `ID: ${this.ID}, Nombre: ${this.bien.nombre}, Descripción: ${this.bien.descripcion}, Material: ${this.bien.material}, Peso: ${this.bien.peso}, Precio: ${this.bien.precio}, Cantidad: ${this.cantidad}`;
   }

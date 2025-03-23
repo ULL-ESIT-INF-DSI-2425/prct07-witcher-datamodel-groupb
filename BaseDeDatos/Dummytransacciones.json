@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "ID": 10,
+    "fecha": "2025-01-10T00:00:00.000Z",
+    "bienes": {
+      "ID": 1,
+      "bien": {
+        "ID": 1,
+        "nombre": "Espada de Plata de Kaer Morhen",
+        "descripcion": "Espada legendaria forjada en acero de Mahakam",
+        "material": "Acero de Mahakam",
+        "peso": 3,
+        "precio": 150
+      },
+      "cantidad": 2
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Geralt",
+      "raza": "Humano",
+      "ubicacion": "Rivia"
+    },
+    "devolucion": false,
+    "dinero": 300
+  },
+  {
+    "ID": 11,
+    "fecha": "2025-01-11T00:00:00.000Z",
+    "bienes": {
+      "ID": 2,
+      "bien": {
+        "ID": 2,
+        "nombre": "Escudo de Roble de Kaer Trolde",
+        "descripcion": "Escudo robusto tallado en roble",
+        "material": "Roble",
+        "peso": 4,
+        "precio": 80
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Geralt",
+      "raza": "Humano",
+      "ubicacion": "Rivia"
+    },
+    "devolucion": false,
+    "dinero": 800
+  },
+  {
+    "ID": 12,
+    "fecha": "2025-01-12T00:00:00.000Z",
+    "bienes": {
+      "ID": 2,
+      "bien": {
+        "ID": 2,
+        "nombre": "Escudo de Roble de Kaer Trolde",
+        "descripcion": "Escudo robusto tallado en roble",
+        "material": "Roble",
+        "peso": 4,
+        "precio": 80
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 2,
+      "nombre": "Zoltan",
+      "tipo": "herrero",
+      "ubicacion": "Mahakam"
+    },
+    "devolucion": false,
+    "dinero": 800
+  }
+]
