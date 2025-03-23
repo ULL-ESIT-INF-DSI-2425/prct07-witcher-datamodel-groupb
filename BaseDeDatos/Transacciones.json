@@ -1,151 +1,19 @@
 [
   {
     "ID": 1,
-    "fecha": "2025-03-23T17:16:43.750Z",
-    "bienes": [
-      {
-        "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
-    "persona": {
+    "fecha": "2025-03-23T19:01:31.331Z",
+    "bienes": {
       "ID": 1,
-      "nombre": "Mercader1",
-      "tipo": "herrero",
-      "ubicacion": "habitacion nº1"
-    },
-    "devolucion": false,
-    "dinero": 0
-  },
-  {
-    "ID": 2,
-    "fecha": "2025-03-23T17:18:47.655Z",
-    "bienes": [
-      {
+      "bien": {
         "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
-    "persona": {
-      "ID": 2,
-      "nombre": "Mercader2",
-      "tipo": "escudero",
-      "ubicacion": "habitacion nº2"
+        "nombre": "Bien1",
+        "descripcion": "Primero bien",
+        "material": "hierro",
+        "peso": 30,
+        "precio": 10
+      },
+      "cantidad": 1
     },
-    "devolucion": false,
-    "dinero": 0
-  },
-  {
-    "ID": 3,
-    "fecha": "2025-03-23T17:19:55.451Z",
-    "bienes": [
-      {
-        "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
-    "persona": {
-      "ID": 1,
-      "nombre": "Mercader1",
-      "tipo": "herrero",
-      "ubicacion": "habitacion nº1"
-    },
-    "devolucion": false,
-    "dinero": 0
-  },
-  {
-    "ID": 4,
-    "fecha": "2025-03-23T17:41:29.545Z",
-    "bienes": [
-      {
-        "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
-    "persona": {
-      "ID": 1,
-      "nombre": "Mercader1",
-      "tipo": "herrero",
-      "ubicacion": "habitacion nº1"
-    },
-    "devolucion": false,
-    "dinero": 0
-  },
-  {
-    "ID": 5,
-    "fecha": "2025-03-23T18:12:07.588Z",
-    "bienes": [
-      {
-        "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
-    "persona": {
-      "ID": 1,
-      "nombre": "Mercader1",
-      "tipo": "herrero",
-      "ubicacion": "habitacion nº1"
-    },
-    "devolucion": true,
-    "dinero": 0
-  },
-  {
-    "ID": 6,
-    "fecha": "2025-03-23T18:15:44.144Z",
-    "bienes": [
-      {
-        "ID": 1,
-        "bien": {
-          "ID": 1,
-          "nombre": "Bien1",
-          "descripcion": "Primero bien",
-          "material": "hierro",
-          "peso": 30,
-          "precio": 10
-        },
-        "cantidad": 0
-      }
-    ],
     "persona": {
       "ID": 1,
       "nombre": "Cliente1",
@@ -153,6 +21,270 @@
       "ubicacion": "habitacion nº1"
     },
     "devolucion": false,
+    "dinero": 10
+  },
+  {
+    "ID": 2,
+    "fecha": "2025-03-23T19:01:44.773Z",
+    "bienes": {
+      "ID": 1,
+      "bien": {
+        "ID": 1,
+        "nombre": "Bien1",
+        "descripcion": "Primero bien",
+        "material": "hierro",
+        "peso": 30,
+        "precio": 10
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Mercader1",
+      "tipo": "herrero",
+      "ubicacion": "habitacion nº1"
+    },
+    "devolucion": false,
+    "dinero": 100
+  },
+  {
+    "ID": 3,
+    "fecha": "2025-03-23T19:01:51.726Z",
+    "bienes": {
+      "ID": 2,
+      "bien": {
+        "ID": 2,
+        "nombre": "Bien2",
+        "descripcion": "Segundo bien",
+        "material": "madera",
+        "peso": 3,
+        "precio": 1
+      },
+      "cantidad": 20
+    },
+    "persona": {
+      "ID": 2,
+      "nombre": "Mercader2",
+      "tipo": "escudero",
+      "ubicacion": "habitacion nº2"
+    },
+    "devolucion": false,
     "dinero": 20
+  },
+  {
+    "ID": 4,
+    "fecha": "2025-03-23T19:01:59.977Z",
+    "bienes": {
+      "ID": 2,
+      "bien": {
+        "ID": 2,
+        "nombre": "Bien2",
+        "descripcion": "Segundo bien",
+        "material": "madera",
+        "peso": 3,
+        "precio": 1
+      },
+      "cantidad": 2
+    },
+    "persona": {
+      "ID": 2,
+      "nombre": "Cliente2",
+      "raza": "elfo",
+      "ubicacion": "habitacion nº2"
+    },
+    "devolucion": false,
+    "dinero": 2
+  },
+  {
+    "ID": 5,
+    "fecha": "2025-03-23T19:04:00.421Z",
+    "bienes": {
+      "ID": 1,
+      "bien": {
+        "ID": 1,
+        "nombre": "Bien1",
+        "descripcion": "Primero bien",
+        "material": "hierro",
+        "peso": 30,
+        "precio": 10
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Cliente1",
+      "raza": "humano",
+      "ubicacion": "habitacion nº1"
+    },
+    "devolucion": false,
+    "dinero": 100
+  },
+  {
+    "ID": 6,
+    "fecha": "2025-03-23T19:06:30.212Z",
+    "bienes": {
+      "ID": 3,
+      "bien": {
+        "ID": 3,
+        "nombre": "Bien3",
+        "descripcion": "Tercer bien",
+        "material": "hierro",
+        "peso": 3,
+        "precio": 1
+      },
+      "cantidad": 1
+    },
+    "persona": {
+      "ID": 5,
+      "nombre": "Cliente5",
+      "raza": "humano",
+      "ubicacion": "habitacion nº5"
+    },
+    "devolucion": false,
+    "dinero": 1
+  },
+  {
+    "ID": 7,
+    "fecha": "2025-03-23T19:07:25.057Z",
+    "bienes": {
+      "ID": 6,
+      "bien": {
+        "ID": 6,
+        "nombre": "Bien6",
+        "descripcion": "Sexto bien",
+        "material": "madera",
+        "peso": 1,
+        "precio": 2
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 5,
+      "nombre": "Mercader5",
+      "tipo": "herrero",
+      "ubicacion": "Oxenfurt"
+    },
+    "devolucion": false,
+    "dinero": 20
+  },
+  {
+    "ID": 8,
+    "fecha": "2025-03-23T19:07:33.781Z",
+    "bienes": {
+      "ID": 3,
+      "bien": {
+        "ID": 3,
+        "nombre": "Bien3",
+        "descripcion": "Tercer bien",
+        "material": "hierro",
+        "peso": 3,
+        "precio": 1
+      },
+      "cantidad": 34
+    },
+    "persona": {
+      "ID": 5,
+      "nombre": "Mercader5",
+      "tipo": "herrero",
+      "ubicacion": "Oxenfurt"
+    },
+    "devolucion": false,
+    "dinero": 34
+  },
+  {
+    "ID": 9,
+    "fecha": "2025-03-23T19:07:43.258Z",
+    "bienes": {
+      "ID": 1,
+      "bien": {
+        "ID": 1,
+        "nombre": "Bien1",
+        "descripcion": "Primero bien",
+        "material": "hierro",
+        "peso": 30,
+        "precio": 10
+      },
+      "cantidad": 1
+    },
+    "persona": {
+      "ID": 2,
+      "nombre": "Mercader2",
+      "tipo": "escudero",
+      "ubicacion": "habitacion nº2"
+    },
+    "devolucion": true,
+    "dinero": 10
+  },
+  {
+    "ID": 10,
+    "fecha": "2025-03-23T19:08:58.116Z",
+    "bienes": {
+      "ID": 3,
+      "bien": {
+        "ID": 3,
+        "nombre": "Bien3",
+        "descripcion": "Tercer bien",
+        "material": "hierro",
+        "peso": 3,
+        "precio": 1
+      },
+      "cantidad": 1
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Cliente1",
+      "raza": "humano",
+      "ubicacion": "habitacion nº1"
+    },
+    "devolucion": true,
+    "dinero": 1
+  },
+  {
+    "ID": 11,
+    "fecha": "2025-03-23T19:10:16.779Z",
+    "bienes": {
+      "ID": 1,
+      "bien": {
+        "ID": 1,
+        "nombre": "Bien1",
+        "descripcion": "Primero bien",
+        "material": "hierro",
+        "peso": 30,
+        "precio": 10
+      },
+      "cantidad": 1
+    },
+    "persona": {
+      "ID": 1,
+      "nombre": "Cliente1",
+      "raza": "humano",
+      "ubicacion": "habitacion nº1"
+    },
+    "devolucion": true,
+    "dinero": 10
+  },
+  {
+    "ID": 12,
+    "fecha": "2025-03-23T19:10:27.655Z",
+    "bienes": {
+      "ID": 5,
+      "bien": {
+        "ID": 5,
+        "nombre": "Bien5",
+        "descripcion": "Quinto bien",
+        "material": "hierro",
+        "peso": 1,
+        "precio": 5
+      },
+      "cantidad": 10
+    },
+    "persona": {
+      "ID": 5,
+      "nombre": "Mercader5",
+      "tipo": "herrero",
+      "ubicacion": "Oxenfurt"
+    },
+    "devolucion": false,
+    "dinero": 50
   }
 ]

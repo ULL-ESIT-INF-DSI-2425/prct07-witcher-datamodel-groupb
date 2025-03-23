@@ -12,6 +12,30 @@
     "ubicacion": "habitacion nº2"
   },
   {
+    "ID": 3,
+    "nombre": "Cliente3",
+    "raza": "humano",
+    "ubicacion": "habitacion nº3"
+  },
+  {
+    "ID": 4,
+    "nombre": "Cliente4",
+    "raza": "elfo",
+    "ubicacion": "habitacion nº4"
+  },
+  {
+    "ID": 5,
+    "nombre": "Cliente5",
+    "raza": "humano",
+    "ubicacion": "habitacion nº5"
+  },
+  {
+    "ID": 6,
+    "nombre": "Cliente6",
+    "raza": "elfo",
+    "ubicacion": "habitacion nº6"
+  },
+  {
     "ID": 7,
     "nombre": "Cliente7",
     "raza": "humano",
@@ -23,5 +47,17 @@
     "nombre": "Cliente8",
     "raza": "elfo",
     "ubicacion": "alla"
+  },
+  {
+    "ID": 9,
+    "nombre": "Cliente9",
+    "raza": "humano",
+    "ubicacion": "habitacion nº9"
+  },
+  {
+    "ID": 10,
+    "nombre": "Cliente10",
+    "raza": "elfo",
+    "ubicacion": "habitacion nº10"
   }
 ]

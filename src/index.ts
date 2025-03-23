@@ -31,6 +31,7 @@ enum comandosPrincipales {
   Comprar = "Comprar",
   Devolver = "Devolver",
   Gestionar = "Gestionar Base de datos",
+  Informes = "Informes",
   Quit = "Quit",
 }
 
@@ -396,7 +397,7 @@ function promptVender(): void {
                 //transacciones.vender(cliente, bien, cantidad);
                 inventario.removeBien(bien.ID, cantidad);
                 let bien_vendido = new ElementoAlmacen(bien.bien, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_vendido], cliente, false));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), bien_vendido, cliente, false));
                 console.log("Venta realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -452,7 +453,7 @@ function promptComprar(): void {
                 //transacciones.comprar(mercader, bien, cantidad);
                 inventario.addBien(bien.ID, cantidad);
                 let bien_comprado = new ElementoAlmacen(bien.bien, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_comprado], mercader, false));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), bien_comprado, mercader, false));
                 console.log("Compra realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -487,7 +488,7 @@ function promptDevolverCliente(): void {
           type: "list",
           name: "Devolver",
           message: "Seleccione bien:",
-          choices: transacciones.getBienes(),
+          choices: transacciones.getBienes(cliente),
         })
         .then((answers) => {
           const id = parseInt(answers["Devolver"].split(" - ")[0]);
@@ -508,7 +509,7 @@ function promptDevolverCliente(): void {
                 //transacciones.devolver(transaccion, bien, cantidad);
                 inventario.addBien(bien.ID, cantidad);
                 let bien_devuelto = new ElementoAlmacen(bien.bien, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_devuelto], cliente, true));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), bien_devuelto, cliente, true));
                 console.log("Devolucion realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -544,7 +545,7 @@ function promptDevolverMercader(): void {
         console.log("Mercader no encontrado");
         return;
       }
-      const bienNombres = transacciones.getBienes();
+      const bienNombres = transacciones.getBienes(mercader);
       //console.log("Bienes disponibles:", bienNombres); // Debug statement
       if (bienNombres.length === 0) {
         console.log("No hay bienes disponibles para seleccionar.");
@@ -575,7 +576,7 @@ function promptDevolverMercader(): void {
               try {
                 inventario.removeBien(bien.ID, cantidad);
                 let bien_devuelto = new ElementoAlmacen(bien.bien, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_devuelto], mercader, true));
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), bien_devuelto, mercader, true));
                 console.log("Devolución realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -684,6 +685,42 @@ function ModificarInventario(): void {
     });
 }
 
+/**Generar informes cruciales para la toma de decisiones de un maestro comerciante, como:
+
+    Estado del stock de un tipo de bien o de un artículo en particular.
+    Bienes más vendidos o más demandados.
+    Total de ingresos por ventas a clientes y gastos en adquisiciones a mercaderes.
+    Histórico de transacciones de un cliente o mercader específico.
+
+ */
+function promptInformes(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "Informes",
+      message: "Seleccione tipo de informe:",
+      choices: ["Estado del stock", "Bienes mas vendidos", "Total de ingresos", "Volver"],
+    })
+    .then((answers) => {
+      switch (answers["Informes"]) {
+        case "Estado del stock":
+          console.log(inventario.buscar());
+          break;
+        case "Bienes mas vendidos":
+          console.log(transacciones.bienesMasVendidos());
+          break;
+        case "Total de ingresos":
+          console.log("Total de ingresos:", transacciones.totalIngresos());
+          console.log("Total de gastos:", transacciones.totalGastos());
+          break;
+        case "Volver":
+          menuPrincipal();
+          break;
+      }
+    });
+}
+
 function menuPrincipal(): void {
   console.clear();
   inquirer
@@ -708,6 +745,9 @@ function menuPrincipal(): void {
           break;
         case comandosPrincipales.Devolver:
           Devoluciones();
+          break;
+        case comandosPrincipales.Informes:
+          promptInformes();
           break;
       }
     });

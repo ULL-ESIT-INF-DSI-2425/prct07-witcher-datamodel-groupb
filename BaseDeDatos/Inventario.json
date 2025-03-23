@@ -9,7 +9,7 @@
       "peso": 30,
       "precio": 10
     },
-    "cantidad": 17
+    "cantidad": 13
   },
   {
     "ID": 2,
@@ -21,7 +21,7 @@
       "peso": 3,
       "precio": 1
     },
-    "cantidad": 2
+    "cantidad": 20
   },
   {
     "ID": 3,
@@ -33,7 +33,7 @@
       "peso": 3,
       "precio": 1
     },
-    "cantidad": 1
+    "cantidad": 35
   },
   {
     "ID": 4,
@@ -46,5 +46,77 @@
       "precio": 3
     },
     "cantidad": 2
+  },
+  {
+    "ID": 5,
+    "bien": {
+      "ID": 5,
+      "nombre": "Bien5",
+      "descripcion": "Quinto bien",
+      "material": "hierro",
+      "peso": 1,
+      "precio": 5
+    },
+    "cantidad": 13
+  },
+  {
+    "ID": 6,
+    "bien": {
+      "ID": 6,
+      "nombre": "Bien6",
+      "descripcion": "Sexto bien",
+      "material": "madera",
+      "peso": 1,
+      "precio": 2
+    },
+    "cantidad": 15
+  },
+  {
+    "ID": 7,
+    "bien": {
+      "ID": 7,
+      "nombre": "Bien7",
+      "descripcion": "Septimo bien",
+      "material": "hierro",
+      "peso": 2,
+      "precio": 3
+    },
+    "cantidad": 1
+  },
+  {
+    "ID": 8,
+    "bien": {
+      "ID": 8,
+      "nombre": "Bien8",
+      "descripcion": "Octavo bien",
+      "material": "madera",
+      "peso": 1,
+      "precio": 1
+    },
+    "cantidad": 2
+  },
+  {
+    "ID": 9,
+    "bien": {
+      "ID": 9,
+      "nombre": "Bien9",
+      "descripcion": "Noveno bien",
+      "material": "hierro",
+      "peso": 1,
+      "precio": 1
+    },
+    "cantidad": 3
+  },
+  {
+    "ID": 10,
+    "bien": {
+      "ID": 10,
+      "nombre": "Bien10",
+      "descripcion": "Decimo bien",
+      "material": "madera",
+      "peso": 1,
+      "precio": 1
+    },
+    "cantidad": 5
   }
 ]

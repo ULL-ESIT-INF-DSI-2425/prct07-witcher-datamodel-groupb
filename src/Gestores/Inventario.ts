@@ -145,9 +145,12 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
    * @param valor - Valor del filtro.
    * @returns ElementoAlmacen[] - Array con los elementos que cumplen el filtro.
    */
-  buscar(filtro: string, valor: string): ElementoAlmacen[] {
+  buscar(filtro: string = "todos", valor: string = ""): ElementoAlmacen[] {
     let elementosFiltrados: ElementoAlmacen[] = [];
     switch (filtro) {
+      case "todos":
+        elementosFiltrados = Array.from(this._almacenMap.values());
+        break;
       case "Nombre":
         elementosFiltrados = Array.from(this._almacenMap.values()).filter(
           (elemento) => elemento.bien.nombre === valor,
@@ -175,7 +178,7 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
    * @param ascendente - Booleano que indica si el orden es ascendente o descendente.
    * @returns ElementoAlmacen[] - Array con los elementos ordenados.
    */
-  ordenar(criterio: string, ascendente: boolean): ElementoAlmacen[] {
+  ordenar(criterio: string = "nombre", ascendente: boolean = true): ElementoAlmacen[] {
     let elementosOrdenados: ElementoAlmacen[] = [];
     switch (criterio) {
       case "nombre":

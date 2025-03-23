@@ -10,7 +10,7 @@ import Mercader from "./Mercader.js";
 export type DetallesTransaccion = {
   ID: number;
   fecha: Date;
-  bienes: ElementoAlmacen[];
+  bienes: ElementoAlmacen;
   persona: Cliente|Mercader;
   devolucion: boolean;
   dinero: number;
@@ -22,11 +22,11 @@ export default class Transaccion implements Entidad {
   constructor( 
     private readonly _ID: number,
     private readonly _fecha: Date,
-    private readonly _elementosEnTransaccion: ElementoAlmacen[],
+    private readonly _elementosEnTransaccion: ElementoAlmacen,
     private readonly _persona: Cliente | Mercader,
     private readonly _devolucion: boolean = false,
   ) {
-    this._dinero = this.CalcularTotalVentas();
+    this._dinero = this._elementosEnTransaccion.bien.precio * this._elementosEnTransaccion.cantidad;
   }
 
   /**
@@ -44,6 +44,10 @@ export default class Transaccion implements Entidad {
     }
   }
 
+  /**
+   * Función que da un string de la clase
+   * @returns Transacción - Transacción creada a partir de un JSON.
+   */
   tostring(): string {
     return `Transacción ${this._ID} realizada por ${this._persona.nombre} el ${this._fecha}`;
   }
@@ -75,43 +79,4 @@ export default class Transaccion implements Entidad {
   get devolucion() {
     return this._devolucion;
   }
-
-  /**
-   * Ventas realizadas a clientes. Se calcula el total de coronas.
-   * @returns number - Total de ventas en coronas.
-   */
-  private CalcularTotalVentas(): number {
-    let total = 0;
-    for (const elementoTransaccion of this._elementosEnTransaccion) {
-      total += elementoTransaccion.bien.precio * elementoTransaccion.cantidad;
-      // Quitar el bien del inventario (cantidad)
-      elementoTransaccion.cantidad -= elementoTransaccion.cantidad;
-    }
-    return total;
-  }
-
-  /**
-   * Compras realizadas a mercaderes. Se calcula el total de coronas.
-   * @returns number - Total de compras en coronas.
-   */
-  private CalcularTotalCompras(): number {
-    let total = 0;
-    for (const elementoTransaccion of this._elementosEnTransaccion) {
-      // Comprobar que seguimos teniendo efectivo
-      if (
-        elementoTransaccion.bien.precio * elementoTransaccion.cantidad >
-        total
-      ) {
-        console.log("No hay suficiente efectivo para realizar la compra");
-        return 0;
-      } else {
-        // Se quita el dinero de la compra
-        total -= elementoTransaccion.bien.precio * elementoTransaccion.cantidad;
-        // Añadir el bien al inventario (cantidad)
-        elementoTransaccion.cantidad += elementoTransaccion.cantidad;
-      }
-    }
-    return total;
-  }
-  
 }

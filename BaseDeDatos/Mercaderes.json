@@ -12,9 +12,51 @@
     "ubicacion": "habitacion nº2"
   },
   {
+    "ID": 3,
+    "nombre": "Mercader3",
+    "tipo": "herrero",
+    "ubicacion": "Vizima"
+  },
+  {
     "ID": 4,
-    "nombre": "Mercader Y",
+    "nombre": "Mercader4",
     "tipo": "herrero",
     "ubicacion": "Novigrado"
+  },
+  {
+    "ID": 5,
+    "nombre": "Mercader5",
+    "tipo": "herrero",
+    "ubicacion": "Oxenfurt"
+  },
+  {
+    "ID": 6,
+    "nombre": "Mercader6",
+    "tipo": "herrero",
+    "ubicacion": "Skellige"
+  },
+  {
+    "ID": 7,
+    "nombre": "Mercader7",
+    "tipo": "herrero",
+    "ubicacion": "Kaer Morhen"
+  },
+  {
+    "ID": 8,
+    "nombre": "Mercader8",
+    "tipo": "herrero",
+    "ubicacion": "Toussaint"
+  },
+  {
+    "ID": 9,
+    "nombre": "Mercader9",
+    "tipo": "herrero",
+    "ubicacion": "Kovir"
+  },
+  {
+    "ID": 10,
+    "nombre": "Mercader10",
+    "tipo": "herrero",
+    "ubicacion": "Cidaris"
   }
 ]

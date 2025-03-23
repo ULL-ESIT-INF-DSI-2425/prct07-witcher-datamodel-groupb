@@ -35,6 +35,10 @@ export default class Bien implements Entidad {
     };
   }
 
+  static fromJSON(json: any): Bien {
+    return new Bien(json.ID, json.nombre, json.descripcion, json.material, json.peso, json.precio);
+  }
+
   tostring(): string {
     return `ID: ${this._ID}, Nombre: ${this._nombre}, Descripción: ${this._descripcion}, Material: ${this._material}, Peso: ${this._peso}, Precio: ${this._precio}`;
   }

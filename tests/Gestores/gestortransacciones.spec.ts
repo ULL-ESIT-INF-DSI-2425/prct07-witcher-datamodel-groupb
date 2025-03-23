@@ -36,7 +36,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1500
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
-    const transaccion1 = new Transaccion(10, new Date('2025-01-10'), [elementoEspada], cliente);
+    const transaccion1 = new Transaccion(10, new Date('2025-01-10'), elementoEspada, cliente);
     
     // Forzamos la rama "else" pasando un array personalizado.
     const gestor = GestorTransacciones.getGestorInstancia([transaccion1]);
@@ -51,7 +51,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion2 = new Transaccion(11, new Date('2025-01-11'), [elementoEscudo], cliente);
+    const transaccion2 = new Transaccion(11, new Date('2025-01-11'), elementoEscudo, cliente);
     gestor.add(transaccion2);
     expect(gestor.length()).toBe(2);
     expect(gestor.get(11)).toEqual(transaccion2);
@@ -67,7 +67,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1500
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
-    const transaccion = new Transaccion(20, new Date('2025-01-12'), [elementoEspada], cliente);
+    const transaccion = new Transaccion(20, new Date('2025-01-12'), elementoEspada, cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(() => gestor.add(transaccion)).toThrow('Error, ID 20 ya está en uso');
   });
@@ -82,7 +82,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion = new Transaccion(30, new Date('2025-01-13'), [elementoEscudo], cliente);
+    const transaccion = new Transaccion(30, new Date('2025-01-13'), elementoEscudo, cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(gestor.length()).toBe(1);
     
@@ -101,7 +101,7 @@ describe('GestorTransacciones - Pruebas', () => {
       1200
     );
     const elementoArmadura = new ElementoAlmacen(armadura, 1);
-    const transaccion = new Transaccion(40, new Date('2025-01-14'), [elementoArmadura], cliente);
+    const transaccion = new Transaccion(40, new Date('2025-01-14'), elementoArmadura, cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     
     const datos = (gestor as any).database.data;
@@ -118,7 +118,7 @@ describe('GestorTransacciones - Pruebas', () => {
       800
     );
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion = new Transaccion(50, new Date('2025-01-15'), [elementoEscudo], cliente);
+    const transaccion = new Transaccion(50, new Date('2025-01-15'), elementoEscudo, cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion]);
     expect(() => gestor.get(999)).toThrow('Bien con ID 999 no encontrado.');
   });
@@ -142,8 +142,8 @@ describe('GestorTransacciones - Pruebas', () => {
     );
     const elementoEspada = new ElementoAlmacen(espada, 2);
     const elementoEscudo = new ElementoAlmacen(escudo, 1);
-    const transaccion1 = new Transaccion(60, new Date('2025-01-16'), [elementoEspada], cliente);
-    const transaccion2 = new Transaccion(61, new Date('2025-01-17'), [elementoEscudo], cliente);
+    const transaccion1 = new Transaccion(60, new Date('2025-01-16'), elementoEspada, cliente);
+    const transaccion2 = new Transaccion(61, new Date('2025-01-17'), elementoEscudo, cliente);
     const gestor = GestorTransacciones.getGestorInstancia([transaccion1, transaccion2]);
 
     // Para capturar la salida, sobrescribimos console.log manualmente.
