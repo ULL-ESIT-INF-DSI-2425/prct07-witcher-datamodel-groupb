@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "ID": 7,
+    "nombre": "Hattori",
+    "tipo": "Herrero",
+    "ubicacion": "Novigrado"
+  },
+  {
+    "ID": 8,
+    "nombre": "Fergus Graem",
+    "tipo": "Mercader General",
+    "ubicacion": "Velen"
+  }
+]

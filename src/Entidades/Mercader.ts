@@ -1,4 +1,5 @@
 import { Entidad } from "./Entidad.js";
+import inquirer from "inquirer";
 
 /**
  * Clase que representa un mercader.
@@ -83,5 +84,78 @@ export default class Mercader implements Entidad {
    */
   set ubicacion(ubicacion: string) {
     this._ubicacion = ubicacion;
+  }
+
+  static crear(callback: (mercader: Mercader | undefined, error?: Error) => void): void {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "_ID",
+          message: "Ingrese el ID del mercader:",
+          validate(value) {
+            const id = Number(value);
+            return isNaN(id) || id <= 0 ? "El ID debe ser un número mayor a cero" : true;
+          },
+        },
+        {
+          type: "input",
+          name: "_nombre",
+          message: "Ingrese el nombre del mercader:",
+          validate(value) {
+            return value.trim() === "" ? "El nombre no puede estar vacío" : true;
+          },
+        },
+        {
+          type: "input",
+          name: "_tipo",
+          message: "Ingrese el tipo del mercader:",
+          validate(value) {
+            return value.trim() === "" ? "El tipo no puede estar vacío" : true;
+          },
+        },
+        {
+          type: "input",
+          name: "_ubicacion",
+          message: "Ingrese la ubicación del mercader:",
+          validate(value) {
+            return value.trim() === "" ? "La ubicación no puede estar vacía" : true;
+          },
+        },
+      ])
+      .then((answers) => {
+        // Validación extra para _ID
+        const id = parseInt(answers._ID);
+        if (isNaN(id) || id <= 0) {
+          return callback(undefined, new Error("El ID debe ser un número mayor a 0"));
+        }
+        
+        // Validación extra para _nombre
+        if (answers._nombre.trim() === "") {
+          return callback(undefined, new Error("El nombre no puede estar vacío"));
+        }
+        
+        // Validación extra para _raza
+        if (answers._tipo.trim() === "") {
+          return callback(undefined, new Error("El tipo no puede estar vacío"));
+        }
+        
+        // Validación extra para _ubicacion
+        if (answers._ubicacion.trim() === "") {
+          return callback(undefined, new Error("La ubicación no puede estar vacía"));
+        }
+        
+        // Si todo es válido, se crea la instancia de mercader
+        const mercader = new Mercader(
+          id,
+          answers._nombre,
+          answers._tipo,
+          answers._ubicacion,
+        );
+        callback(mercader);
+      })
+      .catch((error) => {
+        callback(undefined, error);
+      });
   }
 }

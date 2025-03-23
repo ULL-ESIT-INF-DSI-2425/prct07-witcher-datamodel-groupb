@@ -1,5 +1,6 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi } from "vitest";
 import Mercader from "../../src/Entidades/Mercader";
+import inquirer from "inquirer";
 
 describe("Mercader", () => {
   test("Los getters deben devolver los valores asignados", () => {
@@ -86,5 +87,115 @@ describe("Mercader", () => {
     expect(mercader.nombre).toBe("@#$%^&*()");
     expect(mercader.tipo).toBe("Tipo-ñ");
     expect(mercader.ubicacion).toBe("Ciudad: *&%$#@!");
+  });
+});
+
+vi.mock("inquirer", () => {
+  return {
+    default: {
+      prompt: vi.fn(),
+    },
+  };
+});
+
+const getPromptMock = (): { mockResolvedValue: (val: unknown) => void } =>
+  inquirer.prompt as unknown as { mockResolvedValue: (val: unknown) => void };
+
+describe("Mercaderes - Método crear()", () => {
+  test("crear() debe crear un mercader cuando se ingresan datos válidos", async () => {
+    // Simulamos respuestas válidas
+    getPromptMock().mockResolvedValue({
+      _ID: "10",
+      _nombre: "Vimme Vivaldi",
+      _tipo: "Banca",
+      _ubicacion: "Novigrado",
+    });
+
+    // Llamamos a crear(), que internamente usará el mock de inquirer
+    Mercader.crear((mercader, error) => {
+      expect(error).toBeUndefined();
+      expect(mercader).toBeInstanceOf(Mercader);
+      expect((mercader as Mercader).nombre).toBe("Vimme Vivaldi");
+    });
+  });
+
+  test("crear() debe lanzar error si se ingresa un ID no numérico", async () => {
+    // Simulamos respuesta inválida
+    getPromptMock().mockResolvedValue({
+      _ID: "no es un número",
+      _nombre: "Vimme Vivaldi",
+      _tipo: "Banca",
+      _ubicacion: "Novigrado",
+    });
+
+    Mercader.crear((mercader, error) => {
+      expect(mercader).toBeUndefined();
+      expect(error).toBeInstanceOf(Error);
+      expect(error?.message).toBe("El ID debe ser un número mayor a 0");
+    });
+  });
+
+  test("crear() debe lanzar error si se ingresa un ID menor o igual a 0", async () => {
+    // Simulamos respuesta inválida
+    getPromptMock().mockResolvedValue({
+      _ID: "0",
+      _nombre: "Vimme Vivaldi",
+      _tipo: "Banca",
+      _ubicacion: "Novigrado",
+    });
+
+    Mercader.crear((mercader, error) => {
+      expect(mercader).toBeUndefined();
+      expect(error).toBeInstanceOf(Error);
+      expect(error?.message).toBe("El ID debe ser un número mayor a 0");
+    });
+  });
+
+  test("crear() debe lanzar error si se ingresa un nombre vacío", async () => {
+    // Simulamos respuesta inválida
+    getPromptMock().mockResolvedValue({
+      _ID: "10",
+      _nombre: "",
+      _tipo: "Banca",
+      _ubicacion: "Novigrado",
+    });
+
+    Mercader.crear((mercader, error) => {
+      expect(mercader).toBeUndefined();
+      expect(error).toBeInstanceOf(Error);
+      expect(error?.message).toBe("El nombre no puede estar vacío");
+    });
+  });
+
+  test("crear() debe lanzar error si se ingresa un tipo vacío", async () => {
+    // Simulamos respuesta inválida
+    getPromptMock().mockResolvedValue({
+      _ID: "10",
+      _nombre: "Vimme Vivaldi",
+      _tipo: "",
+      _ubicacion: "Novigrado",
+    });
+
+    Mercader.crear((mercader, error) => {
+      expect(mercader).toBeUndefined();
+      expect(error).toBeInstanceOf(Error);
+      expect(error?.message).toBe("El tipo no puede estar vacío");
+    });
+  });
+
+  test("crear() debe lanzar error si se ingresa una ubicación vacía", async () => {
+    // Simulamos respuesta inválida
+    getPromptMock().mockResolvedValue({
+      _ID: "10",
+      _nombre: "Vimme Vivaldi",
+      _tipo: "Banca",
+      _ubicacion: "",
+    });
+
+    Mercader.crear((mercader, error) => {
+      expect(mercader).toBeUndefined();
+      expect(error).toBeInstanceOf(Error);
+      expect(error?.message).toBe("La ubicación no puede estar vacía");
+    });
   });
 });

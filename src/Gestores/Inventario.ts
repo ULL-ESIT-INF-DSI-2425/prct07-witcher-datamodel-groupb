@@ -1,5 +1,4 @@
 import Bien from "../Entidades/Bien.js";
-import inquirer from "inquirer";
 import Gestor from "./Gestor.js";
 import ElementoAlmacen from "../Entidades/ElementoAlmacen.js";
 
@@ -17,10 +16,10 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
   protected _almacenMap = new Map<number, ElementoAlmacen>();
   private static GestorInstancia?: Inventario;
 
-  private constructor(private readonly _elementosArray: ElementoAlmacen[]) {
+  private constructor(elementosArray: ElementoAlmacen[]) {
     if (
-      _elementosArray.length === 1 &&
-      _elementosArray[0].bien.nombre === "dummy"
+      elementosArray.length === 1 &&
+      elementosArray[0].bien.nombre === "dummy"
     ) {
       // Si el bien es dummy, se carga el fichero JSON
       super("BaseDeDatos/Inventario.json");
@@ -42,10 +41,10 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
       // Si no es dummy, se crea un bien dummy y se añaden los elementos
       super("BaseDeDatos/DummyInventario.json");
       // Es lo mismo que `this.storeInventario();` pero sin el dummy
-      this.database.data = _elementosArray;
+      this.database.data = elementosArray;
       this.database.write();
       // Limpiamos el mapa para asegurarnos de cargar TODOS los elementos del JSON
-      _elementosArray.forEach((elemento) =>
+      elementosArray.forEach((elemento) =>
         this._almacenMap.set(elemento.ID, elemento),
       );
     }
@@ -80,6 +79,7 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
     }
     this.storeInventario();
   }
+  
 
   /**
    * Getter de la propiedad `almacenMap` que devuelve el inventario.
@@ -104,114 +104,6 @@ export default class Inventario extends Gestor<ElementoAlmacen> {
    */
   static resetInstance(): void {
     Inventario.GestorInstancia = undefined;
-  }
-
-  /**
-   * Método que crea un bien. Se usa inquier para preguntar al usuario los datos del bien.
-   * @returns void
-   */
-  public crear(): void {
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          name: "_ID",
-          message: "Ingrese el ID del bien:",
-          validate(value) {
-            const id = Number(value);
-            if (isNaN(id)) {
-              return "El ID debe ser un número";
-            }
-            return true;
-          },
-        },
-        {
-          type: "input",
-          name: "_nombre",
-          message: "Ingrese el nombre del bien:",
-          validate(value) {
-            return value.trim() !== ""
-              ? true
-              : "El nombre no puede estar vacío";
-          },
-        },
-        {
-          type: "input",
-          name: "_descripcion",
-          message: "Ingrese la descripción del bien:",
-          validate(value) {
-            return value.trim() !== ""
-              ? true
-              : "La descripción no puede estar vacía";
-          },
-        },
-        {
-          type: "input",
-          name: "_material",
-          message: "Ingrese el material del bien:",
-          validate(value) {
-            return value.trim() !== ""
-              ? true
-              : "El material no puede estar vacío";
-          },
-        },
-        {
-          type: "input",
-          name: "_peso",
-          message: "Ingrese el peso del bien (kg):",
-          validate(value) {
-            const peso = Number(value);
-            if (isNaN(peso) || peso <= 0) {
-              return "El peso debe ser un número mayor que 0";
-            }
-            return true;
-          },
-        },
-        {
-          type: "input",
-          name: "_precio",
-          message: "Ingrese el precio del bien:",
-          validate(value) {
-            const precio = Number(value);
-            if (isNaN(precio) || precio < 0) {
-              return "El precio debe ser un número positivo";
-            }
-            return true;
-          },
-        },
-        {
-          type: "input",
-          name: "_cantidad",
-          message: "Ingrese la cantidad del bien:",
-          validate(value) {
-            const cantidad = Number(value);
-            if (isNaN(cantidad) || cantidad < 0) {
-              return "La cantidad debe ser un número positivo";
-            }
-            return true;
-          },
-        },
-      ])
-      .then((answers) => {
-        const bien = new Bien(
-          parseInt(answers._ID), // Convertimos el ID a número
-          answers._nombre,
-          answers._descripcion,
-          answers._material,
-          parseFloat(answers._peso), // Convertimos peso a número
-          parseFloat(answers._precio), // Convertimos precio a número
-        );
-        try {
-          this.add(new ElementoAlmacen(bien, parseInt(answers._cantidad)));
-          console.log("Cliente creado y añadido exitosamente");
-        } catch (error: unknown) {
-          if (error instanceof Error) {
-            console.error(error.message);
-          } else {
-            console.error("Ha ocurrido un error desconocido");
-          }
-        }
-      });
   }
 
   /**

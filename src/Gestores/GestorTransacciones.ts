@@ -18,8 +18,8 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
   protected _almacenMap = new Map<number, Transaccion>();
   private static GestorInstancia?: GestorTransacciones;
 
-  private constructor(private readonly _transaccionesArray: Transaccion[]) {
-    if (_transaccionesArray.length === 1 && _transaccionesArray[0].ID === -1) {
+  private constructor(transaccionesArray: Transaccion[]) {
+    if (transaccionesArray.length === 1 && transaccionesArray[0].ID === -1) {
       super("BaseDeDatos/transacciones.json");
       if (this.database.data == null) {
         console.log(
@@ -39,9 +39,9 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
       }
     } else {
       super("BaseDeDatos/Dummytransacciones.json");
-      this.database.data = _transaccionesArray;
+      this.database.data = transaccionesArray;
       this.database.write();
-      _transaccionesArray.forEach((transaccion) =>
+      transaccionesArray.forEach((transaccion) =>
         this._almacenMap.set(transaccion.ID, transaccion),
       );
     }

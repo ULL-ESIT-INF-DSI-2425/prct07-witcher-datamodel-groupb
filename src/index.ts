@@ -20,6 +20,9 @@ import inquirer from "inquirer";
 import Inventario from "./Gestores/Inventario.js";
 import GestorClientes from "./Gestores/GestorClientes.js";
 import GestorMercaderes from "./Gestores/GestorMercaderes.js";
+import Cliente from "./Entidades/Cliente.js";
+import Mercader from "./Entidades/Mercader.js";
+import ElementoAlmacen from "./Entidades/ElementoAlmacen.js";
 
 enum comandosPrincipales {
   Interactuar_bienes = "Gestionar bienes",
@@ -59,7 +62,16 @@ function promptInteracturarMercaderes(): void {
     .then((answers) => {
       switch (answers["Comandos mercaderes"]) {
         case comandosProveedores.nuevo_proveedor:
-          mercaderes.crear();
+          Mercader.crear((mercader, error) => {
+            if (error) {
+              console.error("Error al crear mercader:", error.message);
+            } else if (mercader !== undefined) {
+              mercaderes.add(mercader);
+              console.log("Mercader creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear mercader");
+            }
+          });
           break;
         case comandosProveedores.proveedor_existente:
           console.log("LLamada a modificar proveedor");
@@ -84,7 +96,16 @@ function promptInteracturarBienes(): void {
     .then((answers) => {
       switch (answers["Comandos bienes"]) {
         case comandosBienes.nuevo_bien:
-          inventario.crear();
+          ElementoAlmacen.crear((elemento, error) => {
+            if (error) {
+              console.error("Error al crear elemento:", error.message);
+            } else if (elemento !== undefined) {
+              inventario.add(elemento);
+              console.log("Elemento creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear elemento");
+            }
+          });
           break;
         case comandosBienes.bien_existente:
           console.log("Llamada a modificar bien");
@@ -109,7 +130,16 @@ function promptInteracturarClientes(): void {
     .then((answers) => {
       switch (answers["Comandos clientes"]) {
         case comandosClientes.nuevo_cliente:
-          clientes.crear();
+          Cliente.crear((cliente, error) => {
+            if (error) {
+              console.error("Error al crear cliente:", error.message);
+            } else if (cliente !== undefined) {
+              clientes.add(cliente);
+              console.log("Cliente creado y añadido exitosamente");
+            } else {
+              console.log("Error al crear cliente");
+            }
+          });
           break;
         case comandosClientes.cliente_existente:
           console.log("Llamada a modificar cliente");
