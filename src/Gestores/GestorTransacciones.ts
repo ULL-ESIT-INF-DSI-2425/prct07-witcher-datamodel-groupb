@@ -1,4 +1,5 @@
 import Cliente from "../Entidades/Cliente.js";
+import Mercader from "../Entidades/Mercader.js";
 import Transaccion from "../Entidades/Transaccion.js";
 import Gestor from "./Gestor.js";
 import inquirer from "inquirer";
@@ -61,6 +62,42 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
       newID++;
     }
     return newID;
+  }
+
+  getMercaderes(): string[] {
+    let mercaderes: string[] = [];
+    this._almacenMap.forEach((transaccion) => {
+      const persona = Mercader.fromJSON(transaccion.persona);
+      if(transaccion.persona.hasOwnProperty("tipo"))
+      if (persona instanceof Mercader) {
+        if (!mercaderes.includes(`${persona.ID} - ${persona.nombre}`))
+          mercaderes.push(`${persona.ID} - ${persona.nombre}`);
+      }
+    });
+    return mercaderes;
+  }
+
+  getClientes(): string[] {
+    const clientes: string[] = [];
+    this._almacenMap.forEach((transaccion) => {
+      const persona = Cliente.fromJSON(transaccion.persona);
+      if(transaccion.persona.hasOwnProperty("raza"))
+      if (persona instanceof Cliente) {
+        if (!clientes.includes(`${persona.ID} - ${persona.nombre}`))
+          clientes.push(`${persona.ID} - ${persona.nombre}`)
+      }
+    });
+    return clientes;
+  }
+
+  getBienes(): string[] {
+    const bienes: string[] = [];
+    this._almacenMap.forEach((transaccion) => {
+      transaccion.bienes.forEach((bien) => {
+        bienes.push(`${bien.ID} - ${bien.bien.nombre}`);
+      });
+    });
+    return bienes;
   }
 
   public static getGestorInstancia(

@@ -44,6 +44,10 @@ export default class Transaccion implements Entidad {
     }
   }
 
+  tostring(): string {
+    return `Transacción ${this._ID} realizada por ${this._persona.nombre} el ${this._fecha}`;
+  }
+
   /**
    * Getter de la propiedad ID.
    * @returns ID del mercader.

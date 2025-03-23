@@ -29,6 +29,9 @@ export default class Mercader implements Entidad {
       ubicacion: this._ubicacion,
     };
   }
+  static fromJSON(json: any): Mercader {
+    return new Mercader(json.ID, json.nombre, json.tipo, json.ubicacion);
+  }
 
   tostring(): string {
     return `ID: ${this._ID}, Nombre: ${this._nombre}, Tipo: ${this._tipo}, Ubicación: ${this._ubicacion}`;

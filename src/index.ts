@@ -27,13 +27,10 @@ import GestorTransacciones from "./Gestores/GestorTransacciones.js";
 import Transaccion from "./Entidades/Transaccion.js";
 
 enum comandosPrincipales {
-  Interactuar_bienes = "Gestionar bienes",
-  Interactuar_mercaderes = "Gestionar mercaderes",
-  Interactuar_clientes = "Gestionar clientes",
   Vender = "Vender",
   Comprar = "Comprar",
   Devolver = "Devolver",
-  Test_Imprimir = "Test Comprobar lectura json",
+  Gestionar = "Gestionar Base de datos",
   Quit = "Quit",
 }
 
@@ -398,7 +395,8 @@ function promptVender(): void {
               try {
                 //transacciones.vender(cliente, bien, cantidad);
                 inventario.removeBien(bien.ID, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien], cliente, false));
+                let bien_vendido = new ElementoAlmacen(bien.bien, cantidad);
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_vendido], cliente, false));
                 console.log("Venta realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -453,7 +451,8 @@ function promptComprar(): void {
               try {
                 //transacciones.comprar(mercader, bien, cantidad);
                 inventario.addBien(bien.ID, cantidad);
-                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien], mercader, false));
+                let bien_comprado = new ElementoAlmacen(bien.bien, cantidad);
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_comprado], mercader, false));
                 console.log("Compra realizada exitosamente");
               } catch (error) {
                 if (error instanceof Error) {
@@ -464,6 +463,224 @@ function promptComprar(): void {
               }
             });
         });
+    });
+}
+
+function promptDevolverCliente(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "DevolverMercader",
+      message: "Seleccione Cliente al que se vendió:",
+      choices: transacciones.getClientes(),
+    })
+    .then((answers) => {
+      const id = parseInt(answers["DevolverMercader"].split(" - ")[0]);
+      const cliente = clientes.get(id);
+      if (cliente === undefined) {
+        console.log("Cliente no encontrado");
+        return;
+      }
+      inquirer
+        .prompt({
+          type: "list",
+          name: "Devolver",
+          message: "Seleccione bien:",
+          choices: transacciones.getBienes(),
+        })
+        .then((answers) => {
+          const id = parseInt(answers["Devolver"].split(" - ")[0]);
+          const bien = inventario.get(id);
+          if (bien === undefined) {
+            console.log("Bien no encontrado");
+            return;
+          }
+          inquirer
+            .prompt({
+              type: "input",
+              name: "Cantidad",
+              message: "Introduzca la cantidad a devolver:",
+            })
+            .then((answers) => {
+              const cantidad = parseInt(answers["Cantidad"]);
+              try {
+                //transacciones.devolver(transaccion, bien, cantidad);
+                inventario.addBien(bien.ID, cantidad);
+                let bien_devuelto = new ElementoAlmacen(bien.bien, cantidad);
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_devuelto], cliente, true));
+                console.log("Devolucion realizada exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+        });
+    });
+}
+
+function promptDevolverMercader(): void {
+  console.clear();
+  const mercaderNombres = transacciones.getMercaderes();
+  //console.log("Mercaderes disponibles:", mercaderNombres); // Debug statement
+  if (mercaderNombres.length === 0) {
+    console.log("No hay mercaderes disponibles para seleccionar.");
+    return;
+  }
+  inquirer
+    .prompt({
+      type: "list",
+      name: "DevolverMercader",
+      message: "Seleccione Mercader al que se compró:",
+      choices: mercaderNombres,
+    })
+    .then((answers) => {
+      const id = parseInt(answers["DevolverMercader"].split(" - ")[0]);
+      const mercader = mercaderes.get(id);
+      if (mercader === undefined) {
+        console.log("Mercader no encontrado");
+        return;
+      }
+      const bienNombres = transacciones.getBienes();
+      //console.log("Bienes disponibles:", bienNombres); // Debug statement
+      if (bienNombres.length === 0) {
+        console.log("No hay bienes disponibles para seleccionar.");
+        return;
+      }
+      inquirer
+        .prompt({
+          type: "list",
+          name: "Devolver",
+          message: "Seleccione bien:",
+          choices: bienNombres,
+        })
+        .then((answers) => {
+          const id = parseInt(answers["Devolver"].split(" - ")[0]);
+          const bien = inventario.get(id);
+          if (bien === undefined) {
+            console.log("Bien no encontrado");
+            return;
+          }
+          inquirer
+            .prompt({
+              type: "input",
+              name: "Cantidad",
+              message: "Introduzca la cantidad a devolver:",
+            })
+            .then((answers) => {
+              const cantidad = parseInt(answers["Cantidad"]);
+              try {
+                inventario.removeBien(bien.ID, cantidad);
+                let bien_devuelto = new ElementoAlmacen(bien.bien, cantidad);
+                transacciones.add(new Transaccion(transacciones.getTransaccionID(), new Date(), [bien_devuelto], mercader, true));
+                console.log("Devolución realizada exitosamente");
+              } catch (error) {
+                if (error instanceof Error) {
+                  console.log(error.message);
+                } else {
+                  console.log("Unknown error");
+                }
+              }
+            });
+        });
+    });
+}
+
+function Devoluciones(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "Devoluciones",
+      message: "Seleccione tipo de devolucion:",
+      choices: ["Devolucion de cliente", "Devolucion de mercader", "Volver"],
+    })
+    .then((answers) => {
+      switch (answers["Devoluciones"]) {
+        case "Devolucion de cliente":
+          promptDevolverCliente();
+          break;
+        case "Devolucion de mercader":
+          promptDevolverMercader();
+          break;
+        case "Volver":
+          menuPrincipal();
+          break;
+      }
+    });
+}
+
+function promptTransacciones(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "Transacciones",
+      message: "Seleccione tipo de transaccion:",
+      choices: ["Ver una transaccion", "Ver todas las transacciones", "Volver"],
+    })
+    .then((answers) => {
+      switch (answers["Transacciones"]) {
+        case "Ver una transaccion":
+          inquirer
+            .prompt({
+              type: "input",
+              name: "ID",
+              message: "Introduzca el ID de la transaccion a ver:",
+            })
+            .then((answers) => {
+              const id = parseInt(answers["ID"]);
+              let transaccion:Transaccion = transacciones.get(id);
+              if (transaccion === undefined) {
+                console.log("Transaccion no encontrada");
+                return;
+              }
+              console.log("Transaccion encontrada:");
+              console.log(transaccion.tostring());
+            });
+          break;
+        case "Ver todas las transacciones":
+          transacciones.ImprimirTest();
+          break;
+        case "Volver":
+          menuPrincipal();
+          break;
+      }
+    });
+}
+              
+
+
+function ModificarInventario(): void {
+  console.clear();
+  inquirer
+    .prompt({
+      type: "list",
+      name: "ModificarInventario",
+      message: "Seleccione tipo de modificacion:",
+      choices: ["Bienes", "Mercaderes", "Clientes", "Transacciones", "Volver"],
+    })
+    .then((answers) => {
+      switch (answers["ModificarInventario"]) {
+        case "Bienes":
+          promptInteracturarBienes();
+          break;
+        case "Mercaderes":
+          promptInteracturarMercaderes();
+          break;
+        case "Clientes":
+          promptInteracturarClientes();
+          break;
+        case "Transacciones":
+          promptTransacciones();
+          break;
+        case "Volver":
+          menuPrincipal();
+          break;
+      }
     });
 }
 
@@ -478,14 +695,8 @@ function menuPrincipal(): void {
     })
     .then((answers) => {
       switch (answers["Comandos principales"]) {
-        case comandosPrincipales.Interactuar_bienes:
-          promptInteracturarBienes();
-          break;
-        case comandosPrincipales.Interactuar_mercaderes:
-          promptInteracturarMercaderes();
-          break;
-        case comandosPrincipales.Interactuar_clientes:
-          promptInteracturarClientes();
+        case comandosPrincipales.Gestionar:
+          ModificarInventario();
           break;
         case comandosPrincipales.Quit:
           break;
@@ -495,11 +706,9 @@ function menuPrincipal(): void {
         case comandosPrincipales.Comprar:
           promptComprar();
           break;
-
-        case comandosPrincipales.Test_Imprimir:
-          inventario.ImprimirTest();
-          clientes.ImprimirTest();
-          mercaderes.ImprimirTest();
+        case comandosPrincipales.Devolver:
+          Devoluciones();
+          break;
       }
     });
 }
