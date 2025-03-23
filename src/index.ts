@@ -685,14 +685,7 @@ function ModificarInventario(): void {
     });
 }
 
-/**Generar informes cruciales para la toma de decisiones de un maestro comerciante, como:
 
-    Estado del stock de un tipo de bien o de un artículo en particular.
-    Bienes más vendidos o más demandados.
-    Total de ingresos por ventas a clientes y gastos en adquisiciones a mercaderes.
-    Histórico de transacciones de un cliente o mercader específico.
-
- */
 function promptInformes(): void {
   console.clear();
   inquirer

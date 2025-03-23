@@ -56,7 +56,7 @@ export default class Transaccion implements Entidad {
    * @returns Transacción - Transacción creada a partir de un JSON.
    */
   tostring(): string {
-    return `Transacción ${this._ID} realizada por ${this._persona.nombre} el ${this._fecha}`;
+    return `Transacción ${this._ID} realizada por ${this._persona.nombre} el ${this._fecha} comprando ${this._elementosEnTransaccion.cantidad} ${this._elementosEnTransaccion.bien.nombre} por un total de ${this._dinero} coronas.`;
   }
 
   /**
