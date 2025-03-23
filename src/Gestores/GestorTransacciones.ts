@@ -101,7 +101,6 @@ export default class GestorTransacciones extends Gestor<Transaccion> {
     bienes_mas_vendidos.forEach((ID) => {
       const bien = Bien.fromJSON(this._almacenMap.get(ID)?.bienes.bien);
       result.push(`${bien.ID} - ${bien.nombre}`);
-      console.log(`${bien.ID} - ${bien.nombre}`);
     });
     return result;
   }
